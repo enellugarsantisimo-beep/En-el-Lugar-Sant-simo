@@ -1,0 +1,6 @@
+{
+  "name": "En el Lugar Santísimo - Comunidad Cristiana",
+  "description": "Portal y plataforma web de la comunidad cristiana En el Lugar Santísimo en Bogotá, Colombia. Transmisiones en vivo, grupos de conexión, proyecto humanitario Bocachica y acompañamiento pastoral.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
