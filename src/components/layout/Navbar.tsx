@@ -91,34 +91,19 @@ export const Navbar: React.FC<NavbarProps> = ({
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
-          {/* Zone 1: Single text element brand wordmark */}
+          {/* Zone 1: Official Brand Logo */}
           <button
             onClick={() => handleNavClick('inicio')}
-            className="flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 rounded-lg group shrink-0"
+            aria-label="En el Lugar Santísimo - Inicio"
+            className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 rounded-xl group shrink-0"
           >
-            <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-sm group-hover:bg-rose-600 transition-colors">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-5 h-5 text-rose-400 group-hover:text-white transition-colors"
-              >
-                <path d="M12 2v8m0 4v8" />
-                <path d="M8 8l8 8" />
-                <path d="M16 8l-8 8" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </div>
-            <div>
-              <span className="text-lg lg:text-xl font-bold tracking-tight text-slate-900 font-display block leading-tight">
-                En el Lugar Santísimo
-              </span>
-              <span className="text-[11px] text-slate-500 font-medium tracking-wide uppercase">
-                Comunidad Cristiana · Bogotá
-              </span>
+            <div className="h-12 w-36 sm:w-40 rounded-xl bg-slate-900 group-hover:bg-slate-800 transition-colors px-3 flex items-center justify-center overflow-hidden shadow-sm">
+              <img
+                src="/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png"
+                alt="En el Lugar Santísimo - Comunidad Cristiana"
+                referrerPolicy="no-referrer"
+                className="w-24 h-24 object-contain shrink-0"
+              />
             </div>
           </button>
 
@@ -184,13 +169,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col z-50 overflow-y-auto">
             {/* Header */}
             <div className="p-4 flex items-center justify-between border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white">
-                  <span className="font-bold text-sm text-rose-400">LS</span>
-                </div>
-                <span className="font-bold text-slate-900 font-display text-sm">
-                  En el Lugar Santísimo
-                </span>
+              <div className="h-10 w-32 rounded-lg bg-slate-900 px-2.5 flex items-center justify-center overflow-hidden">
+                <img
+                  src="/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png"
+                  alt="En el Lugar Santísimo - Comunidad Cristiana"
+                  referrerPolicy="no-referrer"
+                  className="w-20 h-20 object-contain shrink-0"
+                />
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}

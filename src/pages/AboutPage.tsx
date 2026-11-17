@@ -139,10 +139,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               Nuestra Misión
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
-              Llevar a cada persona al corazón de Dios
+              NUESTRA MISIÓN
             </h2>
             <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              Guiar a hombres, mujeres, jóvenes y niños a experimentar un encuentro salvador y transformador con Jesucristo, equipándolos mediante la Palabra para influir positivamente en sus hogares, lugares de estudio, empresas y comunidades.
+              Nuestra misión es encontrar y llevar a las personas a un encuentro íntimo y reconciliación genuina con el Padre y consigo mismos. Esto lo haremos a través del discipulado y formación, mediante el cual conduciremos al nuevo hijo e hija a la estatura del Señor Jesucristo, en carácter, verdad y amor. Nuestra meta es ayudarte a ser más como Jesucristo, viviendo con autenticidad, verdad y amor en tu vida diaria. Nos apasiona compartir la maravillosa presencia del Espíritu Santo e infundir una gran pasión por ella a través de una adoración profunda y sincera. En nuestra comunidad, nos centramos en la Biblia, en Jesucristo y en cumplir la Gran Comisión a través de misiones significativas para expandir el Reino de Dios. ¡Únete a nosotros en esta travesía espiritual llena de amor y propósito!
             </p>
           </div>
 
@@ -151,10 +151,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               Nuestra Visión
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
-              Ser faro de esperanza y transformación
+              NUESTRA VISIÓN
             </h2>
             <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
-              Consolidarnos como una comunidad espiritual de referencia en Bogotá y el territorio colombiano, reconocida por su genuina comunión con el Padre, la sólida formación de líderes con carácter piadoso y su generoso impacto humanitario en lugares necesitados como Bocachica.
+              Soñamos con expandirnos y conquistar nuestra ciudad, nación y el mundo para Cristo, llevando el avivamiento del Espíritu Santo a través de la adoración sincera, el crecimiento en la Palabra y el uso de los dones espirituales. Visualizamos una comunidad comprometida en formar y equipar al cuerpo de Cristo, avanzando en el propósito eterno de Dios. Nuestro anhelo es cumplir la Gran Comisión, haciendo discípulos en todas las naciones, bautizándolos y enseñándoles a vivir conforme a los principios del Reino de Dios, transformando vidas y generaciones para Su gloria.
             </p>
           </div>
         </div>

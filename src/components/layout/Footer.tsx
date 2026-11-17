@@ -68,16 +68,13 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand & Essence */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white font-bold text-lg font-display">
-                LS
-              </div>
-              <div>
-                <h3 className="font-display font-bold text-xl text-white tracking-tight">
-                  En el Lugar Santísimo
-                </h3>
-                <span className="text-xs text-stone-400">Comunidad Cristiana Bogotá</span>
-              </div>
+            <div className="h-14 w-44 rounded-xl bg-slate-900/90 border border-slate-800 px-3 flex items-center justify-center overflow-hidden">
+              <img
+                src="/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png"
+                alt="En el Lugar Santísimo - Comunidad Cristiana"
+                referrerPolicy="no-referrer"
+                className="w-28 h-28 object-contain shrink-0"
+              />
             </div>
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-md">

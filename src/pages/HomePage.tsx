@@ -51,16 +51,16 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-              En <strong className="text-rose-600 font-semibold">En el Lugar Santísimo</strong> creemos que cada encuentro con Dios puede marcar el comienzo de una nueva historia. Somos una comunidad que busca crecer en Su presencia, fortalecer la fe y compartir Su amor con los demás.
+              En nuestra iglesia, creemos firmemente en el poder de la formación y el crecimiento espiritual. El botón <strong className="text-rose-600 font-semibold">'Ruta de Crecimiento'</strong> es tu puerta de entrada a un viaje transformador. Aquí, te presentamos los diversos niveles de formación disponibles en nuestra casa, diseñados para equiparte con las herramientas <em>esenciales</em> que necesitas para ser un líder en el servicio a Dios y a los demás. Si anhelas crecer en tu fe, descubrir tu propósito y contribuir al ministerio de la iglesia, ¡has llegado al lugar adecuado!
             </p>
 
             {/* Quick action buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
-                onClick={() => onNavigate('conocenos')}
+                onClick={() => onNavigate('comunidad')}
                 className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2"
               >
-                <span>Quiero visitarlos</span>
+                <span>Ruta de Crecimiento</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -117,13 +117,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1.5">
                 <span className="text-[11px] uppercase tracking-wider text-rose-300 font-semibold">
-                  Auditorio Principal · Domingos 10:30 AM
+                  En el Lugar Santísimo · Bogotá
                 </span>
-                <p className="font-serif italic text-base text-stone-100">
-                  «Donde el Espíritu del Señor está, allí hay libertad.»
+                <p className="font-serif italic text-sm sm:text-base text-stone-100 leading-relaxed">
+                  Prepárate para iniciar un emocionante viaje hacia un servicio significativo y un compromiso más profundo con la obra de Nuestro Dios.
                 </p>
               </div>
             </div>
@@ -131,29 +131,29 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 2. BIENVENIDA: HAY UN LUGAR PARA TI */}
+      {/* 2. NUESTRA MISIÓN */}
       <section className="relative bg-slate-900 text-white py-16 lg:py-20 overflow-hidden">
         {/* Subtle decorative background glow */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6 relative z-10">
           <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold uppercase tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Bienvenida</span>
+            <span>Propósito de Casa</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-bold font-display tracking-tight text-white">
-            Hay un lugar para ti
+            NUESTRA MISIÓN
           </h2>
 
           <div className="space-y-4 text-stone-300 text-base sm:text-lg leading-relaxed font-light">
             <p>
-              No importa si estás comenzando tu camino de fe, si llevas tiempo caminando con Dios o si simplemente estás buscando un espacio para acercarte a Él.
+              Nuestra misión es encontrar y llevar a las personas a un encuentro íntimo y reconciliación genuina con el Padre y consigo mismos. Esto lo haremos a través del discipulado y formación, mediante el cual conduciremos al nuevo hijo e hija a la estatura del Señor Jesucristo, en carácter, verdad y amor.
             </p>
             <p>
-              Queremos que encuentres una comunidad donde puedas conocer más de Su amor, crecer espiritualmente y compartir experiencias con otras personas.
+              Nuestra meta es ayudarte a ser más como Jesucristo, viviendo con autenticidad, verdad y amor en tu vida diaria. Nos apasiona compartir la maravillosa presencia del Espíritu Santo e infundir una gran pasión por ella a través de una adoración profunda y sincera.
             </p>
             <p className="font-medium text-white">
-              En <span className="text-rose-400">En el Lugar Santísimo</span> queremos caminar contigo y acompañarte en cada etapa de tu crecimiento.
+              En nuestra comunidad, nos centramos en la Biblia, en Jesucristo y en cumplir la Gran Comisión a través de misiones significativas para expandir el Reino de Dios. ¡Únete a nosotros en esta travesía espiritual llena de amor y propósito!
             </p>
           </div>
 
@@ -174,18 +174,103 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 3. NUESTRA ESENCIA: UNA COMUNIDAD CON UN PROPÓSITO */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
+      {/* 3. NUESTRA VISIÓN Y PALABRA PROFÉTICA */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-semibold text-rose-600 uppercase tracking-widest">
-            Nuestra esencia
+            Hacia donde vamos
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold font-display text-slate-900 tracking-tight">
-            Una comunidad con un propósito
+            NUESTRA VISIÓN
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Nuestro deseo es que cada persona tenga un <strong className="text-slate-900">encuentro genuino con Dios</strong>, experimente Su amor y descubra una vida transformada por Jesús. Creemos en una fe que no se queda solamente en palabras, sino que se refleja en nuestra manera de vivir, amar, servir y relacionarnos con los demás.
+            Soñamos con expandirnos y conquistar nuestra ciudad, nación y el mundo para Cristo, llevando el avivamiento del Espíritu Santo a través de la adoración sincera, el crecimiento en la Palabra y el uso de los dones espirituales. Visualizamos una comunidad comprometida en formar y equipar al cuerpo de Cristo, avanzando en el propósito eterno de Dios. Nuestro anhelo es cumplir la Gran Comisión, haciendo discípulos en todas las naciones, bautizándolos y enseñándoles a vivir conforme a los principios del Reino de Dios, transformando vidas y generaciones para Su gloria.
           </p>
+        </div>
+
+        {/* Palabra Profética Highlight Card (same elevated card style) */}
+        <div className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-6 max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
+            <div className="space-y-1.5">
+              <span className="text-xs font-bold text-rose-600 uppercase tracking-widest block">
+                Palabra Profética
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-bold font-display text-slate-900 tracking-tight">
+                PALABRA PROFÉTICA AÑO HEBREO 5785-5786 (2025-2026)
+              </h3>
+            </div>
+            <span className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 text-slate-800 shrink-0 self-start md:self-center">
+              Basada en Zacarías 4:1-14
+            </span>
+          </div>
+
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <h4 className="text-lg font-bold font-display text-slate-900">
+                1. Un año para recordar quién es el único Dios.
+              </h4>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                <strong className="font-serif italic text-slate-900">“Un año para recordar que solo hay un Dios y un Señor.”</strong> La tierra misma dará testimonio con sus sacudidas, para derribar la altivez de los hombres, y muchos levantarán la mirada al cielo, reconociendo que solo del Señor viene la ayuda. Él es el Creador que sostiene el mundo con su amor desde el principio, y ese amor es para salvación.
+              </p>
+            </div>
+
+            <div className="pt-5 border-t border-slate-100 space-y-2">
+              <h4 className="text-lg font-bold font-display text-slate-900">
+                2. El candelabro de oro y la plenitud del Espíritu.
+              </h4>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                El candelabro de oro con siete lámparas, Dios encendiendo Su iglesia para brillar con la plenitud de su Espíritu en medio de la oscuridad. El aceite fresco de los olivos fluirá continuamente proveyendo abundancia de vino y aceite del Espíritu Santo, no faltará el aceite en este nuevo ciclo. Este es un año para caminar en Fe en la luz del Espíritu y llevar su resplandor a las naciones siendo portadores de promesas porque, el Dios cumplidor de promesas irá adelante de nosotros, somos los escogidos nacidos de la promesa para mostrar su Gloria.
+              </p>
+            </div>
+
+            <div className="pt-5 border-t border-slate-100 space-y-2">
+              <h4 className="text-lg font-bold font-display text-slate-900">
+                3. Un nuevo ciclo familiar y ministerial.
+              </h4>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                El Señor despierta a las familias y las trae del exilio para completar su propósito eterno. Tiempo de caminar en los sueños de Dios obedecer su voz y moverse en su voluntad perfecta. Los montes de oposición son allanados y convertidos en polvo todos los obstáculos. El soplo de Dios hará y el Ángel dice, no será con fuerza ni con poder humano, sino con su Espíritu, dice el Señor de los ejércitos.
+              </p>
+            </div>
+
+            <div className="pt-5 border-t border-slate-100 space-y-2">
+              <h4 className="text-lg font-bold font-display text-slate-900">
+                4. La obra será completada.
+              </h4>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Así como Zorobabel puso el fundamento del templo y también colocó la piedra final, el Señor te recuerda hoy:{' '}
+                <em className="font-serif text-slate-900">“La obra que Yo comencé, Yo mismo la terminaré.”</em>{' '}
+                Los que despreciaron los pequeños comienzos de esta casa verán con gozo la obra terminada. El grito de victoria será:{' '}
+                <em className="font-serif text-slate-900">«Gritos de alabanza por su belleza.»</em>{' '}
+                Lo que parecía imposible será posible. No con manos humanas sino con espíritu renovado alineados en su gloria por el Espíritu Santo.
+              </p>
+            </div>
+
+            <div className="pt-5 border-t border-slate-100 space-y-2">
+              <h4 className="text-lg font-bold font-display text-slate-900">
+                5. Gracia de Dios.
+              </h4>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                El favor de Dios estará con nosotros, no temeremos a nada ni a nadie y por causa de su nombre, levantamos bandera y multitudes correrán hacia nosotros. Se levantarán generaciones que dirán:{' '}
+                <em className="font-serif text-slate-900">“Solo al Señor serviremos.”</em>{' '}
+                y queremos estar con ustedes. Fuimos llamados por Dios no por los hombres. Nacidos para servir. Los Ángeles de Dios estarán a nuestro servicio, nos acompañarán y ayudarán siempre con todos los que amamos.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+              <h4 className="text-base sm:text-lg font-bold font-display text-rose-700">
+                Declaración Final.
+              </h4>
+              <div className="text-sm sm:text-base text-slate-800 leading-relaxed space-y-1">
+                <p>Este aniversario abre un nuevo tiempo para la iglesia.</p>
+                <p>
+                  El Espíritu Santo está encendiendo el candelabro de oro, llenando con su aceite fresco, iluminando con su gloria y completando la obra. No será por la fuerza ni por el poder humano, <strong className="text-slate-950">¡SINO POR SU ESPÍRITU!</strong>
+                </p>
+                <p className="font-semibold text-rose-700 pt-1">
+                  ¡Un año de gracia, abundancia y victoria en Cristo Jesús!
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 3 Pillars Grid */}
@@ -216,7 +301,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           ))}
         </div>
 
-        <div className="text-center pt-8">
+        <div className="text-center pt-2">
           <button
             onClick={() => onNavigate('conocenos')}
             className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-rose-600 border-b border-slate-900 hover:border-rose-600 pb-1 transition-all"
