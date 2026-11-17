@@ -187,10 +187,13 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-bold font-display text-white">
-                  {t('Servicio General Dominical · En el Lugar Santísimo', 'Sunday General Service · En el Lugar Santísimo')}
+                  {t(
+                    'FE SACRIFICIAL - EL FRUTO DE LA FE - GUIADOS POR EL ESPÍRITU SANTO - 12/02/2025',
+                    'SACRIFICIAL FAITH - THE FRUIT OF FAITH - LED BY THE HOLY SPIRIT - 12/02/2025'
+                  )}
                 </h2>
                 <span className="text-xs text-slate-400">
-                  {t('Transmisión directa desde Bogotá · Domingos 10:30 a. m.', 'Live broadcast from Bogotá · Sundays 10:30 AM')}
+                  {t('En el Lugar Santísimo · Transmisión oficial', 'En el Lugar Santísimo · Official Broadcast')}
                 </span>
               </div>
             </div>
@@ -207,46 +210,33 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
 
           {/* Stream Stage & Chat Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            {/* Left: Player Stage */}
-            <div className="lg:col-span-8 bg-black relative aspect-[16/9] flex items-center justify-center overflow-hidden group">
-              <img
-                src={CHURCH_INFO.images.worship}
-                alt={t('Transmisión del servicio dominical', 'Sunday service live stream')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-
-              {/* Center Play Button Overlay */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-lg backdrop-blur-sm transform transition-transform group-hover:scale-110 cursor-pointer">
-                  <Play className="w-7 h-7 ml-1 fill-current" />
-                </div>
-                <div className="bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-700 max-w-sm">
-                  <span className="text-xs font-bold text-white block">
-                    {t('Transmisión activa cada domingo 10:30 a. m.', 'Live stream active every Sunday at 10:30 AM')}
-                  </span>
-                  <span className="text-[11px] text-stone-300">
-                    {t('Haz clic para reproducir la última enseñanza o sintonizar en vivo', 'Click to play the latest teaching or tune in live')}
-                  </span>
-                </div>
+            {/* Left: Embedded YouTube Player Stage */}
+            <div className="lg:col-span-8 bg-black flex flex-col">
+              <div className="relative aspect-[16/9] w-full bg-black">
+                <iframe
+                  src={CHURCH_INFO.liveYoutubeEmbedUrl}
+                  title="FE SACRIFICIAL - EL FRUTO DE LA FE - GUIADOS POR EL ESPÍRITU SANTO - 12/02/2025"
+                  className="absolute inset-0 w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
               </div>
 
               {/* Player bottom status strip */}
-              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-stone-300">
+              <div className="px-4 py-2.5 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs text-stone-300">
                 <div className="flex items-center gap-2">
                   <Volume2 className="w-4 h-4 text-stone-400" />
-                  <span>{t('Audio HD Stereo', 'HD Stereo Audio')}</span>
+                  <span>{t('Audio HD Stereo · En el Lugar Santísimo', 'HD Stereo Audio · En el Lugar Santísimo')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <a
-                    href={CHURCH_INFO.social.youtube}
+                    href={CHURCH_INFO.liveYoutubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors flex items-center gap-1"
+                    className="hover:text-white transition-colors flex items-center gap-1 font-semibold text-rose-400"
                   >
-                    <span>{t('Ver en YouTube', 'Watch on YouTube')}</span>
+                    <span>{t('Abrir en YouTube', 'Open on YouTube')}</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>

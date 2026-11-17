@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageId } from '../types';
 import { CHURCH_INFO } from '../data/churchData';
 import { useLanguage } from '../context/LanguageContext';
@@ -9,6 +9,8 @@ import {
   Users,
   Shield,
   Smile,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 interface CommunityPageProps {
@@ -16,11 +18,163 @@ interface CommunityPageProps {
   onOpenPrayerModal: () => void;
 }
 
+interface SlideItem {
+  src: string;
+  alt: string;
+}
+
+interface GroupImageSliderProps {
+  slides: SlideItem[];
+  prevLabel: string;
+  nextLabel: string;
+}
+
+const GroupImageSlider: React.FC<GroupImageSliderProps> = ({
+  slides,
+  prevLabel,
+  nextLabel,
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (isHovered || slides.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isHovered, slides.length]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  };
+
+  return (
+    <div
+      className="relative w-full h-full aspect-[4/3] overflow-hidden group select-none bg-slate-900"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Slides Track */}
+      <div
+        className="flex w-full h-full transition-transform duration-500 ease-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {slides.map((slide, idx) => (
+          <div key={idx} className="w-full h-full shrink-0 relative">
+            <img
+              src={slide.src}
+              alt={`${slide.alt} (${idx + 1}/${slides.length})`}
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Subtle Bottom Gradient for Controls */}
+      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+
+      {/* Counter Badge */}
+      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-950/65 backdrop-blur-sm text-white text-[10px] font-mono font-semibold border border-white/15">
+        {currentIndex + 1} / {slides.length}
+      </div>
+
+      {/* Previous Button */}
+      <button
+        type="button"
+        onClick={handlePrev}
+        aria-label={prevLabel}
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 hover:bg-slate-950/85 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+
+      {/* Next Button */}
+      <button
+        type="button"
+        onClick={handleNext}
+        aria-label={nextLabel}
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 hover:bg-slate-950/85 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+
+      {/* Dot Indicators */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => setCurrentIndex(idx)}
+            aria-label={`Slide ${idx + 1}`}
+            className={`h-2 rounded-full transition-all cursor-pointer ${
+              currentIndex === idx
+                ? 'w-5 bg-white shadow-sm'
+                : 'w-2 bg-white/50 hover:bg-white/80'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const CommunityPage: React.FC<CommunityPageProps> = ({
   onNavigate,
   onOpenPrayerModal,
 }) => {
   const { t } = useLanguage();
+
+  const prevLabel = t('Imagen anterior', 'Previous image');
+  const nextLabel = t('Siguiente imagen', 'Next image');
+
+  // 4-image slider slots per group (ready for custom group photos)
+  const pastoralSlides: SlideItem[] = [
+    { src: CHURCH_INFO.images.worship, alt: t('Dirección Pastoral 1', 'Pastoral Leadership 1') },
+    { src: CHURCH_INFO.images.community, alt: t('Dirección Pastoral 2', 'Pastoral Leadership 2') },
+    { src: CHURCH_INFO.images.devotional, alt: t('Dirección Pastoral 3', 'Pastoral Leadership 3') },
+    { src: CHURCH_INFO.images.bocachica, alt: t('Dirección Pastoral 4', 'Pastoral Leadership 4') },
+  ];
+
+  const youthSlides: SlideItem[] = [
+    { src: CHURCH_INFO.images.community, alt: t('Grupo de Jóvenes 1', 'Youth Group 1') },
+    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Jóvenes 2', 'Youth Group 2') },
+    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Jóvenes 3', 'Youth Group 3') },
+    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Jóvenes 4', 'Youth Group 4') },
+  ];
+
+  const couplesSlides: SlideItem[] = [
+    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Parejas 1', 'Couples Group 1') },
+    { src: CHURCH_INFO.images.community, alt: t('Grupo de Parejas 2', 'Couples Group 2') },
+    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Parejas 3', 'Couples Group 3') },
+    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Parejas 4', 'Couples Group 4') },
+  ];
+
+  const womenSlides: SlideItem[] = [
+    { src: CHURCH_INFO.images.community, alt: t('Grupo de Damas 1', 'Women’s Group 1') },
+    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Damas 2', 'Women’s Group 2') },
+    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Damas 3', 'Women’s Group 3') },
+    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Damas 4', 'Women’s Group 4') },
+  ];
+
+  const menSlides: SlideItem[] = [
+    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Hombres 1', 'Men’s Group 1') },
+    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Hombres 2', 'Men’s Group 2') },
+    { src: CHURCH_INFO.images.community, alt: t('Grupo de Hombres 3', 'Men’s Group 3') },
+    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Hombres 4', 'Men’s Group 4') },
+  ];
+
+  const holyKidsSlides: SlideItem[] = [
+    { src: CHURCH_INFO.images.bocachica, alt: t('Holy Kids 1', 'Holy Kids 1') },
+    { src: CHURCH_INFO.images.community, alt: t('Holy Kids 2', 'Holy Kids 2') },
+    { src: CHURCH_INFO.images.worship, alt: t('Holy Kids 3', 'Holy Kids 3') },
+    { src: CHURCH_INFO.images.devotional, alt: t('Holy Kids 4', 'Holy Kids 4') },
+  ];
 
   return (
     <div className="space-y-16 lg:space-y-20 pb-20">
@@ -74,8 +228,8 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
       {/* 2. DIRECCIÓN PASTORAL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-slate-900 text-white overflow-hidden border border-slate-800 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 space-y-5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 space-y-5 flex flex-col justify-center">
               <div className="space-y-1.5">
                 <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold uppercase tracking-widest">
                   <Sparkles className="w-3.5 h-3.5" />
@@ -112,14 +266,8 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
               </div>
             </div>
 
-            <div className="lg:col-span-5 relative aspect-[4/3] lg:h-full">
-              <img
-                src={CHURCH_INFO.images.worship}
-                alt={t('Dirección Pastoral - Pastoras Yuri Arenas y Cecilia Cuervo', 'Pastoral Leadership')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-transparent to-transparent lg:block hidden" />
+            <div className="lg:col-span-5 relative min-h-[260px]">
+              <GroupImageSlider slides={pastoralSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
             </div>
           </div>
         </div>
@@ -129,17 +277,12 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Grupo de Jóvenes */}
         <div className="rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-5 aspect-[4/3] lg:h-full">
-              <img
-                src={CHURCH_INFO.images.community}
-                alt={t('Grupo de Jóvenes - Viviendo para Cristo', 'Youth Group')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-5 min-h-[260px]">
+              <GroupImageSlider slides={youthSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
             </div>
 
-            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4">
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 flex flex-col justify-center">
               <div className="space-y-1">
                 <span className="text-xs font-bold text-amber-600 uppercase tracking-widest block">
                   {t('VIVIENDO PARA CRISTO, IMPACTANDO AL MUNDO', 'LIVING FOR CHRIST, IMPACTING THE WORLD')}
@@ -184,8 +327,8 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
 
         {/* Grupo de Parejas */}
         <div className="rounded-3xl bg-stone-100 border border-stone-200 shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 order-2 lg:order-1">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 order-2 lg:order-1 flex flex-col justify-center">
               <div className="space-y-1">
                 <span className="text-xs font-bold text-rose-600 uppercase tracking-widest block">
                   {t(
@@ -220,30 +363,20 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
               </div>
             </div>
 
-            <div className="lg:col-span-5 aspect-[4/3] lg:h-full order-1 lg:order-2">
-              <img
-                src={CHURCH_INFO.images.devotional}
-                alt={t('Grupo de Parejas - Fortaleciendo matrimonios', 'Couples Group')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
+            <div className="lg:col-span-5 min-h-[260px] order-1 lg:order-2">
+              <GroupImageSlider slides={couplesSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
             </div>
           </div>
         </div>
 
         {/* Grupo de Damas */}
         <div className="rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-5 aspect-[4/3] lg:h-full">
-              <img
-                src={CHURCH_INFO.images.community}
-                alt={t('Grupo de Damas - Mujeres de Poder', 'Women’s Group')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-5 min-h-[260px]">
+              <GroupImageSlider slides={womenSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
             </div>
 
-            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4">
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 flex flex-col justify-center">
               <div className="space-y-1">
                 <span className="text-xs font-bold text-fuchsia-600 uppercase tracking-widest block">
                   {t('MUJERES DE PODER', 'WOMEN OF POWER')}
@@ -279,8 +412,8 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
 
         {/* Grupo de Hombres */}
         <div className="rounded-3xl bg-stone-100 border border-stone-200 shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 order-2 lg:order-1">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 order-2 lg:order-1 flex flex-col justify-center">
               <div className="space-y-1">
                 <span className="text-xs font-bold text-blue-700 uppercase tracking-widest block">
                   {t('HOMBRES DE VALOR', 'MEN OF VALOR')}
@@ -312,30 +445,20 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
               </div>
             </div>
 
-            <div className="lg:col-span-5 aspect-[4/3] lg:h-full order-1 lg:order-2">
-              <img
-                src={CHURCH_INFO.images.devotional}
-                alt={t('Grupo de Hombres - Hombres de valor', 'Men’s Group')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
+            <div className="lg:col-span-5 min-h-[260px] order-1 lg:order-2">
+              <GroupImageSlider slides={menSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
             </div>
           </div>
         </div>
 
         {/* Holy Kids */}
         <div className="rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-5 aspect-[4/3] lg:h-full">
-              <img
-                src={CHURCH_INFO.images.bocachica}
-                alt={t('Holy Kids - Escuela Infantil', 'Holy Kids - Children’s School')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-5 min-h-[260px]">
+              <GroupImageSlider slides={holyKidsSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
             </div>
 
-            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4">
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 flex flex-col justify-center">
               <div className="space-y-1">
                 <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest block">
                   {t('ESCUELA INFANTIL', 'CHILDREN’S MINISTRY')}

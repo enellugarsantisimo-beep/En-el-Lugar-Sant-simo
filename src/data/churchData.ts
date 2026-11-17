@@ -23,8 +23,10 @@ export const CHURCH_INFO = {
   googleMeetMorningPrayer: 'https://meet.google.com/skt-pttc-gmz',
   donateSponsorUrl: 'https://enellugarsantisimo.com/app/donate-sponsor/donate-sponsor.html#',
   logoWatermark: '/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png',
+  liveYoutubeUrl: 'https://youtu.be/IszLWjY_-Qg?si=LGtmRr5EcCkEGSy4',
+  liveYoutubeEmbedUrl: 'https://www.youtube.com/embed/IszLWjY_-Qg?rel=0',
   social: {
-    youtube: 'https://youtube.com/@enellugarsantisimo',
+    youtube: 'https://youtu.be/IszLWjY_-Qg?si=LGtmRr5EcCkEGSy4',
     tiktok: 'https://tiktok.com/@enellugarsantisimo',
     facebook: 'https://facebook.com/enellugarsantisimo',
     instagram: 'https://instagram.com/enellugarsantisimo',
