@@ -21,6 +21,8 @@ export const CHURCH_INFO = {
   phoneClean: '573054351398',
   email: 'Enellugarsantisim@gmail.com',
   googleMeetMorningPrayer: 'https://meet.google.com/skt-pttc-gmz',
+  donateSponsorUrl: 'https://enellugarsantisimo.com/app/donate-sponsor/donate-sponsor.html#',
+  logoWatermark: '/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png',
   social: {
     youtube: 'https://youtube.com/@enellugarsantisimo',
     tiktok: 'https://tiktok.com/@enellugarsantisimo',

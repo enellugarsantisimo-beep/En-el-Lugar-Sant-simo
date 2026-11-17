@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { PageId, Sermon, Devotional } from '../types';
+import { PageId, Sermon } from '../types';
 import {
   CHURCH_INFO,
   SERMONS_ARCHIVE,
   DAILY_DEVOTIONALS,
 } from '../data/churchData';
+import { useLanguage } from '../context/LanguageContext';
 import {
-  Radio,
-  Video,
   Play,
   Volume2,
   ExternalLink,
   Search,
   BookOpen,
-  Calendar,
   Clock,
-  Download,
   Copy,
   Check,
-  Share2,
   Save,
   MessageSquare,
-  Sparkles,
   Youtube,
+  Video,
 } from 'lucide-react';
 
 interface LiveContentPageProps {
   onNavigate: (page: PageId) => void;
   onOpenPrayerModal: () => void;
+  mode?: 'en-vivo' | 'multimedia';
 }
 
 export const LiveContentPage: React.FC<LiveContentPageProps> = ({
   onNavigate,
   onOpenPrayerModal,
+  mode = 'en-vivo',
 }) => {
+  const { t } = useLanguage();
   const [selectedSeries, setSelectedSeries] = useState<string>('Todas');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeDevotionalDay, setActiveDevotionalDay] = useState<string>('Lunes');
@@ -103,31 +102,45 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
             <button
-              onClick={() => onNavigate('inicio')}
+              onClick={() => onNavigate('nosotros')}
               className="hover:text-slate-900 transition-colors"
             >
-              Inicio
+              {t('Nosotros', 'About Us')}
             </button>
             <span>/</span>
-            <span className="text-rose-600 font-semibold">Contenido y En VIVOS</span>
+            <span className="text-rose-600 font-semibold">
+              {mode === 'multimedia' ? t('Multimedia', 'Media') : t('En Vivo', 'Live')}
+            </span>
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-                Transmisión y Medios
+                {mode === 'multimedia'
+                  ? t('Biblioteca & Devocionales', 'Library & Devotionals')
+                  : t('Transmisión en Directo', 'Live Broadcast')}
               </span>
               <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
-                Aliméntate de la Palabra en todo momento
+                {mode === 'multimedia'
+                  ? t('Biblioteca de enseñanzas y devocionales', 'Teaching Library & Weekly Devotionals')
+                  : t('Aliméntate de la Palabra en vivo', 'Be Nourished by the Word Live')}
               </h1>
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                Conéctate en vivo a nuestras reuniones dominicales, únete a la sala de Google Meet de oración matutina y accede a la biblioteca de enseñanzas para edificar tu fe.
+                {mode === 'multimedia'
+                  ? t(
+                      'Explora mensajes recientes organizados por series bíblicas, accede a bosquejos expositivos y medita en nuestros devocionales diarios.',
+                      'Explore recent messages organized by biblical series, access study outlines, and meditate on our daily devotionals.'
+                    )
+                  : t(
+                      'Conéctate en vivo a nuestras reuniones dominicales y únete a la sala de Google Meet de oración matutina desde cualquier lugar.',
+                      'Join our Sunday services live and connect to our morning prayer room on Google Meet from anywhere.'
+                    )}
               </p>
             </div>
 
             <div className="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-                Canales Oficiales
+                {t('Canales Oficiales', 'Official Channels')}
               </span>
               <div className="space-y-2 text-xs">
                 <a
@@ -137,7 +150,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   className="flex items-center justify-between p-2.5 rounded-xl bg-red-50 text-red-700 hover:bg-red-100 transition-colors font-medium"
                 >
                   <span className="flex items-center gap-2">
-                    <Youtube className="w-4 h-4" /> YouTube en VIVO
+                    <Youtube className="w-4 h-4" /> {t('YouTube en VIVO', 'YouTube LIVE')}
                   </span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
@@ -149,7 +162,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-colors font-medium"
                 >
                   <span className="flex items-center gap-2">
-                    <Radio className="w-4 h-4 text-cyan-400" /> TikTok Transmisiones
+                    <span>{t('TikTok Transmisiones', 'TikTok Streams')}</span>
                   </span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
@@ -159,6 +172,9 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
         </div>
       </section>
 
+      {mode === 'en-vivo' && (
+      <>
+
       {/* 2. LIVE STREAMING PLAYER & INTERACTIVE CHAT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-slate-950 text-white border border-slate-800 shadow-2xl overflow-hidden">
@@ -167,14 +183,14 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">
                 <span className="w-2 h-2 rounded-full bg-white" />
-                <span>EN VIVO</span>
+                <span>{t('EN VIVO', 'LIVE')}</span>
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-bold font-display text-white">
-                  Servicio General Dominical · En el Lugar Santísimo
+                  {t('Servicio General Dominical · En el Lugar Santísimo', 'Sunday General Service · En el Lugar Santísimo')}
                 </h2>
                 <span className="text-xs text-slate-400">
-                  Transmisión directa desde Bogotá · Domingos 10:30 a. m.
+                  {t('Transmisión directa desde Bogotá · Domingos 10:30 a. m.', 'Live broadcast from Bogotá · Sundays 10:30 AM')}
                 </span>
               </div>
             </div>
@@ -184,7 +200,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                 onClick={onOpenPrayerModal}
                 className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg transition-colors"
               >
-                Petición de Oración en Vivo
+                {t('Petición de Oración en Vivo', 'Live Prayer Request')}
               </button>
             </div>
           </div>
@@ -195,7 +211,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
             <div className="lg:col-span-8 bg-black relative aspect-[16/9] flex items-center justify-center overflow-hidden group">
               <img
                 src={CHURCH_INFO.images.worship}
-                alt="Transmisión del servicio dominical"
+                alt={t('Transmisión del servicio dominical', 'Sunday service live stream')}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
               />
@@ -209,10 +225,10 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                 </div>
                 <div className="bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-700 max-w-sm">
                   <span className="text-xs font-bold text-white block">
-                    Transmisión activa cada domingo 10:30 a. m.
+                    {t('Transmisión activa cada domingo 10:30 a. m.', 'Live stream active every Sunday at 10:30 AM')}
                   </span>
                   <span className="text-[11px] text-stone-300">
-                    Haz clic para reproducir la última enseñanza o sintonizar en vivo
+                    {t('Haz clic para reproducir la última enseñanza o sintonizar en vivo', 'Click to play the latest teaching or tune in live')}
                   </span>
                 </div>
               </div>
@@ -221,7 +237,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
               <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-stone-300">
                 <div className="flex items-center gap-2">
                   <Volume2 className="w-4 h-4 text-stone-400" />
-                  <span>Audio HD Stereo</span>
+                  <span>{t('Audio HD Stereo', 'HD Stereo Audio')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <a
@@ -230,7 +246,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors flex items-center gap-1"
                   >
-                    <span>Ver en YouTube</span>
+                    <span>{t('Ver en YouTube', 'Watch on YouTube')}</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
@@ -242,10 +258,10 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
               <div className="p-3 bg-slate-800/80 border-b border-slate-700/80 flex items-center justify-between">
                 <span className="text-xs font-bold text-white flex items-center gap-1.5">
                   <MessageSquare className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Chat de la Congregación</span>
+                  <span>{t('Chat de la Congregación', 'Congregation Chat')}</span>
                 </span>
                 <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
-                  Activo
+                  {t('Activo', 'Active')}
                 </span>
               </div>
 
@@ -266,7 +282,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
               <form onSubmit={handleSendChat} className="p-3 border-t border-slate-800 bg-slate-950 flex gap-2">
                 <input
                   type="text"
-                  placeholder="Escribe un saludo o amén..."
+                  placeholder={t('Escribe un saludo o amén...', 'Write a greeting or amen...')}
                   value={newChatText}
                   onChange={(e) => setNewChatText(e.target.value)}
                   className="flex-1 px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-rose-500 placeholder-slate-500"
@@ -275,7 +291,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   type="submit"
                   className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold"
                 >
-                  Enviar
+                  {t('Enviar', 'Send')}
                 </button>
               </form>
             </div>
@@ -290,15 +306,18 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 text-xs font-semibold border border-sky-400/30">
                 <Clock className="w-3.5 h-3.5" />
-                <span>Martes a Viernes · 7:00 a. m.</span>
+                <span>{t('Martes a Viernes · 7:00 a. m.', 'Tuesday to Friday · 7:00 AM')}</span>
               </div>
 
               <h2 className="text-2xl sm:text-4xl font-bold font-display text-white">
-                Oración de la Mañana: Comienza el día en Su presencia
+                {t('Oración de la Mañana: Comienza el día en Su presencia', 'Morning Prayer: Start Your Day in His Presence')}
               </h2>
 
               <p className="text-sky-100 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Un espacio virtual íntimo para consagrar las primeras horas del día, entregando en las manos del Padre nuestros hogares, empleos, estudios y proyectos. No salgas a la batalla sin la armadura de la oración.
+                {t(
+                  'Un espacio virtual íntimo para consagrar las primeras horas del día, entregando en las manos del Padre nuestros hogares, empleos, estudios y proyectos. No salgas a la batalla sin la armadura de la oración.',
+                  'An intimate virtual space to consecrate the first hours of your day, placing our homes, jobs, studies, and projects in the Father’s hands.'
+                )}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -309,7 +328,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   className="px-6 py-3 bg-white hover:bg-sky-50 text-slate-950 font-bold text-xs rounded-xl transition-colors shadow-md flex items-center gap-2"
                 >
                   <Video className="w-4 h-4 text-sky-700" />
-                  <span>Unirme ahora en Google Meet</span>
+                  <span>{t('Unirme ahora en Google Meet', 'Join now on Google Meet')}</span>
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                 </a>
 
@@ -320,12 +339,12 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   {copiedMeet ? (
                     <>
                       <Check className="w-4 h-4 text-emerald-400" />
-                      <span>Enlace copiado al portapapeles</span>
+                      <span>{t('Enlace copiado al portapapeles', 'Link copied to clipboard')}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="w-4 h-4" />
-                      <span>Copiar enlace de Google Meet</span>
+                      <span>{t('Copiar enlace de Google Meet', 'Copy Google Meet link')}</span>
                     </>
                   )}
                 </button>
@@ -334,31 +353,41 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
 
             <div className="lg:col-span-4 bg-sky-950/60 p-6 rounded-2xl border border-sky-700/50 space-y-3">
               <span className="text-xs font-mono text-sky-300 block font-bold">
-                ENLACE DIRECTO MEET:
+                {t('ENLACE DIRECTO MEET:', 'DIRECT MEET LINK:')}
               </span>
               <p className="font-mono text-xs text-white bg-slate-950/70 p-3 rounded-lg border border-sky-800 break-all select-all">
                 {CHURCH_INFO.googleMeetMorningPrayer}
               </p>
               <p className="text-[11px] text-sky-200/80">
-                Puedes unirte desde el computador, tablet o celular sin necesidad de descargar aplicaciones complejas.
+                {t(
+                  'Puedes unirte desde el computador, tablet o celular sin necesidad de descargar aplicaciones complejas.',
+                  'You can join from any computer, tablet, or smartphone without complex downloads.'
+                )}
               </p>
             </div>
           </div>
         </div>
       </section>
+      </>
+      )}
 
+      {mode === 'multimedia' && (
+      <>
       {/* 4. BIBLIOTECA DE PRÉDICAS & SERIES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-              Alimento Espiritual
+              {t('Alimento Espiritual', 'Spiritual Nourishment')}
             </span>
             <h2 className="text-3xl font-bold font-display text-slate-900">
-              Biblioteca de Prédicas y Enseñanzas
+              {t('Biblioteca de Prédicas y Enseñanzas', 'Sermon & Teaching Library')}
             </h2>
             <p className="text-slate-600 text-sm">
-              Explora mensajes recientes organizados por series bíblicas, con bosquejos de estudio descargables para tus devocionales.
+              {t(
+                'Explora mensajes recientes organizados por series bíblicas, con bosquejos de estudio descargables para tus devocionales.',
+                'Explore recent messages organized by biblical series, with study outlines for your personal devotionals.'
+              )}
             </p>
           </div>
 
@@ -367,7 +396,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
             <input
               type="text"
-              placeholder="Buscar por pasaje o tema..."
+              placeholder={t('Buscar por pasaje o tema...', 'Search by passage or topic...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 bg-white"
@@ -387,7 +416,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {series}
+              {series === 'Todas' ? t('Todas', 'All') : series}
             </button>
           ))}
         </div>
@@ -427,7 +456,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
 
                 <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 space-y-1.5">
                   <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
-                    Puntos clave del mensaje:
+                    {t('Puntos clave del mensaje:', 'Key message points:')}
                   </span>
                   <ul className="text-xs text-slate-600 space-y-1">
                     {sermon.keyPoints.map((point, idx) => (
@@ -446,7 +475,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   className="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-slate-800 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5"
                 >
                   <BookOpen className="w-3.5 h-3.5" />
-                  <span>Ver bosquejo de estudio</span>
+                  <span>{t('Ver bosquejo de estudio', 'View study outline')}</span>
                 </button>
 
                 <a
@@ -456,7 +485,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
                   className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5"
                 >
                   <Play className="w-3 h-3 fill-current" />
-                  <span>Escuchar</span>
+                  <span>{t('Escuchar', 'Listen')}</span>
                 </a>
               </div>
             </div>
@@ -469,13 +498,16 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-              Aliento Diario
+              {t('Aliento Diario', 'Daily Encouragement')}
             </span>
             <h2 className="text-3xl font-bold font-display text-slate-900">
-              Devocionales de la Semana
+              {t('Devocionales de la Semana', 'Weekly Devotionals')}
             </h2>
             <p className="text-slate-600 text-sm">
-              Una porción bíblica diaria con aplicación práctica para que medites en la Palabra y tomes tus propias notas personales.
+              {t(
+                'Una porción bíblica diaria con aplicación práctica para que medites en la Palabra y tomes tus propias notas personales.',
+                'A daily biblical portion with practical application so you can meditate on the Word and write your own personal notes.'
+              )}
             </p>
           </div>
 
@@ -526,21 +558,21 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
               <div className="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
                 <div>
                   <h4 className="font-bold text-slate-900 uppercase text-xs tracking-wider mb-1">
-                    Reflexión para hoy:
+                    {t('Reflexión para hoy:', 'Reflection for today:')}
                   </h4>
                   <p>{activeDevotional.reflection}</p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-amber-900 space-y-1">
                   <span className="font-bold text-xs uppercase tracking-wider block">
-                    Desafío práctico del día:
+                    {t('Desafío práctico del día:', 'Daily practical challenge:')}
                   </span>
                   <p className="text-xs">{activeDevotional.practicalChallenge}</p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-rose-50/70 border border-rose-200 text-rose-950 space-y-1">
                   <span className="font-bold text-xs uppercase tracking-wider block text-rose-800">
-                    Oración sugerida:
+                    {t('Oración sugerida:', 'Suggested prayer:')}
                   </span>
                   <p className="font-serif italic text-xs">{activeDevotional.prayer}</p>
                 </div>
@@ -552,38 +584,43 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
               <div className="flex items-center justify-between">
                 <h4 className="font-bold text-base font-display text-slate-900 flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-rose-600" />
-                  <span>Mi libreta de notas</span>
+                  <span>{t('Mi libreta de notas', 'My personal notebook')}</span>
                 </h4>
-                <span className="text-[11px] text-slate-400">Guardado local</span>
+                <span className="text-[11px] text-slate-400">{t('Guardado local', 'Saved locally')}</span>
               </div>
               <p className="text-xs text-slate-500">
-                ¿Qué te habló Dios a través de este pasaje? Escribe tus reflexiones y compromisos de hoy:
+                {t(
+                  '¿Qué te habló Dios a través de este pasaje? Escribe tus reflexiones y compromisos de hoy:',
+                  'What did God speak to you through this passage? Write your reflections and commitments for today:'
+                )}
               </p>
 
               <textarea
                 rows={8}
                 value={userNote}
                 onChange={(e) => setUserNote(e.target.value)}
-                placeholder="Escribe aquí lo que Dios puso en tu corazón..."
+                placeholder={t('Escribe aquí lo que Dios puso en tu corazón...', 'Write here what God placed on your heart...')}
                 className="w-full p-3 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 bg-stone-50/50"
               />
 
               <div className="flex items-center justify-between pt-2">
                 <span className="text-[11px] text-emerald-600 font-medium">
-                  {noteSaved ? '✓ ¡Notas guardadas correctamente!' : ''}
+                  {noteSaved ? t('✓ ¡Notas guardadas correctamente!', '✓ Notes saved successfully!') : ''}
                 </span>
                 <button
                   onClick={handleSaveNote}
                   className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5"
                 >
                   <Save className="w-3.5 h-3.5" />
-                  <span>Guardar mis notas</span>
+                  <span>{t('Guardar mis notas', 'Save my notes')}</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
       </section>
+      </>
+      )}
 
       {/* Sermon Outline Modal */}
       {selectedSermonOutline && (

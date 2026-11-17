@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageId } from '../../types';
 import { CHURCH_INFO } from '../../data/churchData';
+import { useLanguage } from '../../context/LanguageContext';
 import {
   Menu,
   X,
@@ -12,13 +13,26 @@ import {
   Users,
   Video,
   Home,
-  ChevronRight,
+  Film,
+  Sprout,
+  LifeBuoy,
+  Heart,
+  Globe,
+  ExternalLink,
 } from 'lucide-react';
 
 interface NavbarProps {
   currentPage: PageId;
   onNavigate: (page: PageId) => void;
   onOpenPrayerModal: () => void;
+}
+
+interface NavItemConfig {
+  id: PageId;
+  labelEs: string;
+  labelEn: string;
+  icon: React.ElementType;
+  externalUrl?: string;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -28,6 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { lang, toggleLang, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,13 +52,26 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems: { id: PageId; label: string; icon: React.ElementType }[] = [
-    { id: 'inicio', label: 'Inicio', icon: Home },
-    { id: 'conocenos', label: 'Conócenos', icon: Compass },
-    { id: 'comunidad', label: 'Nuestra comunidad', icon: Users },
-    { id: 'en-vivo', label: 'Contenido y En VIVOS', icon: Video },
-    { id: 'eventos', label: 'Información y Eventos', icon: Calendar },
-    { id: 'apoyo-social', label: 'Apoyo Social', icon: HeartHandshake },
+  const navItems: NavItemConfig[] = [
+    { id: 'nosotros', labelEs: 'Nosotros', labelEn: 'About Us', icon: Home },
+    {
+      id: 'apoyo-social',
+      labelEs: 'Apoyo Social',
+      labelEn: 'Social Outreach',
+      icon: HeartHandshake,
+      externalUrl: CHURCH_INFO.donateSponsorUrl,
+    },
+    { id: 'grupos-de-vida', labelEs: 'Grupos de vida', labelEn: 'Life Groups', icon: Users },
+    { id: 'en-vivo', labelEs: 'En Vivo', labelEn: 'Live', icon: Video },
+    { id: 'multimedia', labelEs: 'Multimedia', labelEn: 'Media', icon: Film },
+    {
+      id: 'ruta-de-crecimiento',
+      labelEs: 'Ruta de Crecimiento',
+      labelEn: 'Growth Track',
+      icon: Sprout,
+    },
+    { id: 'info', labelEs: 'Info', labelEn: 'Info', icon: Calendar },
+    { id: 'sos', labelEs: 'S.O.S', labelEn: 'S.O.S', icon: LifeBuoy },
   ];
 
   const handleNavClick = (page: PageId) => {
@@ -54,28 +82,33 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      {/* Top subtle emergency/service ticker */}
+      {/* Top subtle service & language bar */}
       <div className="bg-slate-900 text-stone-200 text-xs py-2 px-4 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5 text-rose-400 font-medium">
               <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>Próxima Reunión:</span>
+              <span>{t('Próxima Reunión:', 'Next Service:')}</span>
             </span>
-            <span className="text-stone-300">Domingos 10:30 a. m. · Presencial y Transmisión</span>
+            <span className="text-stone-300">
+              {t(
+                'Domingos 10:30 a. m. · Presencial y Transmisión',
+                'Sundays 10:30 a. m. · In-Person & Live Stream'
+              )}
+            </span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-4 text-stone-400">
-            <span className="flex items-center gap-1 hover:text-stone-200 transition-colors">
+          <div className="flex items-center gap-4 text-stone-400">
+            <span className="hidden md:flex items-center gap-1 hover:text-stone-200 transition-colors">
               <span>Bogotá, Colombia:</span>
               <strong className="font-normal text-stone-300">Av. Calle 24 #72b–30</strong>
             </span>
-            <span>·</span>
+            <span className="hidden md:inline">·</span>
             <a
               href={`https://wa.me/${CHURCH_INFO.phoneClean}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="hidden sm:flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"
             >
               <Phone className="w-3 h-3" />
               <span>WhatsApp: +57 3054351398</span>
@@ -84,32 +117,47 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Main Top Bar Contract: 3 Zones */}
+      {/* Main White Header with Adapted Watermark Logo */}
       <header
         className={`sticky top-0 z-40 bg-white/95 backdrop-blur-md transition-all duration-200 border-b ${
-          scrolled ? 'border-slate-200 shadow-sm py-3' : 'border-slate-200 py-4'
+          scrolled ? 'border-slate-200 shadow-sm py-2.5' : 'border-slate-200 py-3'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
-          {/* Zone 1: Official Brand Logo */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 lg:gap-6">
+          {/* Zone 1: Official Watermark Logo adapted cleanly for white header */}
           <button
-            onClick={() => handleNavClick('inicio')}
-            aria-label="En el Lugar Santísimo - Inicio"
+            onClick={() => handleNavClick('nosotros')}
+            aria-label="En el Lugar Santísimo - Nosotros"
             className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 rounded-xl group shrink-0"
           >
-            <div className="h-12 w-36 sm:w-40 rounded-xl bg-slate-900 group-hover:bg-slate-800 transition-colors px-3 flex items-center justify-center overflow-hidden shadow-sm">
+            <div className="h-12 w-28 sm:w-32 flex items-center justify-center overflow-hidden">
               <img
-                src="/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png"
+                src={CHURCH_INFO.logoWatermark}
                 alt="En el Lugar Santísimo - Comunidad Cristiana"
                 referrerPolicy="no-referrer"
-                className="w-24 h-24 object-contain shrink-0"
+                className="w-24 h-24 object-contain shrink-0 invert hue-rotate-180 contrast-125 group-hover:opacity-80 transition-opacity"
               />
             </div>
           </button>
 
-          {/* Zone 2: 4-6 concise single-line text nav links */}
-          <nav className="hidden xl:flex items-center gap-6 text-sm font-medium">
+          {/* Zone 2: 8 Nav links (Nosotros .. S.O.S) */}
+          <nav className="hidden xl:flex items-center gap-4 2xl:gap-5 text-[13px] font-medium">
             {navItems.map((item) => {
+              const label = lang === 'en' ? item.labelEn : item.labelEs;
+              if (item.externalUrl) {
+                return (
+                  <a
+                    key={item.id}
+                    href={item.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative py-1 whitespace-nowrap shrink-0 text-slate-600 hover:text-rose-600 transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>{label}</span>
+                    <ExternalLink className="w-3 h-3 text-slate-400" />
+                  </a>
+                );
+              }
               const isActive = currentPage === item.id;
               return (
                 <button
@@ -121,7 +169,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  {item.label}
+                  {label}
                   {isActive && (
                     <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-600 rounded-full" />
                   )}
@@ -130,24 +178,31 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Zone 3: 1 primary action */}
-          <div className="flex items-center gap-3 shrink-0">
+          {/* Zone 3: Translate Button + 9th Section CTA ("Dona") */}
+          <div className="flex items-center gap-2.5 shrink-0">
             <button
-              onClick={() => handleNavClick('contacto')}
-              className={`hidden md:inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg transition-all shadow-sm ${
-                currentPage === 'contacto'
-                  ? 'bg-rose-700 text-white'
-                  : 'bg-rose-600 hover:bg-rose-700 text-white'
-              }`}
+              onClick={toggleLang}
+              aria-label={t('Traducir a inglés', 'Translate to Spanish')}
+              className="inline-flex items-center gap-1.5 px-2.5 py-2 text-xs font-semibold rounded-lg border border-slate-200 bg-stone-50 hover:bg-stone-100 text-slate-700 transition-colors whitespace-nowrap shrink-0"
             >
-              <span>Recibe Acompañamiento</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <Globe className="w-3.5 h-3.5 text-rose-600" />
+              <span>{lang === 'es' ? 'EN' : 'ES'}</span>
             </button>
+
+            <a
+              href={CHURCH_INFO.donateSponsorUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all shadow-sm bg-rose-600 hover:bg-rose-700 text-white whitespace-nowrap shrink-0"
+            >
+              <Heart className="w-3.5 h-3.5 fill-current" />
+              <span>{t('Dona', 'Donate')}</span>
+            </a>
 
             {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú de navegación'}
+              aria-label={mobileMenuOpen ? t('Cerrar menú', 'Close menu') : t('Abrir menú', 'Open menu')}
               className="xl:hidden p-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -159,22 +214,20 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 xl:hidden">
-          {/* Backdrop */}
           <div
             className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          {/* Menu Panel */}
           <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col z-50 overflow-y-auto">
-            {/* Header */}
+            {/* Drawer Header with adapted watermark logo */}
             <div className="p-4 flex items-center justify-between border-b border-slate-100">
-              <div className="h-10 w-32 rounded-lg bg-slate-900 px-2.5 flex items-center justify-center overflow-hidden">
+              <div className="h-10 w-28 flex items-center justify-center overflow-hidden">
                 <img
-                  src="/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png"
+                  src={CHURCH_INFO.logoWatermark}
                   alt="En el Lugar Santísimo - Comunidad Cristiana"
                   referrerPolicy="no-referrer"
-                  className="w-20 h-20 object-contain shrink-0"
+                  className="w-20 h-20 object-contain shrink-0 invert hue-rotate-180 contrast-125"
                 />
               </div>
               <button
@@ -185,13 +238,44 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
 
-            {/* Nav links */}
+            {/* Mobile Nav Links */}
             <div className="p-4 space-y-1 flex-1">
-              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
-                Páginas y Secciones
-              </p>
+              <div className="flex items-center justify-between px-3 mb-2">
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                  {t('Secciones', 'Sections')}
+                </p>
+                <button
+                  onClick={toggleLang}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 px-2 py-0.5 rounded-md bg-rose-50 border border-rose-200"
+                >
+                  <Globe className="w-3 h-3" />
+                  <span>{lang === 'es' ? 'English' : 'Español'}</span>
+                </button>
+              </div>
+
               {navItems.map((item) => {
                 const Icon = item.icon;
+                const label = lang === 'en' ? item.labelEn : item.labelEs;
+
+                if (item.externalUrl) {
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-left text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className="w-4 h-4 text-rose-500" />
+                        <span>{label}</span>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                    </a>
+                  );
+                }
+
                 const isActive = currentPage === item.id;
                 return (
                   <button
@@ -209,23 +293,24 @@ export const Navbar: React.FC<NavbarProps> = ({
                           isActive ? 'text-rose-600' : 'text-slate-400'
                         }`}
                       />
-                      <span>{item.label}</span>
+                      <span>{label}</span>
                     </div>
-                    {isActive && (
-                      <span className="w-2 h-2 rounded-full bg-rose-600" />
-                    )}
+                    {isActive && <span className="w-2 h-2 rounded-full bg-rose-600" />}
                   </button>
                 );
               })}
 
               <div className="pt-4 mt-4 border-t border-slate-100 space-y-2">
-                <button
-                  onClick={() => handleNavClick('contacto')}
+                <a
+                  href={CHURCH_INFO.donateSponsorUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-rose-600 text-white font-medium text-sm rounded-xl hover:bg-rose-700 transition-colors shadow-sm"
                 >
-                  <HeartHandshake className="w-4 h-4" />
-                  <span>Recibe Acompañamiento</span>
-                </button>
+                  <Heart className="w-4 h-4 fill-current" />
+                  <span>{t('Dona / Apoyo Social', 'Donate / Social Outreach')}</span>
+                </a>
 
                 <button
                   onClick={() => {
@@ -234,15 +319,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }}
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-100 text-slate-800 font-medium text-sm rounded-xl hover:bg-slate-200 transition-colors"
                 >
-                  <span>Enviar Petición de Oración</span>
+                  <span>{t('Enviar Petición de Oración', 'Send Prayer Request')}</span>
                 </button>
               </div>
             </div>
 
-            {/* Bottom info */}
             <div className="p-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 space-y-2">
               <div className="flex items-start gap-2">
-                <span className="font-semibold text-slate-700">Ubicación:</span>
+                <span className="font-semibold text-slate-700">{t('Ubicación:', 'Location:')}</span>
                 <span>Av. Calle 24 #72b–30, Bogotá</span>
               </div>
               <div className="flex items-center justify-between pt-1">
@@ -255,7 +339,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <Phone className="w-3.5 h-3.5" />
                   <span>{CHURCH_INFO.phone}</span>
                 </a>
-                <span className="text-slate-400">Dom 10:30 am</span>
+                <span className="text-slate-400">{t('Dom 10:30 am', 'Sun 10:30 am')}</span>
               </div>
             </div>
           </div>

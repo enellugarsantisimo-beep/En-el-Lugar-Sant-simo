@@ -1,48 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { PageId } from './types';
+import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { DonationModal } from './components/common/DonationModal';
 import { PrayerRequestModal } from './components/common/PrayerRequestModal';
+import { WhatsAppFloat } from './components/common/WhatsAppFloat';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { CommunityPage } from './pages/CommunityPage';
 import { LiveContentPage } from './pages/LiveContentPage';
 import { EventsInfoPage } from './pages/EventsInfoPage';
-import { SocialOutreachPage } from './pages/SocialOutreachPage';
 import { ContactCarePage } from './pages/ContactCarePage';
 
-export default function App() {
+function AppContent() {
   const getPageFromHash = (): PageId => {
     const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
     switch (hash) {
-      case 'conocenos':
-        return 'conocenos';
+      case 'grupos-de-vida':
       case 'comunidad':
-        return 'comunidad';
+        return 'grupos-de-vida';
       case 'en-vivo':
       case 'envivo':
       case 'contenido':
         return 'en-vivo';
+      case 'multimedia':
+        return 'multimedia';
+      case 'ruta-de-crecimiento':
+      case 'conocenos':
+        return 'ruta-de-crecimiento';
+      case 'info':
       case 'eventos':
       case 'informacion':
-        return 'eventos';
-      case 'apoyo-social':
-      case 'bocachica':
-      case 'social':
-        return 'apoyo-social';
+        return 'info';
+      case 'sos':
+      case 's.o.s':
       case 'contacto':
       case 'acompanamiento':
-        return 'contacto';
+        return 'sos';
+      case 'nosotros':
       case 'inicio':
       default:
-        return 'inicio';
+        return 'nosotros';
     }
   };
 
   const [currentPage, setCurrentPage] = useState<PageId>(getPageFromHash);
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
-  const [donationTierId, setDonationTierId] = useState<string | undefined>(undefined);
   const [isPrayerModalOpen, setIsPrayerModalOpen] = useState(false);
 
   // Sync hash routing on popstate / hashchange
@@ -62,21 +64,16 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenDonation = (tierId?: string) => {
-    setDonationTierId(tierId);
-    setIsDonationModalOpen(true);
-  };
-
   const renderCurrentPage = () => {
     switch (currentPage) {
-      case 'conocenos':
+      case 'ruta-de-crecimiento':
         return (
           <AboutPage
             onNavigate={handleNavigate}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />
         );
-      case 'comunidad':
+      case 'grupos-de-vida':
         return (
           <CommunityPage
             onNavigate={handleNavigate}
@@ -86,38 +83,38 @@ export default function App() {
       case 'en-vivo':
         return (
           <LiveContentPage
+            mode="en-vivo"
             onNavigate={handleNavigate}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />
         );
-      case 'eventos':
+      case 'multimedia':
+        return (
+          <LiveContentPage
+            mode="multimedia"
+            onNavigate={handleNavigate}
+            onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
+          />
+        );
+      case 'info':
         return (
           <EventsInfoPage
             onNavigate={handleNavigate}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />
         );
-      case 'apoyo-social':
-        return (
-          <SocialOutreachPage
-            onNavigate={handleNavigate}
-            onOpenDonationModal={handleOpenDonation}
-            onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
-          />
-        );
-      case 'contacto':
+      case 'sos':
         return (
           <ContactCarePage
             onNavigate={handleNavigate}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />
         );
-      case 'inicio':
+      case 'nosotros':
       default:
         return (
           <HomePage
             onNavigate={handleNavigate}
-            onOpenDonationModal={() => handleOpenDonation()}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />
         );
@@ -141,21 +138,25 @@ export default function App() {
       {/* Universal Footer */}
       <Footer
         onNavigate={handleNavigate}
-        onOpenDonationModal={() => handleOpenDonation()}
         onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
       />
 
-      {/* Global Interactive Modals */}
-      <DonationModal
-        isOpen={isDonationModalOpen}
-        onClose={() => setIsDonationModalOpen(false)}
-        defaultTierId={donationTierId}
-      />
+      {/* Floating WhatsApp Action */}
+      <WhatsAppFloat />
 
+      {/* Global Prayer Request Modal */}
       <PrayerRequestModal
         isOpen={isPrayerModalOpen}
         onClose={() => setIsPrayerModalOpen(false)}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }

@@ -5,8 +5,8 @@ import {
   CORE_MEETINGS,
   CALENDAR_EVENTS,
 } from '../data/churchData';
+import { useLanguage } from '../context/LanguageContext';
 import {
-  Calendar as CalendarIcon,
   Clock,
   MapPin,
   Car,
@@ -16,8 +16,6 @@ import {
   Download,
   Navigation,
   Shield,
-  Coffee,
-  Heart,
   ChevronRight,
 } from 'lucide-react';
 
@@ -28,8 +26,8 @@ interface EventsInfoPageProps {
 
 export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
   onNavigate,
-  onOpenPrayerModal,
 }) => {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
   const [calendarDownloaded, setCalendarDownloaded] = useState<string | null>(null);
 
@@ -73,31 +71,37 @@ END:VCALENDAR`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
             <button
-              onClick={() => onNavigate('inicio')}
+              onClick={() => onNavigate('nosotros')}
               className="hover:text-slate-900 transition-colors"
             >
-              Inicio
+              {t('Nosotros', 'About Us')}
             </button>
             <span>/</span>
-            <span className="text-rose-600 font-semibold">Información y Eventos</span>
+            <span className="text-rose-600 font-semibold">Info</span>
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-                Agenda & Ubicación
+                {t('Agenda & Ubicación', 'Schedule & Location')}
               </span>
               <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
-                Planifica tu visita y acompáñanos cada semana
+                {t(
+                  'Planifica tu visita y acompáñanos cada semana',
+                  'Plan Your Visit and Join Us Every Week'
+                )}
               </h1>
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                Conoce los horarios de nuestros servicios presenciales en Bogotá, conexiones virtuales y actividades especiales diseñadas para edificar a cada miembro de la familia.
+                {t(
+                  'Conoce los horarios de nuestros servicios presenciales en Bogotá, conexiones virtuales y actividades especiales diseñadas para edificar a cada miembro de la familia.',
+                  'Discover our in-person service times in Bogotá, virtual connections, and special activities designed to encourage every family member.'
+                )}
               </p>
             </div>
 
             <div className="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-                Dirección Principal
+                {t('Dirección Principal', 'Main Campus Address')}
               </span>
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
@@ -116,7 +120,7 @@ END:VCALENDAR`;
                   className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Navigation className="w-3.5 h-3.5" />
-                  <span>Abrir en Google Maps / Waze</span>
+                  <span>{t('Abrir en Google Maps / Waze', 'Open in Google Maps / Waze')}</span>
                 </a>
               </div>
             </div>
@@ -128,13 +132,16 @@ END:VCALENDAR`;
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            Ritmo Congregacional
+            {t('Ritmo Congregacional', 'Weekly Rhythm')}
           </span>
           <h2 className="text-3xl font-bold font-display text-slate-900">
-            Nuestros Encuentros Principales
+            {t('Nuestros Encuentros Principales', 'Our Main Gatherings')}
           </h2>
           <p className="text-slate-600 text-sm">
-            Tiempos diseñados para la adoración, la intercesión y el crecimiento en fraternidad.
+            {t(
+              'Tiempos diseñados para la adoración, la intercesión y el crecimiento en fraternidad.',
+              'Times designed for worship, intercession, and growing together in fellowship.'
+            )}
           </p>
         </div>
 
@@ -188,10 +195,10 @@ END:VCALENDAR`;
                   </a>
                 ) : (
                   <button
-                    onClick={() => onNavigate('contacto')}
+                    onClick={() => onNavigate('sos')}
                     className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <span>Confirmar mi asistencia</span>
+                    <span>{t('Confirmar mi asistencia', 'Confirm my attendance')}</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 )}
@@ -206,13 +213,16 @@ END:VCALENDAR`;
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-              Calendario General
+              {t('Calendario General', 'General Calendar')}
             </span>
             <h2 className="text-3xl font-bold font-display text-slate-900">
-              Próximas Actividades y Eventos
+              {t('Próximas Actividades y Eventos', 'Upcoming Activities & Events')}
             </h2>
             <p className="text-slate-600 text-sm">
-              Filtra por tipo de actividad y sincroniza los eventos directamente en tu calendario de Google o Apple.
+              {t(
+                'Filtra por tipo de actividad y sincroniza los eventos directamente en tu calendario de Google o Apple.',
+                'Filter by activity type and sync events directly to your Google or Apple calendar.'
+              )}
             </p>
           </div>
 
@@ -228,7 +238,7 @@ END:VCALENDAR`;
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                {cat}
+                {cat === 'Todos' ? t('Todos', 'All') : cat}
               </button>
             ))}
           </div>
@@ -296,13 +306,16 @@ END:VCALENDAR`;
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10" id="mapa-ubicacion">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            Ubicación Estratégica
+            {t('Ubicación Estratégica', 'Strategic Location')}
           </span>
           <h2 className="text-3xl font-bold font-display text-slate-900">
-            ¿Cómo llegar a nuestra sede?
+            {t('¿Cómo llegar a nuestra sede?', 'How to Get to Our Campus?')}
           </h2>
           <p className="text-slate-600 text-sm">
-            Estamos ubicados sobre la Av. Calle 24 en Bogotá, con fáciles vías de acceso desde la Av. Boyacá, Av. La Esperanza y Av. Calle 26.
+            {t(
+              'Estamos ubicados sobre la Av. Calle 24 en Bogotá, con fáciles vías de acceso desde la Av. Boyacá, Av. La Esperanza y Av. Calle 26.',
+              'We are located on Av. Calle 24 in Bogotá, with easy access from Av. Boyacá, Av. La Esperanza, and Av. Calle 26.'
+            )}
           </p>
         </div>
 
@@ -396,30 +409,39 @@ END:VCALENDAR`;
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
               <div className="flex items-center gap-2 text-rose-600 font-bold text-sm">
                 <Bus className="w-4 h-4" />
-                <span>En TransMilenio y SITP</span>
+                <span>{t('En TransMilenio y SITP', 'By TransMilenio & SITP')}</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Toma la Troncal Calle 26 hasta la estación <strong>Av. Rojas</strong> o <strong>El Tiempo Maloka</strong>. Desde allí puedes tomar alimentador hacia Modelia o caminar 10 minutos en dirección occidente. Diversas rutas SITP paran justo frente a la Calle 24.
+                {t(
+                  'Toma la Troncal Calle 26 hasta la estación Av. Rojas o El Tiempo Maloka. Desde allí puedes tomar alimentador hacia Modelia o caminar 10 minutos en dirección occidente. Diversas rutas SITP paran justo frente a la Calle 24.',
+                  'Take the Calle 26 TransMilenio line to Av. Rojas or El Tiempo Maloka station. From there, take a feeder bus toward Modelia or walk 10 minutes west. Several SITP routes stop right on Calle 24.'
+                )}
               </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
               <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
                 <Car className="w-4 h-4 text-amber-600" />
-                <span>En Vehículo Particular & Parqueadero</span>
+                <span>{t('En Vehículo Particular & Parqueadero', 'By Private Car & Parking')}</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Acceso fluido por la calzada occidental de la Av. Boyacá o directamente por la Calle 24. Disponemos de <strong>convenio de parqueadero vigilado</strong> contiguo a las instalaciones para tu tranquilidad.
+                {t(
+                  'Acceso fluido por la calzada occidental de la Av. Boyacá o directamente por la Calle 24. Disponemos de convenio de parqueadero vigilado contiguo a las instalaciones para tu tranquilidad.',
+                  'Easy access from the westbound lane of Av. Boyacá or directly via Calle 24. We offer a guarded parking agreement right next to the venue for your peace of mind.'
+                )}
               </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
               <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
                 <Shield className="w-4 h-4 text-emerald-600" />
-                <span>Accesibilidad & Familia</span>
+                <span>{t('Accesibilidad & Familia', 'Accessibility & Family')}</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                El templo cuenta con <strong>rampas de acceso sin barreras arquitectónicas</strong> para personas mayores o en silla de ruedas, además de espacio reservado para coches de bebé y baño familiar.
+                {t(
+                  'El templo cuenta con rampas de acceso sin barreras arquitectónicas para personas mayores o en silla de ruedas, además de espacio reservado para coches de bebé y baño familiar.',
+                  'Our sanctuary features barrier-free access ramps for seniors and wheelchair users, plus reserved space for strollers and a family restroom.'
+                )}
               </p>
             </div>
           </div>

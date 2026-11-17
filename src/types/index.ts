@@ -1,11 +1,15 @@
+export type Language = 'es' | 'en';
+
 export type PageId =
-  | 'inicio'
-  | 'conocenos'
-  | 'comunidad'
-  | 'en-vivo'
-  | 'eventos'
+  | 'nosotros'
   | 'apoyo-social'
-  | 'contacto';
+  | 'grupos-de-vida'
+  | 'en-vivo'
+  | 'multimedia'
+  | 'ruta-de-crecimiento'
+  | 'info'
+  | 'sos'
+  | 'dona';
 
 export interface MeetingSchedule {
   id: string;

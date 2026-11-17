@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { PageId, CellGroup, Ministry } from '../types';
+import { PageId, Ministry } from '../types';
 import {
   CHURCH_INFO,
   CELL_GROUPS,
   MINISTRIES_LIST,
   TESTIMONIALS_DATA,
 } from '../data/churchData';
+import { useLanguage } from '../context/LanguageContext';
 import {
   Users,
   MapPin,
   Clock,
-  ArrowRight,
   MessageCircle,
-  Heart,
   Smile,
   Flame,
   HeartHandshake,
@@ -21,8 +20,8 @@ import {
   HandHeart,
   Check,
   Send,
-  Sparkles,
   ChevronRight,
+  Sparkles,
 } from 'lucide-react';
 
 interface CommunityPageProps {
@@ -34,8 +33,8 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   onNavigate,
   onOpenPrayerModal,
 }) => {
+  const { t } = useLanguage();
   const [selectedZone, setSelectedZone] = useState<string>('Todas');
-  const [activeStep, setActiveStep] = useState<number>(1);
   const [testimonyAuthor, setTestimonyAuthor] = useState('');
   const [testimonyArea, setTestimonyArea] = useState('');
   const [testimonyStory, setTestimonyStory] = useState('');
@@ -48,41 +47,6 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   const filteredGroups = selectedZone === 'Todas'
     ? CELL_GROUPS
     : CELL_GROUPS.filter((g) => g.zone === selectedZone);
-
-  const growthSteps = [
-    {
-      step: 1,
-      title: 'Visítanos en la Reunión General',
-      subtitle: 'Conoce la casa y el corazón de la iglesia',
-      description: 'Asiste a cualquiera de nuestros servicios dominicales a las 10:30 a. m. en la Av. Calle 24 #72b-30. Tómate un café de bienvenida y experimenta la calidez de nuestra gente.',
-      cta: 'Ver horarios de reunión',
-      actionPage: 'eventos' as PageId,
-    },
-    {
-      step: 2,
-      title: 'Conéctate a un Grupo de Hogar',
-      subtitle: 'Amistades sinceras y estudio cercano',
-      description: 'La fe florece en círculos pequeños. En los grupos de conexión compartimos la mesa, oramos los unos por los otros y profundizamos las enseñanzas del domingo.',
-      cta: 'Ver grupos disponibles abajo',
-      actionPage: 'comunidad' as PageId,
-    },
-    {
-      step: 3,
-      title: 'Formación y Discipulado',
-      subtitle: 'Cimentando tu vida en la Palabra',
-      description: 'Participa en nuestros talleres bíblicos, ayunos congregacionales sabatinos y oraciones de la mañana para afianzar tus convicciones y carácter cristiano.',
-      cta: 'Ir a contenidos y en vivo',
-      actionPage: 'en-vivo' as PageId,
-    },
-    {
-      step: 4,
-      title: 'Sirve y Bendice a Otros',
-      subtitle: 'Pon tus dones en acción',
-      description: 'Dios te dio habilidades únicas. Súmate a nuestros ministerios de alabanza, niños, bienvenida o al proyecto social humanitario en Bocachica.',
-      cta: 'Inscribirme como voluntario',
-      actionPage: 'apoyo-social' as PageId,
-    },
-  ];
 
   const handleTestimonySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,32 +79,40 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
             <button
-              onClick={() => onNavigate('inicio')}
+              onClick={() => onNavigate('nosotros')}
               className="hover:text-slate-900 transition-colors"
             >
-              Inicio
+              {t('Nosotros', 'About Us')}
             </button>
             <span>/</span>
-            <span className="text-rose-600 font-semibold">Nuestra comunidad</span>
+            <span className="text-rose-600 font-semibold">
+              {t('Grupos de vida', 'Life Groups')}
+            </span>
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-                Caminando Juntos
+                {t('Grupos de vida · Comunidad y Liderazgo', 'Life Groups · Community & Leadership')}
               </span>
               <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
-                No fuiste creado para vivir la fe en soledad
+                {t(
+                  'No fuiste creado para vivir la fe en soledad',
+                  'You Were Not Created to Live Faith Alone'
+                )}
               </h1>
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                En nuestra iglesia creemos en relaciones de pacto, apoyo mutuo en las dificultades y alegría compartida en las victorias. Conoce nuestros grupos, ministerios y espacios para florecer.
+                {t(
+                  'Caminamos juntos bajo dirección pastoral, fortaleciendo a jóvenes, adultos y matrimonios conforme al diseño y la Palabra de Dios.',
+                  'We walk together under pastoral leadership, strengthening youth, adults, and marriages according to God’s design and Word.'
+                )}
               </p>
             </div>
 
             <div className="lg:col-span-4 rounded-2xl overflow-hidden aspect-[4/3] shadow-md border border-slate-200">
               <img
                 src={CHURCH_INFO.images.community}
-                alt="Comunidad en compañerismo"
+                alt={t('Comunidad en compañerismo', 'Community fellowship')}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
@@ -149,86 +121,182 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
         </div>
       </section>
 
-      {/* 2. SIEMPRE HAY UN SIGUIENTE PASO: RUTA INTERACTIVA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            Tu Crecimiento
-          </span>
-          <h2 className="text-3xl font-bold font-display text-slate-900">
-            Siempre hay un siguiente paso
-          </h2>
-          <p className="text-slate-600 text-sm">
-            Sin importar en qué punto espiritual te encuentres hoy, Dios tiene preparado un nuevo nivel de bendición y madurez para ti.
-          </p>
-        </div>
-
-        {/* Step Tabs */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {growthSteps.map((stepItem) => {
-            const isCurrent = activeStep === stepItem.step;
-            return (
-              <button
-                key={stepItem.step}
-                onClick={() => setActiveStep(stepItem.step)}
-                className={`p-4 rounded-2xl text-left border transition-all ${
-                  isCurrent
-                    ? 'border-rose-600 bg-rose-50/70 text-slate-900 shadow-sm ring-1 ring-rose-500'
-                    : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600'
-                }`}
-              >
-                <span className="text-xs font-mono font-bold text-rose-600 block">
-                  PASO 0{stepItem.step}
-                </span>
-                <span className="font-bold text-sm text-slate-900 block mt-1 line-clamp-1">
-                  {stepItem.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Active Step Card */}
-        {(() => {
-          const current = growthSteps.find((s) => s.step === activeStep)!;
-          return (
-            <div className="p-8 rounded-3xl bg-slate-900 text-white space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-4 h-4" />
-                <span>Paso {current.step} de 4</span>
+      {/* 2. DIRECCIÓN PASTORAL (CONTENIDO DE LA IMAGEN) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-slate-900 text-white overflow-hidden border border-slate-800 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 space-y-5">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold uppercase tracking-widest">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>{t('PASTORAS YURI ARENAS Y CECILIA CUERVO', 'PASTORS YURI ARENAS AND CECILIA CUERVO')}</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold font-display text-white tracking-tight">
+                  {t('DIRECCIÓN PASTORAL', 'PASTORAL LEADERSHIP')}
+                </h2>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-bold font-display text-white">
-                {current.title}
-              </h3>
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-3xl">
-                {current.description}
+
+              <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
+                {t(
+                  'Desde la partida de nuestro Pastor y Fundador Elberto Guzmán, la dirección de nuestra congregación fue asumida por nuestra Pastora Yuri junto con el apoyo de su madre la Pastora Cecilia. Juntas se han propuesto continuar hacia adelante con la obra del Señor, enfocadas en la guía y promesas que Dios ha dado a nuestra congregación. Siendo diligentes, obrando en obediencia, sabiduría y bajo la palabra de Dios para direccionar al equipo de líderes y servidores hacia el camino que nos lleve a ver el cumplimiento de las palabras de Dios.',
+                  'Since the passing of our Pastor and Founder Elberto Guzmán, the leadership of our congregation has been assumed by our Pastor Yuri together with the support of her mother, Pastor Cecilia. Together they have purposed to press forward with the work of the Lord, focused on the guidance and promises God has given our congregation—being diligent, acting in obedience, wisdom, and under the Word of God to direct the team of leaders and servants toward the path that leads to the fulfillment of God’s promises.'
+                )}
               </p>
-              <div className="pt-2">
+
+              <div className="pt-2 flex flex-wrap gap-3">
                 <button
-                  onClick={() => onNavigate(current.actionPage)}
-                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl transition-colors inline-flex items-center gap-2"
+                  onClick={onOpenPrayerModal}
+                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl transition-colors"
                 >
-                  <span>{current.cta}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  {t('Solicitar Oración Pastoral', 'Request Pastoral Prayer')}
                 </button>
+                <a
+                  href={`https://wa.me/${CHURCH_INFO.phoneClean}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-stone-200 border border-slate-700 text-xs font-semibold rounded-xl transition-colors inline-flex items-center gap-1.5"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>WhatsApp</span>
+                </a>
               </div>
             </div>
-          );
-        })()}
+
+            <div className="lg:col-span-5 relative aspect-[4/3] lg:h-full">
+              <img
+                src={CHURCH_INFO.images.worship}
+                alt={t('Dirección Pastoral - Pastoras Yuri Arenas y Cecilia Cuervo', 'Pastoral Leadership')}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-transparent to-transparent lg:block hidden" />
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* 3. GRUPOS DE CONEXIÓN EN BOGOTÁ Y VIRTUAL */}
+      {/* 3. GRUPO DE JÓVENES & GRUPO DE PAREJAS (CONTENIDO DE LA IMAGEN) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Grupo de Jóvenes */}
+        <div className="rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-5 aspect-[4/3] lg:h-full">
+              <img
+                src={CHURCH_INFO.images.community}
+                alt={t('Grupo de Jóvenes - Viviendo para Cristo', 'Youth Group')}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4">
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-amber-600 uppercase tracking-widest block">
+                  {t('VIVIENDO PARA CRISTO, IMPACTANDO AL MUNDO', 'LIVING FOR CHRIST, IMPACTING THE WORLD')}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
+                  {t('GRUPO DE JÓVENES', 'YOUTH GROUP')}
+                </h2>
+              </div>
+
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                {t(
+                  'Nuestro grupo de jóvenes es un espacio para conectar, crecer y descubrir el propósito que Dios tiene para nuestras vidas. Queremos inspirar a una generación apasionada por Cristo que haga la diferencia en su comunidad y más allá. Desde los 16 hasta los 26 años, Adultos de 26 hasta los 36 años.',
+                  'Our youth group is a space to connect, grow, and discover the purpose God has for our lives. We want to inspire a generation passionate for Christ that makes a difference in their community and beyond. Ages 16 to 26, and Young Adults from 26 to 36 years old.'
+                )}
+              </p>
+
+              <div className="flex flex-wrap gap-3 pt-2 text-xs">
+                <span className="px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 font-semibold text-slate-800">
+                  {t('Jóvenes: 16 a 26 años', 'Youth: Ages 16–26')}
+                </span>
+                <span className="px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 font-semibold text-slate-800">
+                  {t('Adultos Jóvenes: 26 a 36 años', 'Young Adults: Ages 26–36')}
+                </span>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href={`https://wa.me/${CHURCH_INFO.phoneClean}?text=${encodeURIComponent(
+                    'Hola, quiero recibir información para unirme al Grupo de Jóvenes.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{t('Unirme al Grupo de Jóvenes', 'Join Youth Group')}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Grupo de Parejas */}
+        <div className="rounded-3xl bg-stone-100 border border-stone-200 shadow-sm overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-7 p-8 sm:p-10 space-y-4 order-2 lg:order-1">
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-rose-600 uppercase tracking-widest block">
+                  {t(
+                    'FORTALECIENDO MATRIMONIOS BAJO EL DISEÑO DE DIOS',
+                    'STRENGTHENING MARRIAGES UNDER GOD’S DESIGN'
+                  )}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
+                  {t('GRUPO DE PAREJAS', 'COUPLES GROUP')}
+                </h2>
+              </div>
+
+              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
+                {t(
+                  'En nuestro grupo de parejas, creemos que el matrimonio es un regalo de Dios y un reflejo de Su amor por nosotros. Nuestro propósito es fortalecer las relaciones matrimoniales, construir una comunidad sólida de parejas y crecer juntos en nuestra fe.',
+                  'In our couples group, we believe marriage is a gift from God and a reflection of His love for us. Our purpose is to strengthen marital relationships, build a solid community of couples, and grow together in our faith.'
+                )}
+              </p>
+
+              <div className="pt-2">
+                <a
+                  href={`https://wa.me/${CHURCH_INFO.phoneClean}?text=${encodeURIComponent(
+                    'Hola, queremos recibir información sobre el Grupo de Parejas.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl transition-colors shadow-sm"
+                >
+                  <HeartHandshake className="w-4 h-4" />
+                  <span>{t('Conectar con el Grupo de Parejas', 'Connect with Couples Group')}</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 aspect-[4/3] lg:h-full order-1 lg:order-2">
+              <img
+                src={CHURCH_INFO.images.devotional}
+                alt={t('Grupo de Parejas - Fortaleciendo matrimonios', 'Couples Group')}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. GRUPOS DE CONEXIÓN EN BOGOTÁ Y VIRTUAL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8" id="grupos-conexion">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-              Células y Círculos de Fe
+              {t('Células y Círculos de Fe', 'Home Cells & Circles of Faith')}
             </span>
             <h2 className="text-3xl font-bold font-display text-slate-900">
-              Grupos de Conexión en Hogares
+              {t('Grupos de Conexión en Hogares', 'Home Connection Groups')}
             </h2>
             <p className="text-slate-600 text-sm">
-              Nos reunimos en diferentes sectores de Bogotá y de forma virtual para estudiar la Biblia, orar y compartir una taza de café en confianza.
+              {t(
+                'Nos reunimos en diferentes sectores de Bogotá y de forma virtual para estudiar la Biblia, orar y compartir una taza de café en confianza.',
+                'We gather across different sectors of Bogotá and virtually to study the Bible, pray, and share fellowship.'
+              )}
             </p>
           </div>
 
@@ -239,7 +307,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
             className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 shrink-0"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            <span>Consultar por WhatsApp</span>
+            <span>{t('Consultar por WhatsApp', 'Ask via WhatsApp')}</span>
           </a>
         </div>
 
@@ -255,7 +323,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {zone}
+              {zone === 'Todas' ? t('Todas', 'All') : zone}
             </button>
           ))}
         </div>
@@ -290,7 +358,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                 <div className="space-y-1.5 text-xs text-slate-600 pt-1">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    <span>Sector: {group.neighborhood}</span>
+                    <span>{t('Sector:', 'Area:')} {group.neighborhood}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
@@ -298,7 +366,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   </div>
                   <div className="flex items-center gap-2 text-slate-500">
                     <Users className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    <span>Anfitriones: {group.host}</span>
+                    <span>{t('Anfitriones:', 'Hosts:')} {group.host}</span>
                   </div>
                 </div>
               </div>
@@ -312,7 +380,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   rel="noopener noreferrer"
                   className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
                 >
-                  <span>Quiero unirme a este grupo</span>
+                  <span>{t('Quiero unirme a este grupo', 'Join this group')}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -321,17 +389,20 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
         </div>
       </section>
 
-      {/* 4. MINISTERIOS ACTIVOS */}
+      {/* 5. MINISTERIOS ACTIVOS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            Servicio y Dones
+            {t('Servicio y Dones', 'Service & Gifts')}
           </span>
           <h2 className="text-3xl font-bold font-display text-slate-900">
-            Ministerios donde puedes servir y crecer
+            {t('Ministerios donde puedes servir y crecer', 'Ministries Where You Can Serve & Grow')}
           </h2>
           <p className="text-slate-600 text-sm">
-            Cada miembro tiene un lugar especial en el cuerpo de Cristo. Descubre las áreas activas en nuestra congregación.
+            {t(
+              'Cada miembro tiene un lugar especial en el cuerpo de Cristo. Descubre las áreas activas en nuestra congregación.',
+              'Every member has a special place in the body of Christ. Discover active service areas in our church.'
+            )}
           </p>
         </div>
 
@@ -362,25 +433,11 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
 
                 <div className="space-y-1 text-xs text-slate-600 p-3 bg-stone-50 rounded-xl border border-stone-200">
                   <div className="font-semibold text-slate-800">
-                    Horario habitual: {min.schedule}
+                    {t('Horario habitual:', 'Schedule:')} {min.schedule}
                   </div>
                   <div className="text-[11px] text-slate-500">
-                    Liderazgo: {min.leader}
+                    {t('Liderazgo:', 'Leadership:')} {min.leader}
                   </div>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
-                    Actividades clave:
-                  </span>
-                  <ul className="text-xs text-slate-600 space-y-0.5">
-                    {min.activities.slice(0, 3).map((act, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                        <span>{act}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
 
@@ -389,7 +446,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   onClick={() => setSelectedMinistryForVolunteer(min)}
                   className="w-full py-2 bg-stone-100 hover:bg-stone-200 text-slate-800 rounded-lg text-xs font-semibold transition-colors"
                 >
-                  Quiero servir en {min.name}
+                  {t(`Quiero servir en ${min.name}`, `Serve in ${min.name}`)}
                 </button>
               </div>
             </div>
@@ -397,42 +454,45 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
         </div>
       </section>
 
-      {/* 5. MURO DE TESTIMONIOS Y ENVÍO */}
+      {/* 6. MURO DE TESTIMONIOS Y ENVÍO */}
       <section className="bg-stone-100 py-16 border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-              Vidas Restauradas
+              {t('Vidas Restauradas', 'Restored Lives')}
             </span>
             <h2 className="text-3xl font-bold font-display text-slate-900">
-              Historias de lo que Dios está haciendo
+              {t('Historias de lo que Dios está haciendo', 'Stories of What God Is Doing')}
             </h2>
             <p className="text-slate-600 text-sm">
-              La gloria siempre es para Él. Estos son algunos testimonios de transformación en nuestra comunidad.
+              {t(
+                'La gloria siempre es para Él. Estos son algunos testimonios de transformación en nuestra comunidad.',
+                'All glory belongs to Him. These are some testimonies of transformation in our community.'
+              )}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS_DATA.map((t) => (
+            {TESTIMONIALS_DATA.map((item) => (
               <div
-                key={t.id}
+                key={item.id}
                 className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <p className="font-serif italic text-sm text-slate-800 leading-relaxed">
-                    «{t.excerpt}»
+                    «{item.excerpt}»
                   </p>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    {t.fullStory}
+                    {item.fullStory}
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
                   <div>
-                    <span className="font-bold text-slate-900 block">{t.author}</span>
-                    <span className="text-slate-500 text-[11px]">{t.area}</span>
+                    <span className="font-bold text-slate-900 block">{item.author}</span>
+                    <span className="text-slate-500 text-[11px]">{item.area}</span>
                   </div>
-                  <span className="text-slate-400 text-[11px]">{t.timeAgo}</span>
+                  <span className="text-slate-400 text-[11px]">{item.timeAgo}</span>
                 </div>
               </div>
             ))}
@@ -441,18 +501,24 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
           {/* Testimonial Submission Form */}
           <div className="max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-md space-y-4">
             <h3 className="font-bold font-display text-lg text-slate-900 text-center">
-              ¿Dios ha hecho algo especial en tu vida?
+              {t('¿Dios ha hecho algo especial en tu vida?', 'Has God done something special in your life?')}
             </h3>
             <p className="text-xs text-slate-600 text-center">
-              Comparte tu testimonio para edificar y llenar de esperanza la fe de otros hermanos.
+              {t(
+                'Comparte tu testimonio para edificar y llenar de esperanza la fe de otros hermanos.',
+                'Share your testimony to build up and bring hope to the faith of others.'
+              )}
             </p>
 
             {testimonySubmitted ? (
               <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-2 text-emerald-800">
                 <Check className="w-6 h-6 mx-auto text-emerald-600" />
-                <p className="font-bold text-sm">¡Gracias por tu testimonio!</p>
+                <p className="font-bold text-sm">{t('¡Gracias por tu testimonio!', 'Thank you for your testimony!')}</p>
                 <p className="text-xs text-emerald-700">
-                  Ha sido recibido con bendición por el equipo ministerial para glorificar a Dios.
+                  {t(
+                    'Ha sido recibido con bendición por el equipo ministerial para glorificar a Dios.',
+                    'It has been received with joy by our pastoral team to glorify God.'
+                  )}
                 </p>
               </div>
             ) : (
@@ -461,14 +527,14 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   <input
                     type="text"
                     required
-                    placeholder="Tu nombre completo"
+                    placeholder={t('Tu nombre completo', 'Your full name')}
                     value={testimonyAuthor}
                     onChange={(e) => setTestimonyAuthor(e.target.value)}
                     className="px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                   />
                   <input
                     type="text"
-                    placeholder="Área (ej. Familia, Salud, Jóvenes)"
+                    placeholder={t('Área (ej. Familia, Salud, Jóvenes)', 'Area (e.g. Family, Health, Youth)')}
                     value={testimonyArea}
                     onChange={(e) => setTestimonyArea(e.target.value)}
                     className="px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
@@ -477,7 +543,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                 <textarea
                   required
                   rows={3}
-                  placeholder="Cuéntanos brevemente tu experiencia..."
+                  placeholder={t('Cuéntanos brevemente tu experiencia...', 'Briefly share your story...')}
                   value={testimonyStory}
                   onChange={(e) => setTestimonyStory(e.target.value)}
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
@@ -487,7 +553,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Enviar testimonio a la iglesia</span>
+                  <span>{t('Enviar testimonio a la iglesia', 'Submit testimony to church')}</span>
                 </button>
               </form>
             )}
@@ -495,25 +561,25 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
         </div>
       </section>
 
-      {/* Volunteer Signup Modal for Ministry */}
+      {/* Volunteer Modal */}
       {selectedMinistryForVolunteer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200">
             <h4 className="font-bold font-display text-lg text-slate-900">
-              Servir en {selectedMinistryForVolunteer.name}
+              {t(`Servir en ${selectedMinistryForVolunteer.name}`, `Serve in ${selectedMinistryForVolunteer.name}`)}
             </h4>
             <p className="text-xs text-slate-600">
-              Nos pondremos en contacto contigo para coordinar una breve charla inductiva con los pastores y coordinadores del área.
+              {t(
+                'Nos pondremos en contacto contigo para coordinar una breve charla inductiva con los pastores y coordinadores del área.',
+                'We will contact you to schedule a brief orientation chat with our pastors and area coordinators.'
+              )}
             </p>
 
             {volunteerSuccess ? (
               <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-center space-y-2">
                 <Check className="w-6 h-6 text-emerald-600 mx-auto" />
                 <p className="text-xs font-bold text-emerald-800">
-                  ¡Postulación enviada con éxito!
-                </p>
-                <p className="text-[11px] text-emerald-700">
-                  El coordinador de {selectedMinistryForVolunteer.name} te escribirá muy pronto.
+                  {t('¡Postulación enviada con éxito!', 'Application sent successfully!')}
                 </p>
                 <button
                   onClick={() => {
@@ -522,7 +588,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                   }}
                   className="px-4 py-1.5 bg-slate-900 text-white text-xs rounded-lg mt-2 font-medium"
                 >
-                  Listo
+                  {t('Listo', 'Done')}
                 </button>
               </div>
             ) : (
@@ -536,18 +602,13 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder="Tu nombre completo"
+                  placeholder={t('Tu nombre completo', 'Your full name')}
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                 />
                 <input
                   type="tel"
                   required
-                  placeholder="Número de WhatsApp"
-                  className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
-                />
-                <textarea
-                  rows={2}
-                  placeholder="¿Por qué te gustaría servir en este ministerio? (Opcional)"
+                  placeholder={t('Número de WhatsApp', 'WhatsApp number')}
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                 />
                 <div className="flex items-center justify-end gap-2 pt-2">
@@ -556,13 +617,13 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
                     onClick={() => setSelectedMinistryForVolunteer(null)}
                     className="px-3 py-2 text-xs text-slate-500 hover:text-slate-800"
                   >
-                    Cancelar
+                    {t('Cancelar', 'Cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg"
                   >
-                    Enviar postulación
+                    {t('Enviar postulación', 'Submit application')}
                   </button>
                 </div>
               </form>

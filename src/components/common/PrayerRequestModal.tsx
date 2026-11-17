@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Check, Heart, Shield, Lock, Send } from 'lucide-react';
 import { CHURCH_INFO } from '../../data/churchData';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface PrayerRequestModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { t } = useLanguage();
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [category, setCategory] = useState<'Salud' | 'Familia' | 'Finanzas' | 'Espiritual' | 'Paz / Ansiedad' | 'Agradecimiento'>('Salud');
@@ -26,6 +28,15 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
     setSubmitted(true);
   };
 
+  const categoryLabels: Record<string, string> = {
+    Salud: t('Salud', 'Health'),
+    Familia: t('Familia', 'Family'),
+    Finanzas: t('Finanzas', 'Finances'),
+    Espiritual: t('Espiritual', 'Spiritual'),
+    'Paz / Ansiedad': t('Paz / Ansiedad', 'Peace / Anxiety'),
+    Agradecimiento: t('Agradecimiento', 'Thanksgiving'),
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm overflow-y-auto">
       <div className="bg-white rounded-2xl max-w-lg w-full my-8 shadow-2xl overflow-hidden border border-slate-200">
@@ -39,13 +50,16 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
           </button>
           <div className="flex items-center gap-2 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-1">
             <Heart className="w-4 h-4 fill-current" />
-            <span>Estamos contigo en oración</span>
+            <span>{t('Estamos contigo en oración', 'We are praying with you')}</span>
           </div>
           <h3 className="text-xl font-bold font-display text-white">
-            Presenta tu petición delante de Dios
+            {t('Presenta tu petición delante de Dios', 'Bring Your Request Before God')}
           </h3>
           <p className="text-xs text-stone-300 mt-1">
-            Nuestro equipo de intercesores y pastores ora por cada motivo en el ayuno congregacional y las oraciones de la mañana.
+            {t(
+              'Nuestro equipo de intercesores y pastores ora por cada motivo en el ayuno congregacional y las oraciones de la mañana.',
+              'Our intercessors and pastoral team pray over every request during congregational fasting and morning prayers.'
+            )}
           </p>
         </div>
 
@@ -55,14 +69,20 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
               <Check className="w-7 h-7" />
             </div>
             <h4 className="text-xl font-bold text-slate-900 font-display">
-              Tu petición ha sido recibida
+              {t('Tu petición ha sido recibida', 'Your prayer request has been received')}
             </h4>
             <div className="bg-stone-50 border border-stone-200 rounded-xl p-4 text-xs text-slate-600 space-y-2">
               <p className="font-serif italic text-sm text-slate-800">
-                «Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces.» — Jeremías 33:3
+                {t(
+                  '«Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces.» — Jeremías 33:3',
+                  '“Call to Me, and I will answer you, and show you great and mighty things, which you do not know.” — Jeremiah 33:3'
+                )}
               </p>
               <p className="text-slate-500">
-                Estaremos orando por ti. Si solicitaste acompañamiento, nos comunicaremos con total prudencia y respeto.
+                {t(
+                  'Estaremos orando por ti. Si solicitaste acompañamiento, nos comunicaremos con total prudencia y respeto.',
+                  'We will be praying for you. If you requested pastoral follow-up, we will reach out with care and respect.'
+                )}
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -72,7 +92,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
               >
-                <span>Escribir por WhatsApp</span>
+                <span>{t('Escribir por WhatsApp', 'Message on WhatsApp')}</span>
               </a>
               <button
                 onClick={() => {
@@ -81,7 +101,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                 }}
                 className="w-full sm:w-auto px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition-colors"
               >
-                Cerrar ventana
+                {t('Cerrar ventana', 'Close')}
               </button>
             </div>
           </div>
@@ -90,7 +110,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
             {/* Category pills */}
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Motivo principal
+                {t('Motivo principal', 'Primary topic')}
               </label>
               <div className="flex flex-wrap gap-1.5">
                 {[
@@ -111,7 +131,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                         : 'bg-stone-100 text-slate-700 hover:bg-stone-200'
                     }`}
                   >
-                    {cat}
+                    {categoryLabels[cat]}
                   </button>
                 ))}
               </div>
@@ -120,14 +140,14 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
             {/* Request content */}
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                ¿En qué podemos orar por ti hoy?
+                {t('¿En qué podemos orar por ti hoy?', 'How can we pray for you today?')}
               </label>
               <textarea
                 required
                 rows={4}
                 value={requestText}
                 onChange={(e) => setRequestText(e.target.value)}
-                placeholder="Cuéntanos con libertad tu situación o motivo de gratitud..."
+                placeholder={t('Cuéntanos con libertad tu situación o motivo de gratitud...', 'Share freely your situation or thanksgiving note...')}
                 className="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 bg-white"
               />
             </div>
@@ -136,11 +156,11 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Tu nombre (o anónimo)
+                  {t('Tu nombre (o anónimo)', 'Your name (or anonymous)')}
                 </label>
                 <input
                   type="text"
-                  placeholder="Ej. Andrés o Anónimo"
+                  placeholder={t('Ej. Andrés o Anónimo', 'E.g. Andrew or Anonymous')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
@@ -149,7 +169,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  WhatsApp o Correo
+                  {t('WhatsApp o Correo', 'WhatsApp or Email')}
                 </label>
                 <input
                   type="text"
@@ -172,7 +192,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                 />
                 <span className="flex items-center gap-1">
                   <Lock className="w-3.5 h-3.5 text-slate-400" />
-                  Petición confidencial (Solo leída por el equipo pastoral)
+                  {t('Petición confidencial (Solo leída por el equipo pastoral)', 'Confidential request (Pastoral team only)')}
                 </span>
               </label>
 
@@ -185,7 +205,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                 />
                 <span className="flex items-center gap-1">
                   <Shield className="w-3.5 h-3.5 text-slate-400" />
-                  Me gustaría recibir una palabra de ánimo o mensaje pastoral
+                  {t('Me gustaría recibir una palabra de ánimo o mensaje pastoral', 'I would like to receive encouragement or a pastoral message')}
                 </span>
               </label>
             </div>
@@ -195,7 +215,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
               className="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Enviar Motivo de Oración</span>
+              <span>{t('Enviar Motivo de Oración', 'Submit Prayer Request')}</span>
             </button>
           </form>
         )}

@@ -62,10 +62,10 @@ export const SocialOutreachPage: React.FC<SocialOutreachPageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
             <button
-              onClick={() => onNavigate('inicio')}
+              onClick={() => onNavigate('nosotros')}
               className="hover:text-slate-900 transition-colors"
             >
-              Inicio
+              Nosotros
             </button>
             <span>/</span>
             <span className="text-rose-600 font-semibold">Apoyo Social · Bocachica</span>
