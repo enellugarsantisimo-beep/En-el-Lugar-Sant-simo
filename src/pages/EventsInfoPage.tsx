@@ -3,6 +3,7 @@ import { PageId } from '../types';
 import { CHURCH_INFO, INFO_SECTION_DATA } from '../data/churchData';
 import { useLanguage } from '../context/LanguageContext';
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
+import { SocialOrb3D, SocialPlatformId } from '../components/common/SocialOrb3D';
 import {
   MapPin,
   ExternalLink,
@@ -18,11 +19,6 @@ import {
   Phone,
   Compass,
   HeartHandshake,
-  Instagram,
-  Facebook,
-  Youtube,
-  Radio,
-  Music2,
 } from 'lucide-react';
 
 interface EventsInfoPageProps {
@@ -118,52 +114,61 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
   const [hoveredGroupInfo, setHoveredGroupInfo] = useState<string | null>(null);
   const [pinnedGroupInfo, setPinnedGroupInfo] = useState<string | null>(null);
 
-  // Scroll-driven rotation for the social spheres (rotates forward scrolling down, reverse scrolling up)
+  // Scroll-driven rotation for the social spheres (smoothly spins clockwise scrolling down, counter-clockwise scrolling up)
   const { scrollY } = useScroll();
-  const sphereRotateClockwise = useTransform(scrollY, (value) => value * 0.25);
-  const sphereRotateCounter = useTransform(scrollY, (value) => -value * 0.2);
+  const rawRotateClockwise = useTransform(scrollY, (value) => value * 0.65);
+  const rawRotateCounter = useTransform(scrollY, (value) => -value * 0.55);
+  const sphereRotateClockwise = useSpring(rawRotateClockwise, {
+    stiffness: 110,
+    damping: 18,
+    mass: 0.35,
+  });
+  const sphereRotateCounter = useSpring(rawRotateCounter, {
+    stiffness: 110,
+    damping: 18,
+    mass: 0.35,
+  });
 
-  const socialSpheres = [
+  const socialSpheres: Array<{
+    platform: SocialPlatformId;
+    name: string;
+    href: string;
+    rotate: typeof sphereRotateClockwise;
+  }> = [
     {
+      platform: 'instagram',
       name: 'Instagram',
       href: CHURCH_INFO.social.instagram,
-      icon: Instagram,
-      bgClass: 'bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white',
       rotate: sphereRotateClockwise,
     },
     {
-      name: 'Podcast & Audio',
-      href: CHURCH_INFO.social.youtube,
-      icon: Radio,
-      bgClass: 'bg-slate-900 text-amber-400',
-      rotate: sphereRotateCounter,
-    },
-    {
-      name: 'Facebook',
-      href: CHURCH_INFO.social.facebook,
-      icon: Facebook,
-      bgClass: 'bg-blue-600 text-white',
-      rotate: sphereRotateClockwise,
-    },
-    {
-      name: 'YouTube',
-      href: CHURCH_INFO.liveYoutubeUrl,
-      icon: Youtube,
-      bgClass: 'bg-red-600 text-white',
-      rotate: sphereRotateCounter,
-    },
-    {
+      platform: 'tiktok',
       name: 'TikTok',
       href: CHURCH_INFO.social.tiktok,
-      icon: Music2,
-      bgClass: 'bg-slate-950 text-white',
+      rotate: sphereRotateCounter,
+    },
+    {
+      platform: 'facebook',
+      name: 'Facebook',
+      href: CHURCH_INFO.social.facebook,
       rotate: sphereRotateClockwise,
     },
     {
+      platform: 'youtube',
+      name: 'YouTube',
+      href: CHURCH_INFO.social.youtube,
+      rotate: sphereRotateCounter,
+    },
+    {
+      platform: 'x',
+      name: 'X',
+      href: CHURCH_INFO.social.x,
+      rotate: sphereRotateClockwise,
+    },
+    {
+      platform: 'whatsapp',
       name: 'WhatsApp',
       href: CHURCH_INFO.social.whatsapp,
-      icon: MessageCircle,
-      bgClass: 'bg-emerald-500 text-white',
       rotate: sphereRotateCounter,
     },
   ];
@@ -358,25 +363,15 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
             </div>
 
             <div className="lg:col-span-7 flex flex-wrap items-center justify-center gap-5 sm:gap-7">
-              {socialSpheres.map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={item.name}
-                    aria-label={item.name}
-                    style={{ rotate: item.rotate }}
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg flex items-center justify-center border-2 border-white/80 cursor-pointer ${item.bgClass}`}
-                  >
-                    <IconComponent className="w-6 h-6 sm:w-7 sm:h-7" />
-                  </motion.a>
-                );
-              })}
+              {socialSpheres.map((item) => (
+                <SocialOrb3D
+                  key={item.platform}
+                  platform={item.platform}
+                  name={item.name}
+                  href={item.href}
+                  rotate={item.rotate}
+                />
+              ))}
             </div>
           </div>
         </div>

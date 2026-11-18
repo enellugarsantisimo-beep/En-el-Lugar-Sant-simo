@@ -28,10 +28,11 @@ export const CHURCH_INFO = {
   liveYoutubeUrl: 'https://youtu.be/IszLWjY_-Qg?si=LGtmRr5EcCkEGSy4',
   liveYoutubeEmbedUrl: 'https://www.youtube.com/embed/IszLWjY_-Qg?rel=0',
   social: {
-    youtube: 'https://youtu.be/IszLWjY_-Qg?si=LGtmRr5EcCkEGSy4',
-    tiktok: 'https://tiktok.com/@enellugarsantisimo',
-    facebook: 'https://facebook.com/enellugarsantisimo',
-    instagram: 'https://instagram.com/enellugarsantisimo',
+    youtube: 'https://www.youtube.com/channel/UC_XJF6lPrbvdsSwzcfds5Ng',
+    tiktok: 'https://www.tiktok.com/@enellugarsantisimo',
+    facebook: 'https://www.facebook.com/people/En-El-Lugar-Sant%C3%ADsimo-Icccle/100063699364553/',
+    instagram: 'https://www.instagram.com/enellugarsantisimo/?next=%2F',
+    x: 'https://x.com/EELS_Church',
     whatsapp: 'https://wa.me/573054351398',
   },
   coordinates: {
