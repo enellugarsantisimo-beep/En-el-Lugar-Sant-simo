@@ -30,7 +30,7 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
 
   const isReadyToSend = requestText.trim().length > 0;
 
-  const prayerWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.helplineClean}?text=${encodeURIComponent(
+  const prayerWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.prayerDispatchClean}?text=${encodeURIComponent(
     `🙏 *${t('Petición de Oración', 'Prayer Request')} (${category})*\n• ${t(
       'Nombre',
       'Name'
@@ -235,8 +235,8 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                 <MessageCircle className="w-4 h-4" />
                 <span>
                   {t(
-                    `Enviar petición por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
-                    `Send prayer request via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                    `Enviar petición por WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`,
+                    `Send prayer request via WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`
                   )}
                 </span>
               </a>
@@ -248,8 +248,8 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
                 <Send className="w-3.5 h-3.5" />
                 <span>
                   {t(
-                    `Enviar petición por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
-                    `Send prayer request via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                    `Enviar petición por WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`,
+                    `Send prayer request via WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`
                   )}
                 </span>
               </button>

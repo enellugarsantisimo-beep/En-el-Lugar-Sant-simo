@@ -838,6 +838,8 @@ export const SOS_SECTION_DATA = {
   helplineBadgeEn: 'NEW',
   helplineNumber: '(+57) 316 7429925',
   helplineClean: '573167429925',
+  prayerDispatchNumber: '(+57) 316 7429925',
+  prayerDispatchClean: '573167429925',
   helplineLabelEs: 'Línea de ayuda',
   helplineLabelEn: 'Help Line',
   scriptureLine1Es: '¡Voy a hacer algo nuevo!',

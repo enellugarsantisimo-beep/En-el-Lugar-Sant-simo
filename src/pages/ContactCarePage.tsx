@@ -53,7 +53,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
     )
   )}`;
 
-  const formWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.helplineClean}?text=${encodeURIComponent(
+  const formWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.prayerDispatchClean}?text=${encodeURIComponent(
     `🆘 *S.O.S - ${formData.reason}*\n• ${t('Nombre', 'Name')}: ${formData.fullName}\n• ${t(
       'Teléfono',
       'Phone'
@@ -468,8 +468,8 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
                   <MessageCircle className="w-4 h-4" />
                   <span>
                     {t(
-                      `Enviar por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
-                      `Send via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                      `Enviar por WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`,
+                      `Send via WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`
                     )}
                   </span>
                 </a>
@@ -481,8 +481,8 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
                   <Send className="w-3.5 h-3.5" />
                   <span>
                     {t(
-                      `Enviar por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
-                      `Send via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                      `Enviar por WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`,
+                      `Send via WhatsApp (${SOS_SECTION_DATA.prayerDispatchNumber})`
                     )}
                   </span>
                 </button>
