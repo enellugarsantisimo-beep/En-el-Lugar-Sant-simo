@@ -473,13 +473,22 @@ export const TESTIMONIALS_DATA: Testimony[] = [
 ];
 
 export const INFO_SECTION_DATA = {
+  heroBanners: {
+    banner1: '/assets/aistudio/SALVAVIDAS_BANNER_ecdb966f.png',
+    banner1AltEs: 'Banner Libro Salvavidas - El Fruto del Espíritu por Yuri Arenas Cuervo',
+    banner1AltEn: 'Book Banner Salvavidas - The Fruit of the Spirit by Yuri Arenas Cuervo',
+    bannerBackgroundNoText: '/assets/aistudio/SALVAVIDAS_BANNER__1__b471d47c.png',
+    banner2: '/assets/aistudio/SALVAVIDAS_BANNER__2__bf75a62e.png',
+    banner2AltEs: 'Reflexión del libro Salvavidas - Romanos 8:26',
+    banner2AltEn: 'Salvavidas Book Reflection - Romans 8:26',
+  },
   pastorBio: {
     eyebrowEs: 'Biografía Pastoral',
     eyebrowEn: 'Pastoral Biography',
     name: 'Yuri Arenas Cuervo',
-    image: '/src/assets/images/church_worship_gathering_1794440713697.jpg',
-    imageAltEs: 'Pastora Yuri Arenas Cuervo ministrando en En el Lugar Santísimo',
-    imageAltEn: 'Pastor Yuri Arenas Cuervo ministering at En el Lugar Santísimo',
+    image: '/assets/aistudio/SALVAVIDAS_BANNER__1__b471d47c.png',
+    imageAltEs: 'Fondo Salvavidas para Biografía Pastoral de Yuri Arenas Cuervo',
+    imageAltEn: 'Salvavidas Background for Pastor Yuri Arenas Cuervo Biography',
     paragraphsEs: [
       'Yuri Arenas Cuervo es una mujer de fe, pastora, misionera y profeta, cuyo llamado a servir a Dios comenzó en su niñez en las Asambleas de Dios en Colombia. Junto a su esposo Elberto Guzmán, quien ya ha partido a la presencia de Dios, fundaron iglesias en Boca Ratón, Bogotá y en Bocachica, donde su ministerio misionero tiene un gran impacto. En Bocachica, se lleva a cabo el proyecto Lives Saved Project, al cual se destinan los recursos de este libro.',
       'Hoy, junto a su madre y los líderes de la congregación en Bogotá, Yuri está consolidando el Ministerio Internacional En El Lugar Santísimo, con el propósito de llevar el mensaje de salvación a donde Dios los envíe.',
@@ -718,3 +727,83 @@ export const INFO_SECTION_DATA = {
     },
   ],
 };
+
+export const DONATE_SECTION_DATA = {
+  eyebrowEs: 'Generosidad y Diezmos',
+  eyebrowEn: 'Generosity & Tithes',
+  headlineEs: 'APOYA EL REINO CON TUS DONACIONES',
+  headlineEn: 'SUPPORT THE KINGDOM WITH YOUR DONATIONS',
+  descriptionEs:
+    'Tu siembra y generosidad hacen posible la predicación del evangelio, el sostenimiento de nuestra casa y el alcance misionero.',
+  descriptionEn:
+    'Your generosity and giving make the preaching of the gospel, church ministry, and missionary outreach possible.',
+  backgroundImage: '/src/assets/images/church_worship_gathering_1794440713697.jpg',
+  backgroundImageAltEs: 'Congregación adorando en En el Lugar Santísimo',
+  backgroundImageAltEn: 'Congregation worshipping at En el Lugar Santísimo',
+  qrImage:
+    '/assets/aistudio/Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_Copy_36fb8979.png',
+  qrImageAltEs: 'Código QR oficial Bancolombia - EnElLugarSantisimo Ahorros *3905',
+  qrImageAltEn: 'Official Bancolombia QR Code - EnElLugarSantisimo Savings *3905',
+  qrCaptionEs: 'Escanea desde tu App Bancolombia o Nequi',
+  qrCaptionEn: 'Scan from your Bancolombia or Nequi App',
+  qrAccountTag: 'EnElLugarSantisimo · Ahorros *3905',
+  channels: [
+    {
+      id: 'nequi-bancolombia',
+      titleEs: 'NEQUI / BANCOLOMBIA',
+      titleEn: 'NEQUI / BANCOLOMBIA',
+      accountNumber: '171-0000-39-05',
+      accountTypeEs: 'CUENTA AHORROS',
+      accountTypeEn: 'SAVINGS ACCOUNT',
+      holderEs: 'Iglesia Comunidad Cristiana Carismática La Esperanza',
+      holderEn: 'Iglesia Comunidad Cristiana Carismática La Esperanza',
+      taxId: 'NIT 830046692-6',
+      cardAccentClass: 'border-purple-400/40 bg-purple-950/55',
+      numberColorClass: 'text-fuchsia-200 border-purple-400/50 bg-purple-900/60',
+    },
+    {
+      id: 'banco-bogota',
+      titleEs: 'BANCO DE BOGOTÁ',
+      titleEn: 'BANCO DE BOGOTÁ',
+      accountNumber: '023-039589',
+      accountTypeEs: 'CUENTA CORRIENTE',
+      accountTypeEn: 'CHECKING ACCOUNT',
+      holderEs: 'Iglesia Comunidad Cristiana Carismática La Esperanza',
+      holderEn: 'Iglesia Comunidad Cristiana Carismática La Esperanza',
+      taxId: 'NIT 830046692-6',
+      cardAccentClass: 'border-rose-400/40 bg-slate-900/70',
+      numberColorClass: 'text-rose-200 border-rose-400/50 bg-rose-950/60',
+    },
+    {
+      id: 'zelle-usa',
+      titleEs: 'DESDE ESTADOS UNIDOS',
+      titleEn: 'FROM THE UNITED STATES',
+      methodBadge: 'Zelle®',
+      accountNumber: '(772) 475-7342',
+      accountTypeEs: 'ZELLE OFICIAL',
+      accountTypeEn: 'OFFICIAL ZELLE',
+      holderEs: 'MINISTERIO INTERNACIONAL EN EL LUGAR SANTÍSIMO',
+      holderEn: 'MINISTERIO INTERNACIONAL EN EL LUGAR SANTÍSIMO',
+      cardAccentClass: 'border-sky-400/40 bg-indigo-950/65',
+      numberColorClass: 'text-sky-200 border-sky-400/50 bg-sky-950/60',
+    },
+  ] as Array<{
+    id: string;
+    titleEs: string;
+    titleEn: string;
+    methodBadge?: string;
+    accountNumber: string;
+    accountTypeEs: string;
+    accountTypeEn: string;
+    holderEs: string;
+    holderEn: string;
+    taxId?: string;
+    cardAccentClass: string;
+    numberColorClass: string;
+  }>,
+  socialBannerTitleEs: '¿Quieres apoyar nuestra labor misionera en Bocachica?',
+  socialBannerTitleEn: 'Want to support our mission work in Bocachica?',
+  socialBannerCtaEs: 'Ir a Apoyo Social',
+  socialBannerCtaEn: 'Go to Social Outreach',
+};
+

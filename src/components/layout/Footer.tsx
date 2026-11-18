@@ -54,14 +54,24 @@ export const Footer: React.FC<FooterProps> = ({
             >
               {t('Pedir Oración', 'Request Prayer')}
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                onNavigate('dona');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-4 py-2 text-xs font-semibold rounded-lg bg-rose-600 hover:bg-rose-700 text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+            >
+              <Heart className="w-3.5 h-3.5 fill-current" />
+              <span>{t('Dona', 'Donate')}</span>
+            </button>
             <a
               href={CHURCH_INFO.donateSponsorUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-xs font-semibold rounded-lg bg-rose-600 hover:bg-rose-700 text-white transition-colors flex items-center gap-1.5"
+              className="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-stone-200 transition-colors border border-slate-700"
             >
-              <Heart className="w-3.5 h-3.5 fill-current" />
-              <span>{t('Dona / Apoyo Social', 'Donate / Social Outreach')}</span>
+              <span>{t('Apoyo Social', 'Social Outreach')}</span>
             </a>
           </div>
         </div>
@@ -207,14 +217,16 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
-                <a
-                  href={CHURCH_INFO.donateSponsorUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-rose-400 transition-colors text-rose-500 font-semibold"
+                <button
+                  type="button"
+                  onClick={() => {
+                    onNavigate('dona');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="hover:text-rose-400 transition-colors text-rose-500 font-semibold cursor-pointer"
                 >
                   {t('Dona', 'Donate')}
-                </a>
+                </button>
               </li>
             </ul>
           </div>

@@ -11,6 +11,7 @@ import { CommunityPage } from './pages/CommunityPage';
 import { LiveContentPage } from './pages/LiveContentPage';
 import { EventsInfoPage } from './pages/EventsInfoPage';
 import { ContactCarePage } from './pages/ContactCarePage';
+import { DonatePage } from './pages/DonatePage';
 
 function AppContent() {
   const getPageFromHash = (): PageId => {
@@ -37,6 +38,10 @@ function AppContent() {
       case 'contacto':
       case 'acompanamiento':
         return 'sos';
+      case 'dona':
+      case 'donaciones':
+      case 'donate':
+        return 'dona';
       case 'nosotros':
       case 'inicio':
       default:
@@ -106,6 +111,13 @@ function AppContent() {
       case 'sos':
         return (
           <ContactCarePage
+            onNavigate={handleNavigate}
+            onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
+          />
+        );
+      case 'dona':
+        return (
+          <DonatePage
             onNavigate={handleNavigate}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />

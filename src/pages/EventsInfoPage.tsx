@@ -109,10 +109,19 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
   onNavigate,
 }) => {
   const { lang, t } = useLanguage();
-  const [heroSlide, setHeroSlide] = useState<0 | 1>(0);
+  const [heroSlide, setHeroSlide] = useState<0 | 1 | 2>(0);
+  const [isHeroHovered, setIsHeroHovered] = useState(false);
   const [activeGroupCard, setActiveGroupCard] = useState<string>('parejas');
   const [hoveredGroupInfo, setHoveredGroupInfo] = useState<string | null>(null);
   const [pinnedGroupInfo, setPinnedGroupInfo] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (isHeroHovered) return;
+    const timer = setInterval(() => {
+      setHeroSlide((prev) => ((prev + 1) % 3) as 0 | 1 | 2);
+    }, 6500);
+    return () => clearInterval(timer);
+  }, [isHeroHovered]);
 
   // Scroll-driven rotation for the social spheres (smoothly spins clockwise scrolling down, counter-clockwise scrolling up)
   const { scrollY } = useScroll();
@@ -173,12 +182,21 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
     },
   ];
 
-  const { pastorBio, bookShowcase, lifeGroupScheduleCards, activities } = INFO_SECTION_DATA;
+  const { heroBanners, pastorBio, bookShowcase, lifeGroupScheduleCards, activities } =
+    INFO_SECTION_DATA;
   const selectedGroup = lifeGroupScheduleCards.find((g) => g.id === activeGroupCard) ?? lifeGroupScheduleCards[0];
+
+  const handlePrevSlide = () => {
+    setHeroSlide((prev) => ((prev - 1 + 3) % 3) as 0 | 1 | 2);
+  };
+
+  const handleNextSlide = () => {
+    setHeroSlide((prev) => ((prev + 1) % 3) as 0 | 1 | 2);
+  };
 
   return (
     <div className="space-y-16 lg:space-y-24 pb-20">
-      {/* 1. INDEPENDENT PAGE HERO + FEATURED SLIDER (BIOGRAFÍA & LIBRO SALVAVIDAS) */}
+      {/* 1. INDEPENDENT PAGE HERO + 3-SLIDE FULL-BACKGROUND SLIDER */}
       <section className="bg-gradient-to-b from-stone-100 to-white pt-8 pb-14 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
@@ -192,20 +210,68 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
             <span className="text-rose-600 font-semibold">Info</span>
           </nav>
 
-          {/* 2-Slide Showcase Card (Editable text + Independent images) */}
-          <div className="relative rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-2xl overflow-hidden">
-            {heroSlide === 0 ? (
-              /* SLIDE 1: BIOGRAFÍA YURI ARENAS CUERVO */
-              <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-                <div className="lg:col-span-8 p-8 sm:p-12 space-y-4">
-                  <div className="inline-flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-widest">
+          {/* 3-Slide Showcase Slider (Background images with content overlaid on top, never below) */}
+          <div
+            onMouseEnter={() => setIsHeroHovered(true)}
+            onMouseLeave={() => setIsHeroHovered(false)}
+            className="relative rounded-3xl bg-slate-950 text-white border border-slate-800 shadow-2xl overflow-hidden"
+          >
+            {heroSlide === 0 && (
+              /* SLIDE 1: BANNER 1 (SALVAVIDAS DISPONIBLE AHORA) */
+              <div className="relative w-full aspect-[16/9] lg:aspect-auto lg:h-[520px]">
+                <img
+                  src={heroBanners.banner1}
+                  alt={lang === 'es' ? heroBanners.banner1AltEs : heroBanners.banner1AltEn}
+                  referrerPolicy="no-referrer"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+
+                {/* Interactive CTA overlaid cleanly on top of Banner 1 */}
+                <div className="absolute bottom-10 sm:bottom-14 right-4 sm:right-12 flex flex-wrap items-center justify-end gap-2 sm:gap-3 z-10">
+                  <a
+                    href={CHURCH_INFO.salvavidasBookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2 sm:px-6 sm:py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-[11px] sm:text-sm rounded-xl transition-all shadow-xl inline-flex items-center gap-1.5 sm:gap-2"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
+                    <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </a>
+                  <a
+                    href={CHURCH_INFO.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden sm:inline-flex px-5 py-3 bg-slate-900/85 hover:bg-slate-900 text-white border border-white/25 backdrop-blur-sm font-semibold text-sm rounded-xl transition-colors items-center gap-2"
+                  >
+                    <MessageCircle className="w-4 h-4 text-emerald-400" />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {heroSlide === 1 && (
+              /* SLIDE 2: TEXT-FREE BANNER 1 AS BACKGROUND + PASTOR BIO TEXT OVERLAID ON TOP */
+              <div className="relative w-full min-h-[420px] sm:min-h-[460px] lg:min-h-[520px] flex items-center">
+                <img
+                  src={heroBanners.bannerBackgroundNoText}
+                  alt={lang === 'es' ? pastorBio.imageAltEs : pastorBio.imageAltEn}
+                  referrerPolicy="no-referrer"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/88 via-slate-950/75 to-slate-950/50" />
+
+                <div className="relative z-10 w-full px-11 sm:px-14 lg:px-16 pt-8 pb-14 max-w-4xl space-y-3 sm:space-y-4">
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-widest">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>{lang === 'es' ? pastorBio.eyebrowEs : pastorBio.eyebrowEn}</span>
                   </div>
-                  <h1 className="text-2xl sm:text-4xl font-bold font-display text-white">
+                  <h1 className="text-2xl sm:text-4xl font-bold font-display text-white drop-shadow">
                     {pastorBio.name}
                   </h1>
-                  <div className="space-y-3 text-xs sm:text-sm text-stone-300 leading-relaxed italic">
+                  <div className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-stone-100 leading-relaxed italic drop-shadow-sm">
                     {(lang === 'es' ? pastorBio.paragraphsEs : pastorBio.paragraphsEn).map(
                       (para, i) => (
                         <p key={i}>{para}</p>
@@ -213,102 +279,61 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                     )}
                   </div>
                 </div>
-
-                {/* Independent Bio Image */}
-                <div className="lg:col-span-4 relative min-h-[260px]">
-                  <img
-                    src={pastorBio.image}
-                    alt={lang === 'es' ? pastorBio.imageAltEs : pastorBio.imageAltEn}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-transparent to-transparent lg:block hidden" />
-                </div>
               </div>
-            ) : (
-              /* SLIDE 2: LIBRO SALVAVIDAS - EL FRUTO DEL ESPÍRITU */
-              <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-                {/* Independent Book Image */}
-                <div className="lg:col-span-5 relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[280px]">
-                  <img
-                    src={bookShowcase.image}
-                    alt={lang === 'es' ? bookShowcase.imageAltEs : bookShowcase.imageAltEn}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
-                  <span className="absolute bottom-4 left-5 text-xs font-semibold tracking-widest uppercase text-sky-200">
-                    {bookShowcase.author}
-                  </span>
-                </div>
+            )}
 
-                {/* Independent Editable Book Copy */}
-                <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 space-y-5 text-center lg:text-left">
-                  <span className="inline-block text-xs font-bold tracking-[0.25em] uppercase text-sky-300">
-                    {lang === 'es' ? bookShowcase.badgeEs : bookShowcase.badgeEn}
-                  </span>
-                  <div>
-                    <h2 className="text-4xl sm:text-5xl font-black font-display tracking-tight text-white">
-                      {bookShowcase.title}
-                    </h2>
-                    <p className="text-xl sm:text-2xl font-bold tracking-wider text-stone-200 mt-1">
-                      {lang === 'es' ? bookShowcase.subtitleEs : bookShowcase.subtitleEn}
-                    </p>
-                  </div>
-                  <p className="text-sm sm:text-base text-stone-300 max-w-lg mx-auto lg:mx-0">
-                    {lang === 'es' ? bookShowcase.descriptionEs : bookShowcase.descriptionEn}
-                  </p>
-                  <div className="pt-2 flex flex-wrap justify-center lg:justify-start gap-3">
-                    <a
-                      href={CHURCH_INFO.salvavidasBookUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs rounded-xl transition-colors shadow-lg inline-flex items-center gap-2"
-                    >
-                      <BookOpen className="w-4 h-4" />
-                      <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                    <a
-                      href={CHURCH_INFO.social.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-semibold text-xs rounded-xl transition-colors inline-flex items-center gap-2"
-                    >
-                      <MessageCircle className="w-4 h-4 text-emerald-400" />
-                      <span>WhatsApp</span>
-                    </a>
-                  </div>
+            {heroSlide === 2 && (
+              /* SLIDE 3: BANNER 2 (SERIE SALVAVIDAS + ROMANOS 8:26) */
+              <div className="relative w-full aspect-[16/9] lg:aspect-auto lg:h-[520px]">
+                <img
+                  src={heroBanners.banner2}
+                  alt={lang === 'es' ? heroBanners.banner2AltEs : heroBanners.banner2AltEn}
+                  referrerPolicy="no-referrer"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
+
+                <div className="absolute bottom-10 sm:bottom-14 left-4 sm:left-14 z-10">
+                  <a
+                    href={CHURCH_INFO.salvavidasBookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-sky-500/95 hover:bg-sky-400 text-slate-950 font-bold text-[11px] sm:text-sm rounded-xl transition-all shadow-xl inline-flex items-center gap-1.5 sm:gap-2 backdrop-blur-sm"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
+                    <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </a>
                 </div>
               </div>
             )}
 
-            {/* Slider Controls */}
+            {/* Slider Controls overlaid directly on the image */}
             <button
               type="button"
-              onClick={() => setHeroSlide((prev) => (prev === 0 ? 1 : 0))}
+              onClick={handlePrevSlide}
               aria-label={t('Anterior', 'Previous')}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-950 text-white flex items-center justify-center border border-white/20 backdrop-blur-sm transition-colors cursor-pointer z-20"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-950/65 hover:bg-slate-950 text-white flex items-center justify-center border border-white/25 backdrop-blur-sm transition-colors cursor-pointer z-20"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               type="button"
-              onClick={() => setHeroSlide((prev) => (prev === 0 ? 1 : 0))}
+              onClick={handleNextSlide}
               aria-label={t('Siguiente', 'Next')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-950 text-white flex items-center justify-center border border-white/20 backdrop-blur-sm transition-colors cursor-pointer z-20"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-950/65 hover:bg-slate-950 text-white flex items-center justify-center border border-white/25 backdrop-blur-sm transition-colors cursor-pointer z-20"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center justify-center gap-2 py-3 bg-slate-950/70 border-t border-slate-800">
-              {[0, 1].map((idx) => (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/55 backdrop-blur-sm border border-white/15 z-20">
+              {[0, 1, 2].map((idx) => (
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => setHeroSlide(idx as 0 | 1)}
+                  onClick={() => setHeroSlide(idx as 0 | 1 | 2)}
                   className={`h-2 rounded-full transition-all cursor-pointer ${
-                    heroSlide === idx ? 'w-6 bg-sky-400' : 'w-2 bg-slate-600 hover:bg-slate-400'
+                    heroSlide === idx ? 'w-6 bg-sky-400' : 'w-2 bg-white/50 hover:bg-white/80'
                   }`}
                   aria-label={`Slide ${idx + 1}`}
                 />
@@ -347,14 +372,14 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
           </h2>
         </div>
 
-        {/* Scroll-Rotating Social Spheres Card */}
-        <div className="rounded-3xl bg-amber-300/90 border border-amber-400 p-8 sm:p-12 shadow-md">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-5 text-center lg:text-left space-y-2">
+        {/* Scroll-Rotating Social Spheres Card (Text on left, vertical staggered spheres on right) */}
+        <div className="rounded-3xl bg-amber-300/90 border border-amber-400 p-8 sm:p-12 lg:p-14 shadow-md">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
+            <div className="md:col-span-6 text-center md:text-left space-y-3 md:pr-6">
               <span className="text-xs font-bold uppercase tracking-widest text-amber-900 block">
                 {t('Redes Sociales Oficiales', 'Official Social Media')}
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-950">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-slate-950 leading-snug">
                 {t(
                   '¡Haz Click en las esferas y síguenos en todas nuestras redes!',
                   'Click the spheres and follow us on all our social networks!'
@@ -362,15 +387,23 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
               </h3>
             </div>
 
-            <div className="lg:col-span-7 flex flex-wrap items-center justify-center gap-5 sm:gap-7">
-              {socialSpheres.map((item) => (
-                <SocialOrb3D
+            <div className="md:col-span-6 flex flex-col items-center justify-center gap-5 sm:gap-6">
+              {socialSpheres.map((item, idx) => (
+                <div
                   key={item.platform}
-                  platform={item.platform}
-                  name={item.name}
-                  href={item.href}
-                  rotate={item.rotate}
-                />
+                  className={
+                    idx % 2 === 0
+                      ? 'translate-x-7 sm:translate-x-12'
+                      : '-translate-x-7 sm:-translate-x-12'
+                  }
+                >
+                  <SocialOrb3D
+                    platform={item.platform}
+                    name={item.name}
+                    href={item.href}
+                    rotate={item.rotate}
+                  />
+                </div>
               ))}
             </div>
           </div>

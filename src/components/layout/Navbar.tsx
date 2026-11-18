@@ -189,15 +189,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>{lang === 'es' ? 'EN' : 'ES'}</span>
             </button>
 
-            <a
-              href={CHURCH_INFO.donateSponsorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all shadow-sm bg-rose-600 hover:bg-rose-700 text-white whitespace-nowrap shrink-0"
+            <button
+              type="button"
+              onClick={() => handleNavClick('dona')}
+              className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all shadow-sm bg-rose-600 hover:bg-rose-700 text-white whitespace-nowrap shrink-0 cursor-pointer ${
+                currentPage === 'dona' ? 'ring-2 ring-rose-300 ring-offset-1' : ''
+              }`}
             >
               <Heart className="w-3.5 h-3.5 fill-current" />
               <span>{t('Dona', 'Donate')}</span>
-            </a>
+            </button>
 
             {/* Mobile menu trigger */}
             <button
@@ -301,16 +302,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
 
               <div className="pt-4 mt-4 border-t border-slate-100 space-y-2">
-                <a
-                  href={CHURCH_INFO.donateSponsorUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-rose-600 text-white font-medium text-sm rounded-xl hover:bg-rose-700 transition-colors shadow-sm"
+                <button
+                  type="button"
+                  onClick={() => handleNavClick('dona')}
+                  className={`w-full flex items-center justify-center gap-2 py-3 px-4 bg-rose-600 text-white font-medium text-sm rounded-xl hover:bg-rose-700 transition-colors shadow-sm cursor-pointer ${
+                    currentPage === 'dona' ? 'ring-2 ring-rose-300' : ''
+                  }`}
                 >
                   <Heart className="w-4 h-4 fill-current" />
-                  <span>{t('Dona / Apoyo Social', 'Donate / Social Outreach')}</span>
-                </a>
+                  <span>{t('Dona', 'Donate')}</span>
+                </button>
 
                 <button
                   onClick={() => {
