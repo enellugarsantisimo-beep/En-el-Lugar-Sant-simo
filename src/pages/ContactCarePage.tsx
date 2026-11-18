@@ -54,11 +54,16 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
   )}`;
 
   const formWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.helplineClean}?text=${encodeURIComponent(
-    `S.O.S - ${formData.reason}\n${t('Nombre', 'Name')}: ${formData.fullName}\n${t(
+    `🆘 *S.O.S - ${formData.reason}*\n• ${t('Nombre', 'Name')}: ${formData.fullName}\n• ${t(
       'Teléfono',
       'Phone'
-    )}: ${formData.phone}\n${t('Mensaje', 'Message')}: ${formData.message}`
+    )}: ${formData.phone}${formData.email ? `\n• ${t('Correo', 'Email')}: ${formData.email}` : ''}\n• ${t('Petición', 'Request')}: ${formData.message}`
   )}`;
+
+  const isReadyToSend =
+    formData.fullName.trim().length > 0 &&
+    formData.phone.trim().length > 0 &&
+    formData.message.trim().length > 0;
 
   return (
     <div className="space-y-12 lg:space-y-16 pb-20">
@@ -452,13 +457,36 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
                 </span>
               </div>
 
-              <button
-                type="submit"
-                className="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Send className="w-3.5 h-3.5" />
-                <span>{t('Enviar Petición S.O.S', 'Send S.O.S Request')}</span>
-              </button>
+              {isReadyToSend ? (
+                <a
+                  href={formWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setSubmitted(true)}
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md transition-colors flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>
+                    {t(
+                      `Enviar por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
+                      `Send via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                    )}
+                  </span>
+                </a>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>
+                    {t(
+                      `Enviar por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
+                      `Send via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                    )}
+                  </span>
+                </button>
+              )}
             </form>
           )}
         </div>

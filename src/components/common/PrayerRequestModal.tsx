@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, Check, Heart, Shield, Lock, Send } from 'lucide-react';
-import { CHURCH_INFO } from '../../data/churchData';
+import { X, Check, Heart, Shield, Lock, Send, MessageCircle } from 'lucide-react';
+import { SOS_SECTION_DATA } from '../../data/churchData';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface PrayerRequestModalProps {
@@ -27,6 +27,19 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
     e.preventDefault();
     setSubmitted(true);
   };
+
+  const isReadyToSend = requestText.trim().length > 0;
+
+  const prayerWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.helplineClean}?text=${encodeURIComponent(
+    `🙏 *${t('Petición de Oración', 'Prayer Request')} (${category})*\n• ${t(
+      'Nombre',
+      'Name'
+    )}: ${name.trim() || t('Anónimo', 'Anonymous')}${
+      contact.trim() ? `\n• ${t('Contacto', 'Contact')}: ${contact.trim()}` : ''
+    }\n• ${t('Confidencial', 'Confidential')}: ${
+      isConfidential ? t('Sí', 'Yes') : 'No'
+    }\n• ${t('Petición', 'Request')}: ${requestText.trim()}`
+  )}`;
 
   const categoryLabels: Record<string, string> = {
     Salud: t('Salud', 'Health'),
@@ -87,12 +100,13 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <a
-                href={`https://wa.me/${CHURCH_INFO.phoneClean}?text=Hola,%20acabo%20de%20enviar%20una%20petici%C3%B3n%20de%20oraci%C3%B3n%20y%20quisiera%20hablar%20con%20alguien.`}
+                href={prayerWhatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
               >
-                <span>{t('Escribir por WhatsApp', 'Message on WhatsApp')}</span>
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>{t('Reenviar por WhatsApp', 'Resend via WhatsApp')}</span>
               </a>
               <button
                 onClick={() => {
@@ -210,13 +224,36 @@ export const PrayerRequestModal: React.FC<PrayerRequestModalProps> = ({
               </label>
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2"
-            >
-              <Send className="w-3.5 h-3.5" />
-              <span>{t('Enviar Motivo de Oración', 'Submit Prayer Request')}</span>
-            </button>
+            {isReadyToSend ? (
+              <a
+                href={prayerWhatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setSubmitted(true)}
+                className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>
+                  {t(
+                    `Enviar petición por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
+                    `Send prayer request via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                  )}
+                </span>
+              </a>
+            ) : (
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>
+                  {t(
+                    `Enviar petición por WhatsApp (${SOS_SECTION_DATA.helplineNumber})`,
+                    `Send prayer request via WhatsApp (${SOS_SECTION_DATA.helplineNumber})`
+                  )}
+                </span>
+              </button>
+            )}
           </form>
         )}
       </div>

@@ -12,17 +12,15 @@ import {
   MessageCircle,
   ExternalLink,
   HeartHandshake,
-  Sparkles,
 } from 'lucide-react';
 
 interface DonatePageProps {
   onNavigate: (page: PageId) => void;
-  onOpenPrayerModal: () => void;
+  onOpenPrayerModal?: () => void;
 }
 
 export const DonatePage: React.FC<DonatePageProps> = ({
   onNavigate,
-  onOpenPrayerModal,
 }) => {
   const { lang, t } = useLanguage();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -227,71 +225,41 @@ export const DonatePage: React.FC<DonatePageProps> = ({
         </div>
       </section>
 
-      {/* 2. APOYO SOCIAL & CONFIRMACIÓN / ORACIÓN */}
+      {/* 2. APOYO SOCIAL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-5">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-bold text-rose-600 uppercase tracking-widest">
-                <HeartHandshake className="w-4 h-4" />
-                <span>{t('Apoyo Social · Lives Saved Project', 'Social Outreach · Lives Saved Project')}</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-900">
-                {lang === 'es'
-                  ? DONATE_SECTION_DATA.socialBannerTitleEs
-                  : DONATE_SECTION_DATA.socialBannerTitleEn}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                {t(
-                  'También puedes apadrinar y apoyar directamente nuestros proyectos sociales e infantiles en Bocachica a través de nuestra plataforma oficial.',
-                  'You can also sponsor and directly support our social and children’s projects in Bocachica through our official platform.'
-                )}
-              </p>
+        <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-rose-600 uppercase tracking-widest">
+              <HeartHandshake className="w-4 h-4" />
+              <span>{t('Apoyo Social · Lives Saved Project', 'Social Outreach · Lives Saved Project')}</span>
             </div>
-
-            <div>
-              <a
-                href={CHURCH_INFO.donateSponsorUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl transition-colors shadow-sm"
-              >
-                <span>
-                  {lang === 'es'
-                    ? DONATE_SECTION_DATA.socialBannerCtaEs
-                    : DONATE_SECTION_DATA.socialBannerCtaEn}
-                </span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
+            <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-900">
+              {lang === 'es'
+                ? DONATE_SECTION_DATA.socialBannerTitleEs
+                : DONATE_SECTION_DATA.socialBannerTitleEn}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              {t(
+                'También puedes apadrinar y apoyar directamente nuestros proyectos sociales e infantiles en Bocachica a través de nuestra plataforma oficial.',
+                'You can also sponsor and directly support our social and children’s projects in Bocachica through our official platform.'
+              )}
+            </p>
           </div>
 
-          <div className="p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-lg flex flex-col justify-between space-y-5">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest">
-                <Sparkles className="w-4 h-4" />
-                <span>{t('Acompañamiento Pastoral', 'Pastoral Care')}</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
-                {t('Oramos por tu familia y provisión', 'We pray for your family and provision')}
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-serif italic">
-                {t(
-                  '«Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre.» — 2 Corintios 9:7',
-                  '“Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.” — 2 Corinthians 9:7'
-                )}
-              </p>
-            </div>
-
-            <div>
-              <button
-                type="button"
-                onClick={onOpenPrayerModal}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 hover:bg-stone-100 text-xs font-semibold rounded-xl transition-colors cursor-pointer"
-              >
-                <span>{t('Enviar Petición de Oración', 'Send Prayer Request')}</span>
-              </button>
-            </div>
+          <div className="shrink-0">
+            <a
+              href={CHURCH_INFO.donateSponsorUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-semibold rounded-xl transition-colors shadow-sm"
+            >
+              <span>
+                {lang === 'es'
+                  ? DONATE_SECTION_DATA.socialBannerCtaEs
+                  : DONATE_SECTION_DATA.socialBannerCtaEn}
+              </span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </section>

@@ -395,8 +395,8 @@ export const Footer: React.FC<FooterProps> = ({
                   </p>
                   <p>
                     {t(
-                      '2. Canales Digitales: Puede solicitar la actualización o supresión de sus datos en cualquier momento escribiendo a Enellugarsantisim@gmail.com.',
-                      '2. Digital Channels: You may request the update or deletion of your data at any time by writing to Enellugarsantisim@gmail.com.'
+                      '2. Canales Digitales: Puede solicitar la actualización o supresión de sus datos en cualquier momento escribiendo a enellugarsantisimo@gmail.com.',
+                      '2. Digital Channels: You may request the update or deletion of your data at any time by writing to enellugarsantisimo@gmail.com.'
                     )}
                   </p>
                 </>

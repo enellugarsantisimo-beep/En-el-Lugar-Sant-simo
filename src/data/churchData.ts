@@ -19,7 +19,7 @@ export const CHURCH_INFO = {
   neighborhood: 'Modelia / Salitre Occidental',
   phone: '+57 3054351398',
   phoneClean: '573054351398',
-  email: 'Enellugarsantisim@gmail.com',
+  email: 'enellugarsantisimo@gmail.com',
   googleMeetMorningPrayer: 'https://meet.google.com/skt-pttc-gmz',
   donateSponsorUrl: 'https://enellugarsantisimo.com/app/donate-sponsor/donate-sponsor.html#',
   salvavidasBookUrl:
