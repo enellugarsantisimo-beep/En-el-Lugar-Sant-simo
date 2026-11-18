@@ -130,12 +130,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label="En el Lugar Santísimo - Nosotros"
             className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 rounded-xl group shrink-0"
           >
-            <div className="h-12 w-28 sm:w-32 flex items-center justify-center overflow-hidden">
+            <div className="flex items-center justify-center">
               <img
                 src={CHURCH_INFO.logoWatermark}
                 alt="En el Lugar Santísimo - Comunidad Cristiana"
                 referrerPolicy="no-referrer"
-                className="w-24 h-24 object-contain shrink-0 invert hue-rotate-180 contrast-125 group-hover:opacity-80 transition-opacity"
+                className="w-24 sm:w-28 h-auto object-contain shrink-0 -my-5 invert hue-rotate-180 contrast-125 group-hover:opacity-80 transition-opacity"
               />
             </div>
           </button>
@@ -222,12 +222,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col z-50 overflow-y-auto">
             {/* Drawer Header with adapted watermark logo */}
             <div className="p-4 flex items-center justify-between border-b border-slate-100">
-              <div className="h-10 w-28 flex items-center justify-center overflow-hidden">
+              <div className="flex items-center justify-start">
                 <img
                   src={CHURCH_INFO.logoWatermark}
                   alt="En el Lugar Santísimo - Comunidad Cristiana"
                   referrerPolicy="no-referrer"
-                  className="w-20 h-20 object-contain shrink-0 invert hue-rotate-180 contrast-125"
+                  className="w-24 h-auto object-contain shrink-0 -my-4 invert hue-rotate-180 contrast-125"
                 />
               </div>
               <button

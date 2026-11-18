@@ -72,12 +72,12 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand & Essence */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="h-14 w-40 flex items-center justify-start overflow-hidden">
+            <div className="flex items-center justify-start">
               <img
                 src={CHURCH_INFO.logoWatermark}
                 alt="En el Lugar Santísimo - Comunidad Cristiana"
                 referrerPolicy="no-referrer"
-                className="w-32 h-32 object-contain shrink-0"
+                className="w-40 sm:w-44 h-auto object-contain shrink-0 -my-4"
               />
             </div>
 
