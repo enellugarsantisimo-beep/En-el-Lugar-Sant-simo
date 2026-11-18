@@ -474,13 +474,16 @@ export const TESTIMONIALS_DATA: Testimony[] = [
 
 export const INFO_SECTION_DATA = {
   heroBanners: {
-    banner1: '/assets/aistudio/SALVAVIDAS_BANNER_ecdb966f.png',
-    banner1AltEs: 'Banner Libro Salvavidas - El Fruto del Espíritu por Yuri Arenas Cuervo',
-    banner1AltEn: 'Book Banner Salvavidas - The Fruit of the Spirit by Yuri Arenas Cuervo',
-    bannerBackgroundNoText: '/assets/aistudio/SALVAVIDAS_BANNER__1__b471d47c.png',
-    banner2: '/assets/aistudio/SALVAVIDAS_BANNER__2__bf75a62e.png',
-    banner2AltEs: 'Reflexión del libro Salvavidas - Romanos 8:26',
-    banner2AltEn: 'Salvavidas Book Reflection - Romans 8:26',
+    slide1Background: '/assets/aistudio/SALVAVIDAS_BANNER__1__b471d47c.png',
+    slide1AltEs: 'Fondo Salvavidas en el océano - Libro Salvavidas',
+    slide1AltEn: 'Ocean lifebuoy background - Salvavidas Book',
+    slide2Background: '/assets/aistudio/SALVAVIDAS_BANNER__1__b471d47c.png',
+    slide2AltEs: 'Fondo Salvavidas para Biografía Pastoral de Yuri Arenas Cuervo',
+    slide2AltEn: 'Salvavidas background for Pastor Yuri Arenas Cuervo Biography',
+    slide3Background: '/assets/aistudio/SALVAVIDAS_BANNER__1__b471d47c.png',
+    slide3AltEs: 'Fondo Salvavidas para reflexión sobre el Espíritu Santo',
+    slide3AltEn: 'Salvavidas background for Holy Spirit reflection',
+    bookCoverImage: '/assets/aistudio/Untitled_design__3__016a8011.png',
   },
   pastorBio: {
     eyebrowEs: 'Biografía Pastoral',
@@ -501,21 +504,41 @@ export const INFO_SECTION_DATA = {
     ],
   },
   bookShowcase: {
-    badgeEs: 'DISPONIBLE AHORA',
-    badgeEn: 'AVAILABLE NOW',
+    badgeEs: 'D I S P O N I B L E   A H O R A',
+    badgeEn: 'A V A I L A B L E   N O W',
     title: 'SALVAVIDAS',
     subtitleEs: 'EL FRUTO DEL ESPÍRITU',
     subtitleEn: 'THE FRUIT OF THE SPIRIT',
-    descriptionEs: 'Adquiérelo en nuestras instalaciones o a través de nuestro WhatsApp',
-    descriptionEn: 'Available at our campus or through our official WhatsApp',
+    descriptionEs: 'Adquiérelo en nuestras instalaciones o haciendo click aquí',
+    descriptionEn: 'Get it at our campus or by clicking here',
     author: 'YURI ARENAS CUERVO',
-    image: '/src/assets/images/bocachica_social_children_1794440713765.jpg',
+    image: '/assets/aistudio/Untitled_design__3__016a8011.png',
     imageAltEs: 'Libro Salvavidas El Fruto del Espíritu por Yuri Arenas Cuervo',
     imageAltEn: 'Book Salvavidas El Fruto del Espíritu by Yuri Arenas Cuervo',
     ctaPromptEs: 'Para adquirir nuestro Libro "Salvavidas El Fruto del Espíritu"',
     ctaPromptEn: 'To purchase our book "Salvavidas El Fruto del Espíritu"',
     ctaButtonEs: 'Haz clic aquí',
     ctaButtonEn: 'Click here',
+  },
+  seriesReflection: {
+    eyebrowEs: 'Sobre el Libro · Salvavidas',
+    eyebrowEn: 'About the Book · Salvavidas',
+    paragraphsEs: [
+      'La serie "Salvavidas" nos muestra cómo el Espíritu Santo es la presencia viva de Dios para dar consuelo en estos tiempos y nos recuerda que no estamos solos en medio del océano de la vida.',
+      'Da poder que transforma lo imposible en posible y nos alimenta con su fruto, trayendo paz en cada momento. Para quienes lo desean, es el Salvavidas, la voz que susurra en el silencio, la luz que brilla en medio de la oscuridad, guiándonos al puerto de salvación. Nos recuerda, en nuestro interior, que nunca nos dejará hundir, no importa cuán profundas sean las aguas de la tormenta. El Espíritu Santo nos mantendrá a flote, descansando en su plenitud.',
+      'En este libro "Salvavidas, El Fruto del Espíritu", quiero mostrarles cómo el Espíritu Santo ha convertido en mi mejor amigo, y me ha dado de comer cada día del fruto: amor, gozo, paz, paciencia, benignidad, bondad, fe, mansedumbre y templanza. Esto me ha permitido salir adelante, haciendo la voluntad de Dios en mi vida, dejando que actuara en cada paso que daba, junto con el proceso de mi esposo y todos los sucesos del camino, dejando todo en las manos de Él.',
+      'Descubre cómo su amor transforma corazones, renueva la fe y nos sostiene como el verdadero salvavidas en nuestro caminar. Te invito a experimentar la compañía divina que nunca nos abandona.',
+    ],
+    paragraphsEn: [
+      'The "Salvavidas" series shows us how the Holy Spirit is God’s living presence to bring comfort in these times and reminds us that we are never alone in the ocean of life.',
+      'He gives power that turns the impossible into the possible and nourishes us with His fruit, bringing peace at every moment. For those who desire Him, He is the Lifebuoy, the voice whispering in silence, the light shining in darkness, guiding us to the harbor of salvation. No matter how deep the storm waters, the Holy Spirit will keep us afloat, resting in His fullness.',
+      'In this book "Salvavidas, The Fruit of the Spirit," I want to share how the Holy Spirit became my closest friend and fed me daily with His fruit: love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control—allowing me to walk forward in God’s will through every step and season.',
+      'Discover how His love transforms hearts, renews faith, and sustains us as our true lifesaver. I invite you to experience the divine companionship that never leaves us.',
+    ],
+    quoteEs: '«Así mismo, en nuestra debilidad el Espíritu acude a ayudarnos»',
+    quoteEn: '“In the same way, the Spirit helps us in our weakness.”',
+    referenceEs: 'Romanos 8:26',
+    referenceEn: 'Romans 8:26',
   },
   lifeGroupScheduleCards: [
     {
@@ -805,5 +828,38 @@ export const DONATE_SECTION_DATA = {
   socialBannerTitleEn: 'Want to support our mission work in Bocachica?',
   socialBannerCtaEs: 'Ir a Apoyo Social',
   socialBannerCtaEn: 'Go to Social Outreach',
+};
+
+export const SOS_SECTION_DATA = {
+  topPromptEs: 'Si necesitas oración en algún tema, no dudes en escribirnos',
+  topPromptEn: 'If you need prayer about any topic, do not hesitate to write to us',
+  title: 'S.O.S',
+  helplineBadgeEs: 'NEW',
+  helplineBadgeEn: 'NEW',
+  helplineNumber: '(+57) 316 7429925',
+  helplineClean: '573167429925',
+  helplineLabelEs: 'Línea de ayuda',
+  helplineLabelEn: 'Help Line',
+  scriptureLine1Es: '¡Voy a hacer algo nuevo!',
+  scriptureLine1En: 'See, I am doing a new thing!',
+  scriptureLine2Es: 'Ya está sucediendo',
+  scriptureLine2En: 'Now it springs up',
+  scriptureRefEs: 'Isaías 43:19',
+  scriptureRefEn: 'Isaiah 43:19',
+  // Editable independent visual asset slots (leave empty string to use the built-in vector artwork or set a custom image URL)
+  visuals: {
+    backgroundImage: '',
+    backgroundImageAltEs: 'Fondo de la sección S.O.S',
+    backgroundImageAltEn: 'S.O.S section background',
+    largeVinylImage: '',
+    smallVinylImage: '',
+    bibleButtonImage: '',
+  },
+  formTitleEs: 'Escríbenos tu petición de oración o ayuda',
+  formTitleEn: 'Write Your Prayer or Help Request',
+  formSubtitleEs:
+    'Este espacio es confidencial. Nuestro equipo de oración y cuidado pastoral responderá a tu mensaje con amor y discreción.',
+  formSubtitleEn:
+    'This space is confidential. Our prayer and pastoral care team will respond to your message with love and discretion.',
 };
 

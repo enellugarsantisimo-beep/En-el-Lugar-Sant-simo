@@ -182,8 +182,14 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
     },
   ];
 
-  const { heroBanners, pastorBio, bookShowcase, lifeGroupScheduleCards, activities } =
-    INFO_SECTION_DATA;
+  const {
+    heroBanners,
+    pastorBio,
+    bookShowcase,
+    seriesReflection,
+    lifeGroupScheduleCards,
+    activities,
+  } = INFO_SECTION_DATA;
   const selectedGroup = lifeGroupScheduleCards.find((g) => g.id === activeGroupCard) ?? lifeGroupScheduleCards[0];
 
   const handlePrevSlide = () => {
@@ -196,7 +202,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
 
   return (
     <div className="space-y-16 lg:space-y-24 pb-20">
-      {/* 1. INDEPENDENT PAGE HERO + 3-SLIDE FULL-BACKGROUND SLIDER */}
+      {/* 1. INDEPENDENT PAGE HERO + 3-SLIDE EDITABLE BACKGROUND SLIDER */}
       <section className="bg-gradient-to-b from-stone-100 to-white pt-8 pb-14 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
@@ -210,67 +216,98 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
             <span className="text-rose-600 font-semibold">Info</span>
           </nav>
 
-          {/* 3-Slide Showcase Slider (Background images with content overlaid on top, never below) */}
+          {/* 3-Slide Showcase Slider (Independent Background Images + 100% Editable Text Overlaid on Top) */}
           <div
             onMouseEnter={() => setIsHeroHovered(true)}
             onMouseLeave={() => setIsHeroHovered(false)}
             className="relative rounded-3xl bg-slate-950 text-white border border-slate-800 shadow-2xl overflow-hidden"
           >
             {heroSlide === 0 && (
-              /* SLIDE 1: BANNER 1 (SALVAVIDAS DISPONIBLE AHORA) */
-              <div className="relative w-full aspect-[16/9] lg:aspect-auto lg:h-[520px]">
+              /* SLIDE 1: LIBRO SALVAVIDAS - FONDO INDEPENDIENTE + TEXTOS EDITABLES ENCIMA */
+              <div className="relative w-full min-h-[440px] sm:min-h-[480px] lg:min-h-[520px] flex items-center">
                 <img
-                  src={heroBanners.banner1}
-                  alt={lang === 'es' ? heroBanners.banner1AltEs : heroBanners.banner1AltEn}
+                  src={heroBanners.slide1Background}
+                  alt={lang === 'es' ? heroBanners.slide1AltEs : heroBanners.slide1AltEn}
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-cyan-950/70 to-slate-950/55" />
 
-                {/* Interactive CTA overlaid cleanly on top of Banner 1 */}
-                <div className="absolute bottom-10 sm:bottom-14 right-4 sm:right-12 flex flex-wrap items-center justify-end gap-2 sm:gap-3 z-10">
-                  <a
-                    href={CHURCH_INFO.salvavidasBookUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2 sm:px-6 sm:py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-[11px] sm:text-sm rounded-xl transition-all shadow-xl inline-flex items-center gap-1.5 sm:gap-2"
-                  >
-                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
-                    <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                  </a>
-                  <a
-                    href={CHURCH_INFO.social.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hidden sm:inline-flex px-5 py-3 bg-slate-900/85 hover:bg-slate-900 text-white border border-white/25 backdrop-blur-sm font-semibold text-sm rounded-xl transition-colors items-center gap-2"
-                  >
-                    <MessageCircle className="w-4 h-4 text-emerald-400" />
-                    <span>WhatsApp</span>
-                  </a>
+                <div className="relative z-10 w-full px-10 sm:px-14 lg:px-16 pt-10 pb-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  {/* Independent 3D Book Image */}
+                  <div className="lg:col-span-4 flex justify-center">
+                    <img
+                      src={heroBanners.bookCoverImage}
+                      alt={lang === 'es' ? bookShowcase.imageAltEs : bookShowcase.imageAltEn}
+                      referrerPolicy="no-referrer"
+                      className="w-48 sm:w-56 lg:w-64 h-auto object-contain drop-shadow-[0_24px_38px_rgba(0,0,0,0.65)]"
+                    />
+                  </div>
+
+                  {/* All Editable Headline & CTA Copy Overlaid on Image */}
+                  <div className="lg:col-span-8 text-center lg:text-left space-y-4">
+                    <span className="inline-block text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase text-sky-300">
+                      {lang === 'es' ? bookShowcase.badgeEs : bookShowcase.badgeEn}
+                    </span>
+
+                    <div className="space-y-1">
+                      <h1 className="text-4xl sm:text-6xl font-black font-display tracking-tight text-white drop-shadow-md leading-none">
+                        {bookShowcase.title}
+                      </h1>
+                      <p className="text-xl sm:text-3xl font-bold tracking-wider text-stone-100 drop-shadow">
+                        {lang === 'es' ? bookShowcase.subtitleEs : bookShowcase.subtitleEn}
+                      </p>
+                    </div>
+
+                    <p className="text-sm sm:text-lg text-stone-200 max-w-xl mx-auto lg:mx-0">
+                      {lang === 'es' ? bookShowcase.descriptionEs : bookShowcase.descriptionEn}
+                    </p>
+
+                    <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                      <a
+                        href={CHURCH_INFO.salvavidasBookUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs sm:text-sm rounded-xl transition-all shadow-xl inline-flex items-center gap-2"
+                      >
+                        <BookOpen className="w-4 h-4" />
+                        <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                      <a
+                        href={CHURCH_INFO.social.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-3 bg-slate-900/80 hover:bg-slate-900 text-white border border-white/25 backdrop-blur-sm font-semibold text-xs sm:text-sm rounded-xl transition-colors inline-flex items-center gap-2"
+                      >
+                        <MessageCircle className="w-4 h-4 text-emerald-400" />
+                        <span>WhatsApp</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
 
             {heroSlide === 1 && (
-              /* SLIDE 2: TEXT-FREE BANNER 1 AS BACKGROUND + PASTOR BIO TEXT OVERLAID ON TOP */
-              <div className="relative w-full min-h-[420px] sm:min-h-[460px] lg:min-h-[520px] flex items-center">
+              /* SLIDE 2: BIOGRAFÍA PASTORAL - FONDO INDEPENDIENTE + TEXTOS EDITABLES ENCIMA */
+              <div className="relative w-full min-h-[440px] sm:min-h-[480px] lg:min-h-[520px] flex items-center">
                 <img
-                  src={heroBanners.bannerBackgroundNoText}
-                  alt={lang === 'es' ? pastorBio.imageAltEs : pastorBio.imageAltEn}
+                  src={heroBanners.slide2Background}
+                  alt={lang === 'es' ? heroBanners.slide2AltEs : heroBanners.slide2AltEn}
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/88 via-slate-950/75 to-slate-950/50" />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/78 to-slate-950/55" />
 
-                <div className="relative z-10 w-full px-11 sm:px-14 lg:px-16 pt-8 pb-14 max-w-4xl space-y-3 sm:space-y-4">
+                <div className="relative z-10 w-full px-11 sm:px-14 lg:px-16 pt-10 pb-14 max-w-4xl space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-widest">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>{lang === 'es' ? pastorBio.eyebrowEs : pastorBio.eyebrowEn}</span>
                   </div>
-                  <h1 className="text-2xl sm:text-4xl font-bold font-display text-white drop-shadow">
+                  <h2 className="text-2xl sm:text-4xl font-bold font-display text-white drop-shadow">
                     {pastorBio.name}
-                  </h1>
+                  </h2>
                   <div className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-stone-100 leading-relaxed italic drop-shadow-sm">
                     {(lang === 'es' ? pastorBio.paragraphsEs : pastorBio.paragraphsEn).map(
                       (para, i) => (
@@ -283,27 +320,67 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
             )}
 
             {heroSlide === 2 && (
-              /* SLIDE 3: BANNER 2 (SERIE SALVAVIDAS + ROMANOS 8:26) */
-              <div className="relative w-full aspect-[16/9] lg:aspect-auto lg:h-[520px]">
+              /* SLIDE 3: REFLEXIÓN SERIE SALVAVIDAS - FONDO INDEPENDIENTE + TEXTOS EDITABLES ENCIMA */
+              <div className="relative w-full min-h-[440px] sm:min-h-[480px] lg:min-h-[520px] flex items-center">
                 <img
-                  src={heroBanners.banner2}
-                  alt={lang === 'es' ? heroBanners.banner2AltEs : heroBanners.banner2AltEn}
+                  src={heroBanners.slide3Background}
+                  alt={lang === 'es' ? heroBanners.slide3AltEs : heroBanners.slide3AltEn}
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/92 via-slate-950/78 to-cyan-950/55" />
 
-                <div className="absolute bottom-10 sm:bottom-14 left-4 sm:left-14 z-10">
-                  <a
-                    href={CHURCH_INFO.salvavidasBookUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-sky-500/95 hover:bg-sky-400 text-slate-950 font-bold text-[11px] sm:text-sm rounded-xl transition-all shadow-xl inline-flex items-center gap-1.5 sm:gap-2 backdrop-blur-sm"
-                  >
-                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
-                    <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                  </a>
+                <div className="relative z-10 w-full px-11 sm:px-14 lg:px-16 pt-10 pb-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  {/* Left: Editable Reflection Copy + Romanos 8:26 Quote */}
+                  <div className="lg:col-span-8 space-y-3 text-left">
+                    <div className="inline-flex items-center gap-2 text-xs font-bold text-sky-300 uppercase tracking-widest">
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>
+                        {lang === 'es' ? seriesReflection.eyebrowEs : seriesReflection.eyebrowEn}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 text-xs sm:text-sm text-stone-100 leading-relaxed italic drop-shadow-sm">
+                      {(lang === 'es'
+                        ? seriesReflection.paragraphsEs
+                        : seriesReflection.paragraphsEn
+                      ).map((para, i) => (
+                        <p key={i}>{para}</p>
+                      ))}
+                    </div>
+
+                    <div className="pt-2 space-y-1">
+                      <p className="text-base sm:text-xl font-black font-display text-white drop-shadow">
+                        {lang === 'es' ? seriesReflection.quoteEs : seriesReflection.quoteEn}
+                      </p>
+                      <span className="text-sm sm:text-base font-bold text-amber-300 block">
+                        {lang === 'es' ? seriesReflection.referenceEs : seriesReflection.referenceEn}
+                      </span>
+                    </div>
+
+                    <div className="pt-2">
+                      <a
+                        href={CHURCH_INFO.salvavidasBookUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs sm:text-sm rounded-xl transition-all shadow-xl inline-flex items-center gap-2"
+                      >
+                        <BookOpen className="w-4 h-4" />
+                        <span>{lang === 'es' ? bookShowcase.ctaButtonEs : bookShowcase.ctaButtonEn}</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Right: Independent 3D Book Image */}
+                  <div className="lg:col-span-4 flex justify-center">
+                    <img
+                      src={heroBanners.bookCoverImage}
+                      alt={lang === 'es' ? bookShowcase.imageAltEs : bookShowcase.imageAltEn}
+                      referrerPolicy="no-referrer"
+                      className="w-48 sm:w-56 lg:w-64 h-auto object-contain drop-shadow-[0_24px_38px_rgba(0,0,0,0.65)]"
+                    />
+                  </div>
                 </div>
               </div>
             )}

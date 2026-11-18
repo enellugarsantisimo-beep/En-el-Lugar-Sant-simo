@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { PageId, PastoralCareRequest } from '../types';
-import { CHURCH_INFO } from '../data/churchData';
+import { SOS_SECTION_DATA } from '../data/churchData';
 import { useLanguage } from '../context/LanguageContext';
+import { RedVinylDisc, BibleEmergencyArt } from '../components/common/SosArtwork';
 import {
   Phone,
-  Mail,
-  MapPin,
-  Clock,
   Lock,
   Send,
   CheckCircle,
@@ -23,55 +21,55 @@ interface ContactCarePageProps {
 export const ContactCarePage: React.FC<ContactCarePageProps> = ({
   onNavigate,
 }) => {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const [formData, setFormData] = useState<PastoralCareRequest>({
     fullName: '',
     phone: '',
     email: '',
-    reason: 'Orientación espiritual',
+    reason: 'Oración',
     message: '',
     preferredContact: 'WhatsApp',
     isConfidential: true,
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
+
+  const handleCopyPhone = () => {
+    navigator.clipboard.writeText(SOS_SECTION_DATA.helplineNumber);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 2200);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(CHURCH_INFO.email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
-  };
+  const whatsappDirectUrl = `https://wa.me/${SOS_SECTION_DATA.helplineClean}?text=${encodeURIComponent(
+    t(
+      'Hola, necesito oración y acompañamiento en la Línea de ayuda S.O.S.',
+      'Hello, I need prayer and support via the S.O.S Help Line.'
+    )
+  )}`;
 
-  const biblicalComfortVerses = [
-    {
-      verse: '«Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.»',
-      ref: 'Mateo 11:28',
-    },
-    {
-      verse: '«Cercano está Jehová a los quebrantados de corazón; y salva a los contritos de espíritu.»',
-      ref: 'Salmo 34:18',
-    },
-    {
-      verse: '«No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo...»',
-      ref: 'Isaías 41:10',
-    },
-  ];
+  const formWhatsappUrl = `https://wa.me/${SOS_SECTION_DATA.helplineClean}?text=${encodeURIComponent(
+    `S.O.S - ${formData.reason}\n${t('Nombre', 'Name')}: ${formData.fullName}\n${t(
+      'Teléfono',
+      'Phone'
+    )}: ${formData.phone}\n${t('Mensaje', 'Message')}: ${formData.message}`
+  )}`;
 
   return (
-    <div className="space-y-16 lg:space-y-24 pb-20">
-      {/* 1. INDEPENDENT PAGE HERO */}
-      <section className="bg-gradient-to-b from-stone-100 to-white pt-8 pb-14 border-b border-slate-200">
+    <div className="space-y-12 lg:space-y-16 pb-20">
+      {/* 1. BREADCRUMB + S.O.S HERO SHOWCASE (SEPARATED IMAGES + 100% EDITABLE TEXTS) */}
+      <section className="bg-stone-100 pt-8 pb-12 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
             <button
+              type="button"
               onClick={() => onNavigate('nosotros')}
-              className="hover:text-slate-900 transition-colors"
+              className="hover:text-slate-900 transition-colors cursor-pointer"
             >
               {t('Nosotros', 'About Us')}
             </button>
@@ -79,137 +77,230 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             <span className="text-rose-600 font-semibold">S.O.S</span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-                {t('S.O.S · Cuidado Pastoral y Cercanía', 'S.O.S · Pastoral Care & Support')}
-              </span>
-              <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
-                {t(
-                  'No estás solo: Estamos aquí para caminar contigo',
-                  'You Are Not Alone: We Are Here to Walk With You'
-                )}
-              </h1>
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                {t(
-                  'Todos atravesamos momentos donde necesitamos ser escuchados, recibir una palabra oportuna de Dios y orar juntos. Nuestro equipo pastoral y de consejeros te ofrece un espacio confidencial y de acogida sin juzgarte.',
-                  'Everyone goes through seasons where we need to be heard, receive a timely word from God, and pray together. Our pastoral team offers a confidential, welcoming space without judgment.'
-                )}
+          {/* Dark Editorial S.O.S Hero Banner matching user design with fully separated layers */}
+          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-blue-950 via-slate-950 to-black text-white shadow-2xl border border-slate-800 min-h-[520px] sm:min-h-[560px] flex flex-col justify-between p-6 sm:p-10 lg:p-14">
+            {/* Optional independent background image slot */}
+            {SOS_SECTION_DATA.visuals.backgroundImage && (
+              <img
+                src={SOS_SECTION_DATA.visuals.backgroundImage}
+                alt={
+                  lang === 'es'
+                    ? SOS_SECTION_DATA.visuals.backgroundImageAltEs
+                    : SOS_SECTION_DATA.visuals.backgroundImageAltEn
+                }
+                referrerPolicy="no-referrer"
+                className="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none"
+              />
+            )}
+
+            {/* Ambient navy radial glow */}
+            <div
+              aria-hidden="true"
+              className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-blue-700/25 blur-3xl pointer-events-none"
+            />
+
+            {/* Independent Graphic Layer: Large Red Vinyl Disc (Right) */}
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute right-4 lg:right-12 top-1/2 -translate-y-1/2 w-64 h-64 lg:w-[370px] lg:h-[370px] pointer-events-none z-0 opacity-95"
+            >
+              <RedVinylDisc
+                customImage={SOS_SECTION_DATA.visuals.largeVinylImage || undefined}
+                className="w-full h-full"
+              />
+            </div>
+
+            {/* Independent Graphic Layer: Small Red Vinyl Disc + Bible & Push Button (Bottom-Left on Desktop) */}
+            <div
+              aria-hidden="true"
+              className="hidden md:flex items-center justify-center absolute left-8 lg:left-24 bottom-6 lg:bottom-8 w-52 h-52 lg:w-64 lg:h-64 pointer-events-none z-0"
+            >
+              <RedVinylDisc
+                customImage={SOS_SECTION_DATA.visuals.smallVinylImage || undefined}
+                className="w-44 h-44 lg:w-56 lg:h-56"
+              />
+              <BibleEmergencyArt
+                customImage={SOS_SECTION_DATA.visuals.bibleButtonImage || undefined}
+                className="absolute w-36 h-36 lg:w-44 lg:h-44 translate-y-2"
+              />
+            </div>
+
+            {/* Editable Top Prompt Text */}
+            <div className="relative z-10">
+              <p className="text-sm sm:text-lg lg:text-xl font-medium text-white/95 tracking-tight max-w-2xl">
+                {lang === 'es'
+                  ? SOS_SECTION_DATA.topPromptEs
+                  : SOS_SECTION_DATA.topPromptEn}
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                <Clock className="w-4 h-4 text-rose-600" />
-                <span>{t('Horarios de Atención Pastoral', 'Pastoral Care Hours')}</span>
+            {/* Center Editable Typography + Interactive Helpline Badge + Scripture Note */}
+            <div className="relative z-10 my-auto py-8 flex flex-col items-center md:items-start md:pl-20 lg:pl-44 space-y-6">
+              {/* Row 1: S.O.S Display Title + Interactive Helpline Sticker */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                <h1
+                  className="font-display font-black italic text-6xl sm:text-7xl lg:text-8xl tracking-tight text-white select-text leading-none"
+                  style={{
+                    textShadow: '4px 5px 0px #5c1916, 7px 9px 18px rgba(0,0,0,0.85)',
+                  }}
+                >
+                  {SOS_SECTION_DATA.title}
+                </h1>
+
+                {/* Editable White/Yellow Helpline Card */}
+                <div className="relative bg-white text-slate-950 shadow-2xl border border-stone-200 min-w-[230px] sm:min-w-[255px] transform -rotate-1 hover:rotate-0 transition-transform">
+                  {/* Top Phone Row (Clickable WhatsApp Link) */}
+                  <a
+                    href={whatsappDirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-4 pt-3 pb-2 hover:bg-stone-50 transition-colors"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0">
+                      <Phone className="w-3 h-3" />
+                    </span>
+                    <span className="font-display font-extrabold text-base sm:text-lg tracking-tight text-slate-900">
+                      {SOS_SECTION_DATA.helplineNumber}
+                    </span>
+                  </a>
+
+                  {/* Bottom Yellow Strip + Diagonal Red NEW Badge */}
+                  <div className="relative bg-amber-300 px-4 py-1 flex items-center justify-center overflow-hidden">
+                    <span className="absolute -left-2 bottom-0.5 -rotate-12 bg-red-600 text-white text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 shadow-sm">
+                      {lang === 'es'
+                        ? SOS_SECTION_DATA.helplineBadgeEs
+                        : SOS_SECTION_DATA.helplineBadgeEn}
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold italic text-slate-900 pl-6">
+                      {lang === 'es'
+                        ? SOS_SECTION_DATA.helplineLabelEs
+                        : SOS_SECTION_DATA.helplineLabelEn}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="text-xs text-slate-600 space-y-1">
-                <p><strong>{t('Lunes a Viernes:', 'Monday to Friday:')}</strong> 9:00 am – 5:00 pm</p>
-                <p><strong>{t('Sábados (Ayuno):', 'Saturdays (Fasting):')}</strong> 10:00 am – 12:00 pm</p>
-                <p><strong>{t('Domingos:', 'Sundays:')}</strong> {t('Antes y después de la reunión general', 'Before and after the general service')}</p>
+
+              {/* Row 2: Editable Scripture Note Card (Isaiah 43:19) */}
+              <div className="relative sm:ml-16 lg:ml-24 max-w-xs w-full bg-stone-100 text-slate-900 shadow-2xl border border-stone-200">
+                <div className="px-5 pt-4 pb-3 text-center space-y-1">
+                  <p className="text-sm sm:text-base font-bold italic text-slate-900 leading-snug">
+                    {lang === 'es'
+                      ? SOS_SECTION_DATA.scriptureLine1Es
+                      : SOS_SECTION_DATA.scriptureLine1En}
+                    <br />
+                    {lang === 'es'
+                      ? SOS_SECTION_DATA.scriptureLine2Es
+                      : SOS_SECTION_DATA.scriptureLine2En}
+                  </p>
+                  <p className="text-xs sm:text-sm font-semibold text-slate-700 pt-1">
+                    {lang === 'es'
+                      ? SOS_SECTION_DATA.scriptureRefEs
+                      : SOS_SECTION_DATA.scriptureRefEn}
+                  </p>
+                </div>
+
+                {/* Yellow & black chevron strip + smiley badge */}
+                <div className="relative h-3 bg-amber-400 border-t border-amber-500/50 overflow-hidden flex items-center">
+                  <div
+                    aria-hidden="true"
+                    className="w-full h-full opacity-80"
+                    style={{
+                      backgroundImage:
+                        'repeating-linear-gradient(120deg, #1e293b 0px, #1e293b 6px, transparent 6px, transparent 14px)',
+                    }}
+                  />
+                </div>
+
+                {/* Cheerful Yellow Smiley Sticker Accent */}
+                <svg
+                  viewBox="0 0 36 36"
+                  aria-hidden="true"
+                  className="w-8 h-8 absolute -right-3 -bottom-2.5 rotate-12 drop-shadow-md pointer-events-none"
+                >
+                  <circle cx="18" cy="18" r="16" fill="#fde047" stroke="#ca8a04" strokeWidth="1.5" />
+                  <ellipse cx="13" cy="14" rx="1.6" ry="2.6" fill="#1e293b" />
+                  <ellipse cx="23" cy="14" rx="1.6" ry="2.6" fill="#1e293b" />
+                  <path
+                    d="M11 21 Q18 27 25 21"
+                    fill="none"
+                    stroke="#1e293b"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </div>
-              <a
-                href={`https://wa.me/${CHURCH_INFO.phoneClean}?text=Hola,%20quisiera%20solicitar%20acompa%C3%B1amiento%20pastoral.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>{t('Abrir chat de WhatsApp', 'Open WhatsApp chat')}</span>
-              </a>
+
+              {/* Quick Direct Action Buttons (WhatsApp & Copy Helpline) */}
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
+                <a
+                  href={whatsappDirectUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm rounded-xl shadow-lg transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>{t('Escribir por WhatsApp ahora', 'Message on WhatsApp now')}</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopyPhone}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-semibold rounded-xl transition-colors cursor-pointer"
+                >
+                  {copiedPhone ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-400" />
+                      <span className="text-emerald-300">
+                        {t('Número copiado', 'Number copied')}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span>{t('Copiar línea', 'Copy helpline')}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile-only clean visual strip below copy so nothing overlaps on small screens */}
+            <div className="relative z-10 flex md:hidden items-center justify-center gap-6 pt-4 border-t border-white/10">
+              <div className="relative w-28 h-28 flex items-center justify-center">
+                <RedVinylDisc
+                  customImage={SOS_SECTION_DATA.visuals.smallVinylImage || undefined}
+                  className="w-28 h-28"
+                />
+                <BibleEmergencyArt
+                  customImage={SOS_SECTION_DATA.visuals.bibleButtonImage || undefined}
+                  className="absolute w-24 h-24"
+                />
+              </div>
+              <RedVinylDisc
+                customImage={SOS_SECTION_DATA.visuals.largeVinylImage || undefined}
+                className="w-28 h-28"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. CANALES DIRECTOS DE CONTACTO */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-              <Phone className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-slate-900 font-display">
-              {t('Línea Directa / WhatsApp', 'Direct Line / WhatsApp')}
-            </h3>
-            <p className="text-xs text-slate-600">
-              {t(
-                'Escríbenos para peticiones de oración, orientación sobre horarios o asistencia a células.',
-                'Write to us for prayer requests, schedule info, or home cell group attendance.'
-              )}
-            </p>
-            <a
-              href={`https://wa.me/${CHURCH_INFO.phoneClean}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-sm font-bold text-emerald-700 hover:text-emerald-800 block pt-1"
-            >
-              +57 3054351398
-            </a>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-              <Mail className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-slate-900 font-display">
-              {t('Correo Electrónico', 'Email Address')}
-            </h3>
-            <p className="text-xs text-slate-600">
-              {t(
-                'Para cartas formales, consultas sobre voluntariado o contacto con el liderazgo pastoral.',
-                'For formal letters, volunteering inquiries, or contacting pastoral leadership.'
-              )}
-            </p>
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-xs font-semibold text-slate-900 truncate">
-                {CHURCH_INFO.email}
-              </span>
-              <button
-                onClick={handleCopyEmail}
-                className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
-              >
-                {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedEmail ? t('Copiado', 'Copied') : t('Copiar', 'Copy')}</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-              <MapPin className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-base text-slate-900 font-display">
-              {t('Sede Presencial Bogotá', 'Bogotá In-Person Campus')}
-            </h3>
-            <p className="text-xs text-slate-600">
-              Av. Calle 24 #72b–30 (Modelia / Salitre Occidental), Bogotá, Colombia.
-            </p>
-            <button
-              onClick={() => onNavigate('info')}
-              className="text-xs font-bold text-rose-600 hover:text-rose-700 block pt-1 text-left"
-            >
-              {t('Ver mapa y cómo llegar →', 'View map & directions →')}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. FORMULARIO INTEGRAL DE ACOMPAÑAMIENTO PASTORAL */}
+      {/* 2. FORMULARIO CONFIDENCIAL S.O.S (CONEXIÓN DIRECTA CON LA LÍNEA DE AYUDA) */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6">
         <div className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-6">
           <div className="text-center space-y-2">
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-              {t('Solicitud Confidencial', 'Confidential Request')}
+              S.O.S · {t('Oración Confidencial', 'Confidential Prayer')}
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
-              {t('Formulario de Acompañamiento', 'Pastoral Care Form')}
+              {lang === 'es'
+                ? SOS_SECTION_DATA.formTitleEs
+                : SOS_SECTION_DATA.formTitleEn}
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm max-w-lg mx-auto">
-              {t(
-                'Diligencia este formulario. Tu información será tratada con estricta reserva pastoral y un miembro de nuestro equipo se comunicará contigo con delicadeza.',
-                'Fill out this form. Your information will be handled with strict pastoral confidentiality and a team member will reach out carefully.'
-              )}
+              {lang === 'es'
+                ? SOS_SECTION_DATA.formSubtitleEs
+                : SOS_SECTION_DATA.formSubtitleEn}
             </p>
           </div>
 
@@ -217,31 +308,44 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             <div className="p-8 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-4">
               <CheckCircle className="w-12 h-12 text-emerald-600 mx-auto" />
               <h4 className="text-xl font-bold font-display text-emerald-950">
-                {t('¡Tu solicitud ha sido entregada al equipo pastoral!', 'Your request has been delivered to our pastoral team!')}
+                {t(
+                  '¡Tu petición ha sido registrada!',
+                  'Your prayer request has been received!'
+                )}
               </h4>
               <p className="text-xs sm:text-sm text-emerald-800 leading-relaxed max-w-md mx-auto">
                 {t(
-                  `Nos pondremos en contacto contigo a través de ${formData.preferredContact} en el transcurso de las próximas 24 horas. Recuerda que no estás solo: Dios tiene cuidado de ti.`,
-                  `We will contact you via ${formData.preferredContact} within the next 24 hours. Remember you are not alone: God cares for you.`
+                  `Nuestro equipo de oración intercederá por ti y te contactará por ${formData.preferredContact}. También puedes enviar tu mensaje directamente a nuestra Línea de ayuda S.O.S por WhatsApp.`,
+                  `Our prayer team will pray with you and reach out via ${formData.preferredContact}. You can also send this message directly to our S.O.S Help Line on WhatsApp.`
                 )}
               </p>
-              <div className="pt-2">
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <a
+                  href={formWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>{t('Enviar también por WhatsApp', 'Also send via WhatsApp')}</span>
+                </a>
                 <button
+                  type="button"
                   onClick={() => {
                     setSubmitted(false);
                     setFormData({
                       fullName: '',
                       phone: '',
                       email: '',
-                      reason: 'Orientación espiritual',
+                      reason: 'Oración',
                       message: '',
                       preferredContact: 'WhatsApp',
                       isConfidential: true,
                     });
                   }}
-                  className="px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-semibold"
+                  className="px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-semibold cursor-pointer"
                 >
-                  {t('Enviar otra solicitud', 'Send another request')}
+                  {t('Enviar otra petición', 'Send another request')}
                 </button>
               </div>
             </div>
@@ -293,58 +397,47 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    {t('Motivo principal', 'Primary reason')}
+                    {t('Motivo de oración', 'Prayer topic')}
                   </label>
                   <select
                     value={formData.reason}
-                    onChange={(e) => setFormData({ ...formData, reason: e.target.value as any })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        reason: e.target.value as PastoralCareRequest['reason'],
+                      })
+                    }
                     className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 bg-white"
                   >
-                    <option value="Oración">{t('Necesito oración urgente', 'I need urgent prayer')}</option>
-                    <option value="Consejería familiar">{t('Consejería familiar o matrimonial', 'Family or marriage counseling')}</option>
-                    <option value="Duelo / Pérdida">{t('Duelo o pérdida reciente', 'Grief or recent loss')}</option>
-                    <option value="Orientación espiritual">{t('Orientación espiritual / Dudas de fe', 'Spiritual guidance / Questions of faith')}</option>
-                    <option value="Primera visita">{t('Quiero visitar la iglesia y ser recibido', 'I want to visit the church')}</option>
+                    <option value="Oración">
+                      {t('Petición de oración', 'Prayer request')}
+                    </option>
+                    <option value="Consejería familiar">
+                      {t('Consejería familiar o matrimonial', 'Family or marriage counseling')}
+                    </option>
+                    <option value="Duelo / Pérdida">
+                      {t('Duelo o pérdida reciente', 'Grief or recent loss')}
+                    </option>
+                    <option value="Orientación espiritual">
+                      {t('Orientación espiritual', 'Spiritual guidance')}
+                    </option>
                   </select>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  {t('Medio de contacto preferido', 'Preferred contact method')}
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {(['WhatsApp', 'Llamada', 'Reunión Presencial'] as const).map((m) => (
-                    <button
-                      type="button"
-                      key={m}
-                      onClick={() => setFormData({ ...formData, preferredContact: m })}
-                      className={`py-2 text-xs font-medium rounded-lg border transition-colors ${
-                        formData.preferredContact === m
-                          ? 'bg-slate-900 text-white border-slate-900 font-bold'
-                          : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                      }`}
-                    >
-                      {m === 'Llamada'
-                        ? t('Llamada', 'Phone Call')
-                        : m === 'Reunión Presencial'
-                        ? t('Reunión Presencial', 'In-Person Meeting')
-                        : m}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  {t('Mensaje o detalle de la situación', 'Message or details')}
+                  {t('Tu mensaje o petición', 'Your message or prayer need')}
                 </label>
                 <textarea
                   required
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder={t('Escribe con confianza aquello en lo que necesitas apoyo o consejo...', 'Share openly where you need support or counsel...')}
+                  placeholder={t(
+                    'Escríbenos con confianza el tema por el cual deseas que oremos...',
+                    'Share openly what you would like us to pray with you about...'
+                  )}
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                 />
               </div>
@@ -353,49 +446,21 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
                 <Lock className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>
                   {t(
-                    'Tu mensaje será manejado con absoluta reserva por el equipo de pastores de En el Lugar Santísimo.',
-                    'Your message will be handled in strict confidence by the pastoral team of En el Lugar Santísimo.'
+                    'Tu petición será tratada con absoluta reserva por el equipo pastoral de En el Lugar Santísimo.',
+                    'Your request will be handled in strict confidence by the pastoral team at En el Lugar Santísimo.'
                   )}
                 </span>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs rounded-xl shadow-md transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{t('Solicitar Acompañamiento', 'Request Pastoral Support')}</span>
+                <span>{t('Enviar Petición S.O.S', 'Send S.O.S Request')}</span>
               </button>
             </form>
           )}
-        </div>
-      </section>
-
-      {/* 4. PALABRAS DE ESPERANZA */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6">
-        <div className="text-center space-y-1">
-          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            {t('Promesas Bíblicas', 'Biblical Promises')}
-          </span>
-          <h3 className="text-2xl font-bold font-display text-slate-900">
-            {t('Una palabra de paz para tu corazón hoy', 'A Word of Peace for Your Heart Today')}
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {biblicalComfortVerses.map((item, idx) => (
-            <div
-              key={idx}
-              className="p-5 rounded-2xl bg-stone-100 border border-stone-200 space-y-3 flex flex-col justify-between"
-            >
-              <p className="font-serif italic text-xs sm:text-sm text-slate-800 leading-relaxed">
-                {item.verse}
-              </p>
-              <span className="font-sans font-bold text-xs text-rose-600 block pt-1 border-t border-stone-200">
-                {item.ref}
-              </span>
-            </div>
-          ))}
         </div>
       </section>
     </div>
