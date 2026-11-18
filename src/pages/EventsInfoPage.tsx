@@ -114,7 +114,9 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
 }) => {
   const { lang, t } = useLanguage();
   const [heroSlide, setHeroSlide] = useState<0 | 1>(0);
-  const [activeGroupCard, setActiveGroupCard] = useState<string | null>('parejas');
+  const [activeGroupCard, setActiveGroupCard] = useState<string>('parejas');
+  const [hoveredGroupInfo, setHoveredGroupInfo] = useState<string | null>(null);
+  const [pinnedGroupInfo, setPinnedGroupInfo] = useState<string | null>(null);
 
   // Scroll-driven rotation for the social spheres (rotates forward scrolling down, reverse scrolling up)
   const { scrollY } = useScroll();
@@ -380,20 +382,33 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
         </div>
       </section>
 
-      {/* 3. ÚNETE AQUÍ A NUESTROS GRUPOS DE VIDA (CON ÍCONOS (i) Y DATOS EDITABLES) */}
+      {/* 3. ÚNETE AQUÍ A NUESTROS GRUPOS DE VIDA (POPOVERS EN ÍCONOS (i) + TARJETA FLYER EDITABLE) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="rounded-3xl bg-gradient-to-br from-rose-50 via-stone-100 to-purple-50 border border-slate-200 p-8 sm:p-12 shadow-sm space-y-10">
+        <div className="rounded-3xl bg-gradient-to-br from-rose-50 via-stone-100 to-purple-50 border border-slate-200 p-6 sm:p-12 shadow-sm space-y-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Group Selector Pills + White (i) Info Buttons */}
+            {/* Group Selector Pills + Floating Popover on White/Dark (i) Info Buttons */}
             <div className="lg:col-span-6 space-y-4">
               {lifeGroupScheduleCards.map((grp) => {
                 const isSelected = activeGroupCard === grp.id;
+                const isPopoverOpen = hoveredGroupInfo === grp.id || pinnedGroupInfo === grp.id;
+
                 return (
-                  <div key={grp.id} className="flex items-center gap-3">
+                  <div
+                    key={grp.id}
+                    className="relative flex items-center gap-3"
+                    onMouseLeave={() => {
+                      if (hoveredGroupInfo === grp.id) {
+                        setHoveredGroupInfo(null);
+                      }
+                    }}
+                  >
                     <button
                       type="button"
-                      onClick={() => setActiveGroupCard(grp.id)}
-                      className={`px-6 py-3 rounded-full font-display font-extrabold text-base sm:text-lg tracking-wide border shadow-md transition-all cursor-pointer ${
+                      onClick={() => {
+                        setActiveGroupCard(grp.id);
+                        setPinnedGroupInfo((prev) => (prev === grp.id ? null : grp.id));
+                      }}
+                      className={`px-6 py-3 rounded-full font-display font-extrabold text-base sm:text-lg tracking-wide border shadow-md transition-all cursor-pointer underline underline-offset-4 ${
                         grp.badgeColor
                       } ${isSelected ? 'ring-4 ring-rose-300 scale-[1.03]' : 'opacity-90 hover:opacity-100'}`}
                     >
@@ -402,18 +417,186 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
 
                     <button
                       type="button"
-                      onMouseEnter={() => setActiveGroupCard(grp.id)}
-                      onClick={() => setActiveGroupCard(grp.id)}
+                      onMouseEnter={() => {
+                        setHoveredGroupInfo(grp.id);
+                        setActiveGroupCard(grp.id);
+                      }}
+                      onFocus={() => {
+                        setHoveredGroupInfo(grp.id);
+                        setActiveGroupCard(grp.id);
+                      }}
+                      onClick={() => {
+                        setActiveGroupCard(grp.id);
+                        setPinnedGroupInfo((prev) => (prev === grp.id ? null : grp.id));
+                      }}
+                      aria-expanded={isPopoverOpen}
                       aria-label={t(
                         `Ver detalles de ${grp.labelEs}`,
                         `View details for ${grp.labelEn}`
                       )}
-                      className={`w-8 h-8 rounded-full bg-white text-slate-900 font-serif font-extrabold text-sm border border-slate-300 shadow-sm flex items-center justify-center transition-transform cursor-pointer ${
-                        isSelected ? 'scale-110 ring-2 ring-rose-500' : 'hover:scale-110'
+                      className={`w-8 h-8 rounded-full bg-slate-900 text-white font-serif font-extrabold text-sm border-2 border-white shadow-md flex items-center justify-center transition-transform cursor-pointer ${
+                        isPopoverOpen || isSelected
+                          ? 'scale-110 ring-2 ring-rose-500'
+                          : 'hover:scale-110'
                       }`}
                     >
                       i
                     </button>
+
+                    {/* Floating Popover Card right beneath the hovered/tapped (i) button (Desktop & Tablet) */}
+                    {isPopoverOpen && (
+                      <div
+                        className={`hidden sm:block absolute left-0 top-full mt-3 z-40 w-[560px] max-w-[88vw] rounded-2xl bg-gradient-to-br ${grp.flyerAccentClass} border-2 shadow-2xl p-5`}
+                      >
+                        {/* Upward Caret */}
+                        <div className="absolute -top-2 left-32 w-4 h-4 rotate-45 bg-slate-900 border-l border-t border-white/25" />
+
+                        <div className="relative z-10 space-y-4">
+                          {/* Popover Flyer Header */}
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="space-y-1">
+                              <span className="text-xs font-serif italic text-amber-200 block">
+                                {lang === 'es' ? grp.sloganEs : grp.sloganEn}
+                              </span>
+                              <h3 className="text-xl font-black font-display tracking-tight text-white">
+                                {lang === 'es' ? grp.taglineEs : grp.taglineEn}
+                              </h3>
+                              {grp.subtitleEs && (
+                                <span className="inline-block px-2.5 py-0.5 rounded bg-white/15 text-[11px] font-bold tracking-wider uppercase text-amber-300">
+                                  {lang === 'es' ? grp.subtitleEs : grp.subtitleEn}
+                                </span>
+                              )}
+                              {grp.verseEs && (
+                                <p className="font-serif italic text-[11px] text-white/85 pt-0.5">
+                                  «{lang === 'es' ? grp.verseEs : grp.verseEn}»
+                                </p>
+                              )}
+                            </div>
+
+                            {/* Independent Group Photo Thumbnail + Church Logo */}
+                            <div className="flex items-center gap-2 shrink-0">
+                              <img
+                                src={CHURCH_INFO.logoWatermark}
+                                alt={CHURCH_INFO.name}
+                                className="h-9 w-auto object-contain opacity-90"
+                              />
+                              <img
+                                src={grp.image}
+                                alt={lang === 'es' ? grp.labelEs : grp.labelEn}
+                                referrerPolicy="no-referrer"
+                                className="w-16 h-16 rounded-xl object-cover border-2 border-white/60 shadow-md"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Editable Schedule Table(s) + Locations Grid */}
+                          <div className="grid grid-cols-12 gap-3 items-start">
+                            {/* Locations & Hosts */}
+                            <div className="col-span-6 space-y-2">
+                              {grp.locations.map((loc, idx) => (
+                                <div
+                                  key={idx}
+                                  className="p-2.5 rounded-xl bg-black/35 border border-white/15 text-[11px] space-y-0.5"
+                                >
+                                  <p className="font-semibold text-white flex items-start gap-1.5">
+                                    <MapPin className="w-3.5 h-3.5 text-amber-300 shrink-0 mt-0.5" />
+                                    <span>{loc.address}</span>
+                                  </p>
+                                  <p className="text-white/85 pl-5">
+                                    {t('Anfitrión:', 'Host:')} <strong>{loc.hosts}</strong>
+                                  </p>
+                                  {loc.phone && (
+                                    <p className="text-emerald-300 pl-5 font-medium">
+                                      {t('Celular:', 'Phone:')} {loc.phone}
+                                    </p>
+                                  )}
+                                </div>
+                              ))}
+                              <p className="text-[10px] font-mono text-white/75 tracking-wider pt-1">
+                                {grp.hashtag}
+                              </p>
+                            </div>
+
+                            {/* Mes | Días | Hora Table(s) */}
+                            <div className="col-span-6 space-y-2.5">
+                              <div className="rounded-xl bg-black/35 border border-white/15 p-2.5">
+                                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-300 mb-1.5">
+                                  {lang === 'es' ? grp.scheduleTitleEs : grp.scheduleTitleEn}
+                                </p>
+                                <div className="grid grid-cols-3 text-[10px] font-bold text-white/70 border-b border-white/15 pb-1 mb-1">
+                                  <span>{t('Mes', 'Month')}</span>
+                                  <span>{t('Días', 'Days')}</span>
+                                  <span className="text-right">{t('Hora', 'Time')}</span>
+                                </div>
+                                <div className="space-y-1">
+                                  {grp.schedule.map((row) => (
+                                    <div
+                                      key={row.month}
+                                      className="grid grid-cols-3 text-[11px] font-semibold text-white"
+                                    >
+                                      <span className="text-amber-200">{row.month}</span>
+                                      <span>{row.days}</span>
+                                      <span className="text-right">{row.time}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {grp.secondarySchedule && (
+                                <div className="rounded-xl bg-black/35 border border-yellow-300/30 p-2.5">
+                                  <p className="text-[10px] font-bold uppercase tracking-wider text-yellow-300 mb-1.5">
+                                    {lang === 'es'
+                                      ? grp.secondaryScheduleTitleEs
+                                      : grp.secondaryScheduleTitleEn}
+                                  </p>
+                                  <div className="grid grid-cols-3 text-[10px] font-bold text-white/70 border-b border-white/15 pb-1 mb-1">
+                                    <span>{t('Mes', 'Month')}</span>
+                                    <span>{t('Días', 'Days')}</span>
+                                    <span className="text-right">{t('Hora', 'Time')}</span>
+                                  </div>
+                                  <div className="space-y-1">
+                                    {grp.secondarySchedule.map((row) => (
+                                      <div
+                                        key={row.month}
+                                        className="grid grid-cols-3 text-[11px] font-semibold text-white"
+                                      >
+                                        <span className="text-yellow-200">{row.month}</span>
+                                        <span>{row.days}</span>
+                                        <span className="text-right">{row.time}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-1">
+                            <a
+                              href={`https://wa.me/${CHURCH_INFO.phoneClean}?text=${encodeURIComponent(
+                                `Hola, quiero inscribirme al Grupo de Vida ${grp.labelEs}.`
+                              )}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-colors"
+                            >
+                              <MessageCircle className="w-3.5 h-3.5" />
+                              <span>{t('Inscribirme por WhatsApp', 'Join via WhatsApp')}</span>
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setPinnedGroupInfo(null);
+                                setHoveredGroupInfo(null);
+                              }}
+                              className="text-[11px] text-white/75 hover:text-white underline cursor-pointer"
+                            >
+                              {t('Cerrar', 'Close')}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -429,39 +612,60 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
               </h2>
               <p className="text-sm sm:text-base font-semibold text-slate-700 pt-1">
                 {t(
-                  '¡Haz click sobre el grupo o en el ícono (i) para ver fechas, dirección y anfitriones!',
-                  'Click on any group or its (i) icon to see dates, address, and hosts!'
+                  '¡Pasa el cursor o haz click en el grupo o en el ícono (i) para ver horarios, fechas, dirección y anfitriones!',
+                  'Hover or click on any group or its (i) icon to view schedules, dates, addresses, and hosts!'
                 )}
               </p>
             </div>
           </div>
 
-          {/* Active Editable Life Group Details Card */}
-          <div className="rounded-2xl bg-white border border-slate-200 shadow-lg overflow-hidden">
+          {/* Active Editable Life Group Flyer Card (Always visible on Mobile & Desktop below selector) */}
+          <div
+            className={`rounded-2xl bg-gradient-to-br ${selectedGroup.flyerAccentClass} border shadow-xl overflow-hidden`}
+          >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
               {/* Independent Group Image */}
-              <div className="lg:col-span-4 relative min-h-[220px]">
+              <div className="lg:col-span-4 relative min-h-[240px]">
                 <img
                   src={selectedGroup.image}
                   alt={lang === 'es' ? selectedGroup.labelEs : selectedGroup.labelEn}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent flex items-end p-5">
-                  <span className="text-xs font-mono font-bold text-white tracking-wider">
-                    {selectedGroup.hashtag}
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent flex flex-col justify-between p-5">
+                  <div className="flex justify-end">
+                    <img
+                      src={CHURCH_INFO.logoWatermark}
+                      alt={CHURCH_INFO.name}
+                      className="h-9 w-auto object-contain opacity-90"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-xs font-serif italic text-amber-200 block">
+                      {lang === 'es' ? selectedGroup.sloganEs : selectedGroup.sloganEn}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-white tracking-wider block">
+                      {selectedGroup.hashtag}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Editable Text Details & Schedule Table */}
+              {/* Editable Text Details & Full Schedule Tables */}
               <div className="lg:col-span-8 p-6 sm:p-8 space-y-5">
-                <div className="space-y-1">
-                  <span className="text-xs font-bold text-rose-600 uppercase tracking-wider block">
-                    {lang === 'es' ? selectedGroup.taglineEs : selectedGroup.taglineEn}
-                  </span>
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="text-2xl sm:text-3xl font-black font-display text-white">
+                      {lang === 'es' ? selectedGroup.taglineEs : selectedGroup.taglineEn}
+                    </h3>
+                    {selectedGroup.subtitleEs && (
+                      <span className="px-3 py-1 rounded-full bg-white/15 border border-white/25 text-xs font-bold text-amber-300">
+                        {lang === 'es' ? selectedGroup.subtitleEs : selectedGroup.subtitleEn}
+                      </span>
+                    )}
+                  </div>
                   {selectedGroup.verseEs && (
-                    <p className="font-serif italic text-xs text-slate-500">
+                    <p className="font-serif italic text-xs sm:text-sm text-white/85">
                       «{lang === 'es' ? selectedGroup.verseEs : selectedGroup.verseEn}»
                     </p>
                   )}
@@ -472,20 +676,20 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                   {selectedGroup.locations.map((loc, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-stone-50 border border-stone-200 text-xs space-y-1"
+                      className="p-3.5 rounded-xl bg-black/30 border border-white/15 text-xs space-y-1"
                     >
-                      <div className="flex items-start gap-2 font-semibold text-slate-900">
-                        <MapPin className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2 font-semibold text-white">
+                        <MapPin className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
                         <span>{loc.address}</span>
                       </div>
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pl-6 text-slate-600">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pl-6 text-white/85">
                         <span className="flex items-center gap-1">
-                          <Users className="w-3.5 h-3.5 text-slate-400" />
+                          <Users className="w-3.5 h-3.5 text-amber-300" />
                           {t('Anfitrión:', 'Host:')} <strong>{loc.hosts}</strong>
                         </span>
-                        {'phone' in loc && loc.phone && (
-                          <span className="flex items-center gap-1">
-                            <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                        {loc.phone && (
+                          <span className="flex items-center gap-1 text-emerald-300 font-semibold">
+                            <Phone className="w-3.5 h-3.5" />
                             <span>{loc.phone}</span>
                           </span>
                         )}
@@ -494,28 +698,69 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                   ))}
                 </div>
 
-                {/* Schedule Grid */}
-                <div className="space-y-2">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-rose-600" />
-                    <span>{t('Calendario de Encuentros', 'Meeting Schedule')}</span>
-                  </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {selectedGroup.schedule.map((row) => (
-                      <div
-                        key={row.month}
-                        className="p-2.5 rounded-xl bg-slate-900 text-white text-xs space-y-0.5"
-                      >
-                        <span className="font-bold text-rose-400 block text-[11px]">
-                          {row.month}
-                        </span>
-                        <span className="block font-semibold">
-                          {t('Días:', 'Days:')} {row.days}
-                        </span>
-                        <span className="text-[11px] text-stone-300 block">{row.time}</span>
-                      </div>
-                    ))}
+                {/* Primary & Optional Secondary Schedule Tables (Mes | Días | Hora) */}
+                <div
+                  className={`grid grid-cols-1 ${
+                    selectedGroup.secondarySchedule ? 'md:grid-cols-2' : ''
+                  } gap-4`}
+                >
+                  <div className="rounded-xl bg-black/35 border border-white/15 p-4 space-y-2">
+                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>
+                        {lang === 'es'
+                          ? selectedGroup.scheduleTitleEs
+                          : selectedGroup.scheduleTitleEn}
+                      </span>
+                    </span>
+                    <div className="grid grid-cols-3 text-[11px] font-bold text-white/70 border-b border-white/15 pb-1">
+                      <span>{t('Mes', 'Month')}</span>
+                      <span>{t('Días', 'Days')}</span>
+                      <span className="text-right">{t('Hora', 'Time')}</span>
+                    </div>
+                    <div className="space-y-1.5">
+                      {selectedGroup.schedule.map((row) => (
+                        <div
+                          key={row.month}
+                          className="grid grid-cols-3 text-xs font-semibold text-white py-0.5 border-b border-white/5 last:border-0"
+                        >
+                          <span className="text-amber-200">{row.month}</span>
+                          <span>{row.days}</span>
+                          <span className="text-right">{row.time}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
+
+                  {selectedGroup.secondarySchedule && (
+                    <div className="rounded-xl bg-black/35 border border-yellow-300/30 p-4 space-y-2">
+                      <span className="text-xs font-bold text-yellow-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>
+                          {lang === 'es'
+                            ? selectedGroup.secondaryScheduleTitleEs
+                            : selectedGroup.secondaryScheduleTitleEn}
+                        </span>
+                      </span>
+                      <div className="grid grid-cols-3 text-[11px] font-bold text-white/70 border-b border-white/15 pb-1">
+                        <span>{t('Mes', 'Month')}</span>
+                        <span>{t('Días', 'Days')}</span>
+                        <span className="text-right">{t('Hora', 'Time')}</span>
+                      </div>
+                      <div className="space-y-1.5">
+                        {selectedGroup.secondarySchedule.map((row) => (
+                          <div
+                            key={row.month}
+                            className="grid grid-cols-3 text-xs font-semibold text-white py-0.5 border-b border-white/5 last:border-0"
+                          >
+                            <span className="text-yellow-200">{row.month}</span>
+                            <span>{row.days}</span>
+                            <span className="text-right">{row.time}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-1">
@@ -525,7 +770,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition-colors shadow-sm"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>

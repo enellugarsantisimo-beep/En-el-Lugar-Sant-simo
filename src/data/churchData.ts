@@ -513,15 +513,22 @@ export const INFO_SECTION_DATA = {
       labelEs: 'PAREJAS',
       labelEn: 'COUPLES',
       badgeColor: 'bg-purple-900 hover:bg-purple-800 text-white border-purple-700',
-      taglineEs: '¡Haz algo Diferente! · GRUPO DE VIDA PAREJAS · SIRVIENDO A DIOS COMO PAREJA',
-      taglineEn: 'Do Something Different! · COUPLES LIFE GROUP · SERVING GOD AS A COUPLE',
+      flyerAccentClass: 'from-rose-950 via-red-900 to-rose-950 border-rose-800 text-white',
+      sloganEs: '¡Haz algo Diferente!',
+      sloganEn: 'Do Something Different!',
+      taglineEs: 'GRUPO DE VIDA · Parejas',
+      taglineEn: 'LIFE GROUP · Couples',
+      subtitleEs: 'SIRVIENDO A DIOS COMO PAREJA',
+      subtitleEn: 'SERVING GOD AS A COUPLE',
       image: '/src/assets/images/prayer_morning_devotional_1794440714722.jpg',
       locations: [
         {
-          address: 'Carrera 72C # 22A - 77, Interior 5 Torre 2 Apto 618',
+          address: 'Carrera 72C # 22A - 77 · Interior 5 Torre 2 Apto 618',
           hosts: 'Miguel y Tatiana',
         },
       ],
+      scheduleTitleEs: 'Horarios 7:00pm',
+      scheduleTitleEn: 'Schedule 7:00 PM',
       schedule: [
         { month: 'FEBRERO', days: '13 y 28', time: '7:00pm' },
         { month: 'MARZO', days: '14 y 28', time: '7:00pm' },
@@ -537,15 +544,20 @@ export const INFO_SECTION_DATA = {
       labelEs: 'HOMBRES',
       labelEn: 'MEN',
       badgeColor: 'bg-blue-600 hover:bg-blue-700 text-white border-blue-500',
-      taglineEs: '¡Haz algo Diferente! · GRUPO DE VIDA HOMBRES',
-      taglineEn: 'Do Something Different! · MEN’S LIFE GROUP',
+      flyerAccentClass: 'from-slate-950 via-zinc-900 to-slate-950 border-amber-500/40 text-white',
+      sloganEs: '¡Haz algo Diferente!',
+      sloganEn: 'Do Something Different!',
+      taglineEs: 'GRUPO DE VIDA · HOMBRES',
+      taglineEn: 'LIFE GROUP · MEN',
       image: '/src/assets/images/church_community_fellowship_1794440714625.jpg',
       locations: [
         {
-          address: 'Calle 23C # 69F-65, Int 31 Apto 502 · Urb Carlos Lleras',
+          address: 'Calle 23C # 69F-65 · Int 31 Apto 502 · Urb Carlos Lleras',
           hosts: 'Ricardo Martinez',
         },
       ],
+      scheduleTitleEs: 'Horarios 7:00pm',
+      scheduleTitleEn: 'Schedule 7:00 PM',
       schedule: [
         { month: 'FEBRERO', days: '7 y 21', time: '7:00pm' },
         { month: 'MARZO', days: '7 y 21', time: '7:00pm' },
@@ -561,8 +573,11 @@ export const INFO_SECTION_DATA = {
       labelEs: 'MUJERES',
       labelEn: 'WOMEN',
       badgeColor: 'bg-indigo-950 hover:bg-indigo-900 text-white border-indigo-800',
-      taglineEs: '¡Haz algo Diferente! · Grupo de Vida MUJERES',
-      taglineEn: 'Do Something Different! · WOMEN’S LIFE GROUP',
+      flyerAccentClass: 'from-rose-700 via-pink-700 to-fuchsia-800 border-pink-400/50 text-white',
+      sloganEs: '¡Haz algo Diferente!',
+      sloganEn: 'Do Something Different!',
+      taglineEs: 'Grupo de Vida · MUJERES',
+      taglineEn: 'Life Group · WOMEN',
       image: '/src/assets/images/church_community_fellowship_1794440714625.jpg',
       locations: [
         {
@@ -581,6 +596,8 @@ export const INFO_SECTION_DATA = {
           phone: '(+57) 320 897 0808',
         },
       ],
+      scheduleTitleEs: 'Horarios 7:00pm',
+      scheduleTitleEn: 'Schedule 7:00 PM',
       schedule: [
         { month: 'FEBRERO', days: '7 y 21', time: '7:00pm' },
         { month: 'MARZO', days: '7 y 21', time: '7:00pm' },
@@ -596,23 +613,39 @@ export const INFO_SECTION_DATA = {
       labelEs: 'JÓVENES',
       labelEn: 'YOUTH',
       badgeColor: 'bg-sky-600 hover:bg-sky-700 text-white border-sky-500',
-      taglineEs: '¡Haz algo Diferente! · GRUPO DE VIDA DE JÓVENES (12 - 17 AÑOS)',
-      taglineEn: 'Do Something Different! · YOUTH LIFE GROUP (AGES 12 - 17)',
+      flyerAccentClass: 'from-fuchsia-800 via-purple-800 to-indigo-900 border-yellow-400/60 text-white',
+      sloganEs: '¡Haz algo Diferente!',
+      sloganEn: 'Do Something Different!',
+      taglineEs: 'GRUPO DE VIDA DE JÓVENES',
+      taglineEn: 'YOUTH LIFE GROUP',
+      subtitleEs: '12 - 17 AÑOS',
+      subtitleEn: 'AGES 12 - 17',
       verseEs: 'Alégrate, joven, en tu juventud, y tome placer tu corazón',
       verseEn: 'Rejoice, young person, in your youth, and let your heart be glad',
       image: '/src/assets/images/church_worship_gathering_1794440713697.jpg',
       locations: [
         {
-          address: 'Cra 79 # 19A-87 Torre 1 Apto 503 · Conjunto El Sendero, Barrio La Felicidad',
+          address: 'Cra 79 # 19A-87 Torre 1 Apto 503 · Conjunto El Sendero · Barrio La Felicidad',
           hosts: 'Loren Grau',
         },
       ],
+      scheduleTitleEs: 'Grupo 12 - 17 Años · 5:30pm',
+      scheduleTitleEn: 'Ages 12 - 17 Group · 5:30 PM',
       schedule: [
-        { month: 'FEBRERO', days: '8 y 22', time: '5:30pm / 6:00pm' },
-        { month: 'MARZO', days: '8 y 22', time: '5:30pm / 6:00pm' },
-        { month: 'ABRIL', days: '5 y 26', time: '5:30pm / 6:00pm' },
-        { month: 'MAYO', days: '10 y 24', time: '5:30pm / 6:00pm' },
-        { month: 'JUNIO', days: '7 y 21', time: '5:30pm / 6:00pm' },
+        { month: 'FEBRERO', days: '8 y 22', time: '5:30pm' },
+        { month: 'MARZO', days: '8 y 22', time: '5:30pm' },
+        { month: 'ABRIL', days: '5 y 26', time: '5:30pm' },
+        { month: 'MAYO', days: '10 y 24', time: '5:30pm' },
+        { month: 'JUNIO', days: '7 y 21', time: '5:30pm' },
+      ],
+      secondaryScheduleTitleEs: 'Segundo Grupo Jóvenes · 6:00pm',
+      secondaryScheduleTitleEn: 'Second Youth Group · 6:00 PM',
+      secondarySchedule: [
+        { month: 'FEBRERO', days: '8 y 22', time: '6:00pm' },
+        { month: 'MARZO', days: '8 y 22', time: '6:00pm' },
+        { month: 'ABRIL', days: '5 y 26', time: '6:00pm' },
+        { month: 'MAYO', days: '10 y 24', time: '6:00pm' },
+        { month: 'JUNIO', days: '7 y 21', time: '6:00pm' },
       ],
       hashtag: '#LLEVANDOLAPRESENCIAACASA',
     },
@@ -621,13 +654,23 @@ export const INFO_SECTION_DATA = {
     labelEs: string;
     labelEn: string;
     badgeColor: string;
+    flyerAccentClass: string;
+    sloganEs: string;
+    sloganEn: string;
     taglineEs: string;
     taglineEn: string;
+    subtitleEs?: string;
+    subtitleEn?: string;
     verseEs?: string;
     verseEn?: string;
     image: string;
     locations: Array<{ address: string; hosts: string; phone?: string }>;
+    scheduleTitleEs: string;
+    scheduleTitleEn: string;
     schedule: Array<{ month: string; days: string; time: string }>;
+    secondaryScheduleTitleEs?: string;
+    secondaryScheduleTitleEn?: string;
+    secondarySchedule?: Array<{ month: string; days: string; time: string }>;
     hashtag: string;
   }>,
   activities: [
