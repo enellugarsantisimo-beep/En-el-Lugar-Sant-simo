@@ -22,6 +22,8 @@ export const CHURCH_INFO = {
   email: 'Enellugarsantisim@gmail.com',
   googleMeetMorningPrayer: 'https://meet.google.com/skt-pttc-gmz',
   donateSponsorUrl: 'https://enellugarsantisimo.com/app/donate-sponsor/donate-sponsor.html#',
+  salvavidasBookUrl:
+    'https://www.amazon.com/SALVAVIDAS-Fruto-Del-Esp%C3%ADritu-Spanish-ebook/dp/B0FM4LR35X/ref=sr_1_1?crid=20YT9034MT4GO&dib=eyJ2IjoiMSJ9.PZ4k8bWaOAJvsalC434lhbg33Zyx7L9Yc0cJwoMo6GrXGr8M_6XRn0iA0YK0a16_J-STlLEloD8dlC5PqtgWSuUFZu8wOeP-rPee49xhts2CFPSF0Wfuo_3WjQ-iAf3PL3WnP3TXEjJMHpOw-0SO2A.60wcMdCP98bK7qbdk9DTG1LCaBZPal1cpmZf-eNZXGE&dib_tag=se&keywords=salvavidas+el+fruto+del+espiritu&qid=1775768821&sprefix=salvavidas+el+fruto+del+espiritu%2Caps%2C198&sr=8-1',
   logoWatermark: '/assets/aistudio/LOGOS_MARCAS_EELS__1__b8140c5b.png',
   liveYoutubeUrl: 'https://youtu.be/IszLWjY_-Qg?si=LGtmRr5EcCkEGSy4',
   liveYoutubeEmbedUrl: 'https://www.youtube.com/embed/IszLWjY_-Qg?rel=0',
@@ -468,3 +470,207 @@ export const TESTIMONIALS_DATA: Testimony[] = [
     timeAgo: 'Hace 1 mes',
   },
 ];
+
+export const INFO_SECTION_DATA = {
+  pastorBio: {
+    eyebrowEs: 'Biografía Pastoral',
+    eyebrowEn: 'Pastoral Biography',
+    name: 'Yuri Arenas Cuervo',
+    image: '/src/assets/images/church_worship_gathering_1794440713697.jpg',
+    imageAltEs: 'Pastora Yuri Arenas Cuervo ministrando en En el Lugar Santísimo',
+    imageAltEn: 'Pastor Yuri Arenas Cuervo ministering at En el Lugar Santísimo',
+    paragraphsEs: [
+      'Yuri Arenas Cuervo es una mujer de fe, pastora, misionera y profeta, cuyo llamado a servir a Dios comenzó en su niñez en las Asambleas de Dios en Colombia. Junto a su esposo Elberto Guzmán, quien ya ha partido a la presencia de Dios, fundaron iglesias en Boca Ratón, Bogotá y en Bocachica, donde su ministerio misionero tiene un gran impacto. En Bocachica, se lleva a cabo el proyecto Lives Saved Project, al cual se destinan los recursos de este libro.',
+      'Hoy, junto a su madre y los líderes de la congregación en Bogotá, Yuri está consolidando el Ministerio Internacional En El Lugar Santísimo, con el propósito de llevar el mensaje de salvación a donde Dios los envíe.',
+      'Parte esencial de su labor incluye los medios de comunicación, con la serie diaria de podcast Sintonízate con Dios y el programa semanal Guiados por el Espíritu Santo, además de cubrir otras iglesias aliadas. Con más de 40 años de matrimonio, Yuri considera que esa fue su mejor escuela, aprendiendo y sirviendo a Dios junto a su esposo. Su formación teológica y su pasión por la escritura la han llevado a compartir sus enseñanzas a través de libros que próximamente publicará, con el deseo de impactar vidas y transmitir la esperanza que ella misma ha recibido.',
+    ],
+    paragraphsEn: [
+      'Yuri Arenas Cuervo is a woman of faith, pastor, missionary, and prophet whose call to serve God began in her childhood in the Assemblies of God in Colombia. Together with her husband Elberto Guzmán, who has gone home to be with the Lord, they founded churches in Boca Raton, Bogotá, and Bocachica, where their missionary work has made a profound impact. In Bocachica, the Lives Saved Project is carried out, to which the proceeds of this book are dedicated.',
+      'Today, together with her mother and the congregation’s leaders in Bogotá, Yuri is consolidating En El Lugar Santísimo International Ministry with the purpose of carrying the message of salvation wherever God sends them.',
+      'An essential part of her work includes media ministry, with the daily podcast series Sintonízate con Dios and the weekly program Guiados por el Espíritu Santo, alongside covering partner churches. With over 40 years of marriage, Yuri considers it her greatest school, learning and serving God alongside her husband. Her theological training and passion for writing have led her to share her teachings through books she is publishing, desiring to impact lives and pass on the hope she herself has received.',
+    ],
+  },
+  bookShowcase: {
+    badgeEs: 'DISPONIBLE AHORA',
+    badgeEn: 'AVAILABLE NOW',
+    title: 'SALVAVIDAS',
+    subtitleEs: 'EL FRUTO DEL ESPÍRITU',
+    subtitleEn: 'THE FRUIT OF THE SPIRIT',
+    descriptionEs: 'Adquiérelo en nuestras instalaciones o a través de nuestro WhatsApp',
+    descriptionEn: 'Available at our campus or through our official WhatsApp',
+    author: 'YURI ARENAS CUERVO',
+    image: '/src/assets/images/bocachica_social_children_1794440713765.jpg',
+    imageAltEs: 'Libro Salvavidas El Fruto del Espíritu por Yuri Arenas Cuervo',
+    imageAltEn: 'Book Salvavidas El Fruto del Espíritu by Yuri Arenas Cuervo',
+    ctaPromptEs: 'Para adquirir nuestro Libro "Salvavidas El Fruto del Espíritu"',
+    ctaPromptEn: 'To purchase our book "Salvavidas El Fruto del Espíritu"',
+    ctaButtonEs: 'Haz clic aquí',
+    ctaButtonEn: 'Click here',
+  },
+  lifeGroupScheduleCards: [
+    {
+      id: 'parejas',
+      labelEs: 'PAREJAS',
+      labelEn: 'COUPLES',
+      badgeColor: 'bg-purple-900 hover:bg-purple-800 text-white border-purple-700',
+      taglineEs: '¡Haz algo Diferente! · GRUPO DE VIDA PAREJAS · SIRVIENDO A DIOS COMO PAREJA',
+      taglineEn: 'Do Something Different! · COUPLES LIFE GROUP · SERVING GOD AS A COUPLE',
+      image: '/src/assets/images/prayer_morning_devotional_1794440714722.jpg',
+      locations: [
+        {
+          address: 'Carrera 72C # 22A - 77, Interior 5 Torre 2 Apto 618',
+          hosts: 'Miguel y Tatiana',
+        },
+      ],
+      schedule: [
+        { month: 'FEBRERO', days: '13 y 28', time: '7:00pm' },
+        { month: 'MARZO', days: '14 y 28', time: '7:00pm' },
+        { month: 'ABRIL', days: '11', time: '7:00pm' },
+        { month: 'MAYO', days: '2, 16 y 30', time: '7:00pm' },
+        { month: 'JUNIO', days: '13 y 27', time: '7:00pm' },
+        { month: 'JULIO', days: '11 y 25', time: '7:00pm' },
+      ],
+      hashtag: '#LLEVANDOLAPRESENCIAACASA',
+    },
+    {
+      id: 'hombres',
+      labelEs: 'HOMBRES',
+      labelEn: 'MEN',
+      badgeColor: 'bg-blue-600 hover:bg-blue-700 text-white border-blue-500',
+      taglineEs: '¡Haz algo Diferente! · GRUPO DE VIDA HOMBRES',
+      taglineEn: 'Do Something Different! · MEN’S LIFE GROUP',
+      image: '/src/assets/images/church_community_fellowship_1794440714625.jpg',
+      locations: [
+        {
+          address: 'Calle 23C # 69F-65, Int 31 Apto 502 · Urb Carlos Lleras',
+          hosts: 'Ricardo Martinez',
+        },
+      ],
+      schedule: [
+        { month: 'FEBRERO', days: '7 y 21', time: '7:00pm' },
+        { month: 'MARZO', days: '7 y 21', time: '7:00pm' },
+        { month: 'ABRIL', days: '4 y 25', time: '7:00pm' },
+        { month: 'MAYO', days: '9 y 23', time: '7:00pm' },
+        { month: 'JUNIO', days: '6 y 20', time: '7:00pm' },
+        { month: 'JULIO', days: '4 y 18', time: '7:00pm' },
+      ],
+      hashtag: '#LLEVANDOLAPRESENCIAACASA',
+    },
+    {
+      id: 'mujeres',
+      labelEs: 'MUJERES',
+      labelEn: 'WOMEN',
+      badgeColor: 'bg-indigo-950 hover:bg-indigo-900 text-white border-indigo-800',
+      taglineEs: '¡Haz algo Diferente! · Grupo de Vida MUJERES',
+      taglineEn: 'Do Something Different! · WOMEN’S LIFE GROUP',
+      image: '/src/assets/images/church_community_fellowship_1794440714625.jpg',
+      locations: [
+        {
+          address: 'Carrera 70 # 22 - 75, Manzana C Interior 13 Apto 204 · Urb. Carlos Lleras',
+          hosts: 'Flor María Vargas Palacios',
+          phone: '(+57) 301 356 5873',
+        },
+        {
+          address: 'Cll 24 C # 69 - 59 Interior 3 - Apto 201 · Conjunto Residencial "Intisuyu"',
+          hosts: 'Lucy Calderón',
+          phone: '(+57) 315 8413649',
+        },
+        {
+          address: 'Casa - Cra 72B # 23 F - 12 · Barrio Modelia',
+          hosts: 'Hermelinda de Urbina',
+          phone: '(+57) 320 897 0808',
+        },
+      ],
+      schedule: [
+        { month: 'FEBRERO', days: '7 y 21', time: '7:00pm' },
+        { month: 'MARZO', days: '7 y 21', time: '7:00pm' },
+        { month: 'ABRIL', days: '4 y 25', time: '7:00pm' },
+        { month: 'MAYO', days: '9 y 23', time: '7:00pm' },
+        { month: 'JUNIO', days: '6 y 20', time: '7:00pm' },
+        { month: 'JULIO', days: '4 y 18', time: '7:00pm' },
+      ],
+      hashtag: '#LLEVANDOLAPRESENCIAACASA',
+    },
+    {
+      id: 'jovenes',
+      labelEs: 'JÓVENES',
+      labelEn: 'YOUTH',
+      badgeColor: 'bg-sky-600 hover:bg-sky-700 text-white border-sky-500',
+      taglineEs: '¡Haz algo Diferente! · GRUPO DE VIDA DE JÓVENES (12 - 17 AÑOS)',
+      taglineEn: 'Do Something Different! · YOUTH LIFE GROUP (AGES 12 - 17)',
+      verseEs: 'Alégrate, joven, en tu juventud, y tome placer tu corazón',
+      verseEn: 'Rejoice, young person, in your youth, and let your heart be glad',
+      image: '/src/assets/images/church_worship_gathering_1794440713697.jpg',
+      locations: [
+        {
+          address: 'Cra 79 # 19A-87 Torre 1 Apto 503 · Conjunto El Sendero, Barrio La Felicidad',
+          hosts: 'Loren Grau',
+        },
+      ],
+      schedule: [
+        { month: 'FEBRERO', days: '8 y 22', time: '5:30pm / 6:00pm' },
+        { month: 'MARZO', days: '8 y 22', time: '5:30pm / 6:00pm' },
+        { month: 'ABRIL', days: '5 y 26', time: '5:30pm / 6:00pm' },
+        { month: 'MAYO', days: '10 y 24', time: '5:30pm / 6:00pm' },
+        { month: 'JUNIO', days: '7 y 21', time: '5:30pm / 6:00pm' },
+      ],
+      hashtag: '#LLEVANDOLAPRESENCIAACASA',
+    },
+  ] as Array<{
+    id: string;
+    labelEs: string;
+    labelEn: string;
+    badgeColor: string;
+    taglineEs: string;
+    taglineEn: string;
+    verseEs?: string;
+    verseEn?: string;
+    image: string;
+    locations: Array<{ address: string; hosts: string; phone?: string }>;
+    schedule: Array<{ month: string; days: string; time: string }>;
+    hashtag: string;
+  }>,
+  activities: [
+    {
+      id: 'act-1',
+      titleEs: 'Reunión General',
+      titleEn: 'General Sunday Service',
+      subtitleEs: 'Presencial – Transmisión en vivo',
+      subtitleEn: 'In-Person – Live Stream',
+      scheduleEs: 'Domingo 10:30am',
+      scheduleEn: 'Sunday 10:30 AM',
+      alignLeft: true,
+    },
+    {
+      id: 'act-2',
+      titleEs: 'Un Nuevo Tiempo En El Espíritu',
+      titleEn: 'A New Season in the Spirit',
+      subtitleEs: 'Transmisión en vivo vía Youtube y TikTok @enellugarsantisimo',
+      subtitleEn: 'Live broadcast on YouTube & TikTok @enellugarsantisimo',
+      scheduleEs: 'Miércoles 5:30pm',
+      scheduleEn: 'Wednesday 5:30 PM',
+      alignLeft: false,
+    },
+    {
+      id: 'act-3',
+      titleEs: 'Ayuno',
+      titleEn: 'Congregational Fasting',
+      subtitleEs: 'Presencial – Reunión Virtual',
+      subtitleEn: 'In-Person – Virtual Meeting',
+      scheduleEs: 'Sábado 10am – 12m',
+      scheduleEn: 'Saturday 10 AM – 12 PM',
+      alignLeft: true,
+    },
+    {
+      id: 'act-4',
+      titleEs: 'Oración de la Mañana',
+      titleEn: 'Morning Prayer',
+      subtitleEs: 'Reunión Virtual',
+      subtitleEn: 'Virtual Meeting',
+      scheduleEs: 'Martes a Viernes 7am – 8am',
+      scheduleEn: 'Tuesday to Friday 7 AM – 8 AM',
+      alignLeft: false,
+      meetLink: 'https://meet.google.com/skt-pttc-gmz',
+    },
+  ],
+};
