@@ -1,150 +1,149 @@
 import React, { useState } from 'react';
 import { PageId } from '../types';
-import { CHURCH_PILLARS } from '../data/churchData';
 import { useLanguage } from '../context/LanguageContext';
-import {
-  Compass,
-  CheckCircle2,
-  ShieldCheck,
-  ChevronDown,
-  Sparkles,
-  ArrowRight,
-} from 'lucide-react';
+import { Compass, Sparkles, ArrowUpRight } from 'lucide-react';
 
 interface AboutPageProps {
   onNavigate: (page: PageId) => void;
   onOpenPrayerModal: () => void;
 }
 
+interface GrowthStepNode {
+  number: number;
+  title: string;
+  titleColorClass: string;
+  numberColorClass: string;
+  glowClass: string;
+  tooltip?: string;
+  offsetClass: string;
+  sideBadge?: string;
+  isFirstStepLink?: boolean;
+}
+
 export const AboutPage: React.FC<AboutPageProps> = ({
   onNavigate,
-  onOpenPrayerModal,
 }) => {
   const { t } = useLanguage();
-  const [activeFaq, setActiveFaq] = useState<number | null>(0);
-  const [activeStep, setActiveStep] = useState<number>(1);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+  const [pinnedStep, setPinnedStep] = useState<number | null>(null);
 
-  const growthSteps = [
-    {
-      step: 1,
-      title: t('Visítanos en la Reunión General', 'Visit Us at the Sunday Gathering'),
-      description: t(
-        'Asiste a cualquiera de nuestros servicios dominicales a las 10:30 a. m. en la Av. Calle 24 #72b-30. Tómate un café de bienvenida y experimenta la calidez de nuestra casa.',
-        'Join any of our Sunday services at 10:30 a. m. at Av. Calle 24 #72b-30. Enjoy a welcome coffee and experience the warmth of our house.'
-      ),
-      cta: t('Ver horarios de reunión', 'View meeting schedules'),
-      actionPage: 'info' as PageId,
-    },
-    {
-      step: 2,
-      title: t('Conéctate a un Grupo de Vida', 'Connect to a Life Group'),
-      description: t(
-        'La fe florece en círculos pequeños. En los Grupos de vida compartimos la mesa, oramos los unos por los otros y profundizamos las enseñanzas del domingo.',
-        'Faith flourishes in small circles. In Life Groups we share life together, pray for one another, and go deeper into Sunday teachings.'
-      ),
-      cta: t('Ir a Grupos de vida', 'Go to Life Groups'),
-      actionPage: 'grupos-de-vida' as PageId,
-    },
-    {
-      step: 3,
-      title: t('Formación y Discipulado', 'Training & Discipleship'),
-      description: t(
-        'Participa en nuestros niveles de formación, ayunos congregacionales sabatinos y oraciones de la mañana para equiparte con herramientas esenciales en la Palabra.',
-        'Participate in our training levels, Saturday congregational fasts, and morning prayers to equip yourself with essential tools in the Word.'
-      ),
-      cta: t('Ir a En Vivo y Oración', 'Go to Live & Prayer'),
-      actionPage: 'en-vivo' as PageId,
-    },
-    {
-      step: 4,
-      title: t('Sirve y Bendice a Otros', 'Serve & Bless Others'),
-      description: t(
-        'Dios te dio habilidades únicas. Súmate a nuestros ministerios de alabanza, niños, bienvenida o al servicio misionero de nuestra congregación.',
-        'God gave you unique gifts. Join our worship, kids, hospitality, or mission service teams.'
-      ),
-      cta: t('Solicitar ingreso al servicio (S.O.S)', 'Apply to serve (S.O.S)'),
-      actionPage: 'sos' as PageId,
-    },
-  ];
+  const activeStep = hoveredStep ?? pinnedStep;
 
-  const faithStatements = [
+  // Ordered 9 -> 1 on desktop (staircase from bottom-left 1 to top-right 9),
+  // reversed on mobile via flex-col-reverse so mobile reads 1 -> 9 naturally.
+  const growthSteps: GrowthStepNode[] = [
     {
-      title: t('Las Sagradas Escrituras', 'The Holy Scriptures'),
-      desc: t(
-        'Creemos que la Biblia es la Palabra inspirada e infalible de Dios, la norma suprema y suficiente para la fe, la doctrina y la vida diaria.',
-        'We believe the Bible is the inspired and infallible Word of God, the supreme and sufficient standard for faith, doctrine, and daily living.'
+      number: 9,
+      title: t('ESCUELA MINISTERIAL CON ÉNFASIS MISIONERO', 'MINISTRY SCHOOL WITH MISSIONAL EMPHASIS'),
+      numberColorClass: 'text-purple-600',
+      titleColorClass: 'text-purple-500',
+      glowClass: 'hover:border-purple-500/60 hover:shadow-[0_0_28px_rgba(147,51,234,0.3)]',
+      tooltip: t(
+        'La persona podrá continuar su formación en un instituto bíblico mientras desarrollamos nuestra escuela ministerial.',
+        'Participants can continue their training at a Bible institute while we develop our ministry school.'
       ),
-      scripture: t('2 Timoteo 3:16-17', '2 Timothy 3:16-17'),
+      offsetClass: 'lg:ml-[56%]',
     },
     {
-      title: t('Dios Trino y Eterno', 'The Triune & Eternal God'),
-      desc: t(
-        'Creemos en un solo Dios vivo y verdadero, eterno y todopoderoso, subsistente en tres personas coeternas e iguales: el Padre, el Hijo y el Espíritu Santo.',
-        'We believe in one living and true God, eternal and almighty, subsisting in three coeternal and equal persons: the Father, the Son, and the Holy Spirit.'
+      number: 8,
+      title: t('FORMACIÓN DE LÍDERES', 'LEADERSHIP TRAINING'),
+      numberColorClass: 'text-indigo-600',
+      titleColorClass: 'text-indigo-500',
+      glowClass: 'hover:border-indigo-500/60 hover:shadow-[0_0_28px_rgba(79,70,229,0.3)]',
+      tooltip: t(
+        'Para preparar líderes de Grupos de Vida, enseñándoles a ministrar según los doce pasos y liderar su grupo.',
+        'To prepare Life Group leaders, teaching them to minister through the twelve steps and lead their group.'
       ),
-      scripture: t('Mateo 28:19', 'Matthew 28:19'),
+      offsetClass: 'lg:ml-[49%]',
     },
     {
-      title: t('Jesucristo, Único Salvador', 'Jesus Christ, Only Savior'),
-      desc: t(
-        'Creemos en la deidad de Jesucristo, Su nacimiento virginal, Su vida sin pecado, Su muerte expiatoria en la cruz, Su resurrección corporal y Su regreso en gloria.',
-        'We believe in the deity of Jesus Christ, His virgin birth, sinless life, atoning death on the cross, bodily resurrection, and return in glory.'
+      number: 7,
+      title: t('ENCUENTRO SERVIDORES', 'SERVANTS ENCOUNTER'),
+      numberColorClass: 'text-lime-500',
+      titleColorClass: 'text-lime-500',
+      glowClass: 'hover:border-lime-500/60 hover:shadow-[0_0_28px_rgba(132,204,22,0.3)]',
+      tooltip: t(
+        'Para sanar y empoderar a líderes, equipándolos con dones para su misión en la iglesia y el mundo.',
+        'To heal and empower leaders, equipping them with spiritual gifts for their mission in the church and the world.'
       ),
-      scripture: t('Hechos 4:12', 'Acts 4:12'),
+      offsetClass: 'lg:ml-[42%]',
     },
     {
-      title: t('Salvación por Gracia mediante la Fe', 'Salvation by Grace Through Faith'),
-      desc: t(
-        'La reconciliación con Dios no se obtiene por méritos humanos ni obras religiosas, sino únicamente por la gracia divina recibida a través de la fe en Jesús.',
-        'Reconciliation with God is not earned by human merit or religious works, but solely by divine grace received through faith in Jesus.'
+      number: 6,
+      title: t('ESCUELA DE SERVIDORES', 'SCHOOL OF SERVANTS'),
+      numberColorClass: 'text-fuchsia-600',
+      titleColorClass: 'text-fuchsia-500',
+      glowClass: 'hover:border-fuchsia-500/60 hover:shadow-[0_0_28px_rgba(192,38,211,0.3)]',
+      tooltip: t(
+        'Formación y equipamiento para servidores comprometidos con la misión.',
+        'Training and equipping for servants committed to the mission.'
       ),
-      scripture: t('Efesios 2:8-9', 'Ephesios 2:8-9'),
+      offsetClass: 'lg:ml-[35%]',
+      sideBadge: t('EL QUE SIRVE QUE SIRVA', 'LET THE ONE WHO SERVES, SERVE'),
     },
     {
-      title: t('La Iglesia como Cuerpo Vivo', 'The Church as a Living Body'),
-      desc: t(
-        'La iglesia es la asamblea de creyentes redimidos, llamada a congregarse en fraternidad, partir el pan, orar y llevar esperanza al mundo entero.',
-        'The church is the assembly of redeemed believers, called to gather in fellowship, break bread, pray, and carry hope to the world.'
+      number: 5,
+      title: t('NIVEL 1 Y 2', 'LEVEL 1 & 2'),
+      numberColorClass: 'text-pink-500',
+      titleColorClass: 'text-pink-500',
+      glowClass: 'hover:border-pink-500/60 hover:shadow-[0_0_28px_rgba(236,72,153,0.3)]',
+      tooltip: t(
+        'Formación bíblica y práctica para alcanzar la madurez cristiana, enfocada en doctrina, relación con Dios, oración, adoración y dirección divina.',
+        'Biblical and practical training to reach Christian maturity, focused on doctrine, relationship with God, prayer, worship, and divine guidance.'
       ),
-      scripture: t('Hebreos 10:24-25', 'Hebrews 10:24-25'),
-    },
-  ];
-
-  const firstVisitQuestions = [
-    {
-      q: t('¿Cómo debo vestir para asistir a la reunión?', 'How should I dress for the service?'),
-      a: t(
-        'Ven tal como eres. En En el Lugar Santísimo no tenemos código estricto de vestimenta. Lo verdaderamente importante es la disposición sincera del corazón delante de Dios.',
-        'Come as you are. At En el Lugar Santísimo there is no strict dress code. What truly matters is a sincere heart before God.'
-      ),
+      offsetClass: 'lg:ml-[28%]',
     },
     {
-      q: t('¿Tienen un espacio especial para los niños?', 'Do you have a special program for children?'),
-      a: t(
-        '¡Sí! Contamos con Santísimo Kids, un ministerio preparado con maestras capacitadas, material didáctico y seguridad para que tus hijos aprendan de Jesús.',
-        'Yes! We have Santísimo Kids, a dedicated ministry with trained teachers and safe spaces for children to learn about Jesus.'
+      number: 4,
+      title: t('12 PASOS SANIDAD INTERIOR', '12 STEPS INNER HEALING'),
+      numberColorClass: 'text-white',
+      titleColorClass: 'text-white',
+      glowClass: 'hover:border-white/50 hover:shadow-[0_0_28px_rgba(255,255,255,0.22)]',
+      tooltip: t(
+        'Para fortalecer la sanidad y el bienestar espiritual de los miembros.',
+        'To strengthen the spiritual healing and wellbeing of members.'
       ),
+      offsetClass: 'lg:ml-[21%]',
     },
     {
-      q: t('¿Cuánto tiempo dura la Reunión General del domingo?', 'How long is the Sunday General Service?'),
-      a: t(
-        'El servicio comienza a las 10:30 a. m. y tiene una duración aproximada de 1 hora y 45 minutos, incluyendo alabanza, adoración y la enseñanza bíblica.',
-        'Service begins at 10:30 a. m. and lasts approximately 1 hour and 45 minutes, including praise, worship, and biblical teaching.'
+      number: 3,
+      title: t('¿AHORA QUÉ? 1 Y 2', 'WHAT NOW? 1 & 2'),
+      numberColorClass: 'text-yellow-400',
+      titleColorClass: 'text-yellow-400',
+      glowClass: 'hover:border-yellow-400/60 hover:shadow-[0_0_28px_rgba(250,204,21,0.3)]',
+      tooltip: t(
+        'Son dos lecciones que enseñan nuestra identidad como hijos de Dios y las disciplinas cristianas, estas las tomamos para estar preparados para el encuentro.',
+        'Two lessons teaching our identity as children of God and Christian disciplines, preparing us for the encounter retreat.'
       ),
+      offsetClass: 'lg:ml-[14%]',
     },
     {
-      q: t('¿Hay parqueadero disponible?', 'Is parking available?'),
-      a: t(
-        'Sí, disponemos de convenios y zonas de parqueo sobre la Av. Calle 24 y calles adyacentes vigiladas, además de fácil acceso en SITP y TransMilenio.',
-        'Yes, parking zones are available along Av. Calle 24 and nearby streets, along with easy public transit access.'
+      number: 2,
+      title: t('ENCUENTRO DE NUEVOS CREYENTES Y BAUTISMOS', 'NEW BELIEVERS ENCOUNTER & BAPTISMS'),
+      numberColorClass: 'text-red-500',
+      titleColorClass: 'text-red-500',
+      glowClass: 'hover:border-red-500/60 hover:shadow-[0_0_28px_rgba(239,68,68,0.3)]',
+      tooltip: t(
+        'Este retiro confronta y libera de obstáculos espirituales, culminando con el Bautismo y la llenura del Espíritu Santo, guiando a los participantes hacia una vida cristiana plena.',
+        'This retreat confronts and frees participants from spiritual obstacles, culminating in Baptism and the filling of the Holy Spirit, guiding them into a full Christian life.'
       ),
+      offsetClass: 'lg:ml-[7%]',
+    },
+    {
+      number: 1,
+      title: t('GRUPOS DE VIDA', 'LIFE GROUPS'),
+      numberColorClass: 'text-lime-400',
+      titleColorClass: 'text-lime-400',
+      glowClass: 'hover:border-lime-400/60 hover:shadow-[0_0_28px_rgba(163,230,53,0.3)]',
+      offsetClass: 'lg:ml-0',
+      isFirstStepLink: true,
     },
   ];
 
   return (
-    <div className="space-y-16 lg:space-y-24 pb-20">
+    <div className="space-y-12 lg:space-y-16 pb-20">
       {/* 1. INDEPENDENT PAGE HERO & BREADCRUMBS */}
-      <section className="bg-gradient-to-b from-stone-100 to-white pt-8 pb-14 border-b border-slate-200">
+      <section className="bg-gradient-to-b from-stone-100 to-white pt-8 pb-12 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <nav className="flex items-center gap-2 text-xs text-slate-500">
             <button
@@ -159,320 +158,159 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-                {t('Formación y Discipulado', 'Training & Discipleship')}
-              </span>
-              <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
-                {t(
-                  'Ruta de Crecimiento: Tu viaje espiritual en nuestra casa',
-                  'Growth Track: Your Spiritual Journey in Our House'
-                )}
-              </h1>
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                {t(
-                  'En nuestra iglesia creemos firmemente en el poder de la formación y el crecimiento espiritual. Aquí te presentamos nuestros niveles de formación, pilares y fundamentos bíblicos.',
-                  'In our church we firmly believe in spiritual training and growth. Explore our training steps, pillars, and biblical foundations.'
-                )}
-              </p>
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-rose-600 uppercase tracking-widest">
+              <Compass className="w-4 h-4" />
+              <span>{t('Ruta de Crecimiento', 'Growth Track')}</span>
             </div>
-
-            <div className="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
-                  <Compass className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-xs text-slate-400 block uppercase">
-                    {t('Nuestra Sede', 'Our Location')}
-                  </span>
-                  <span className="text-sm font-bold text-slate-900">Bogotá, Colombia</span>
-                </div>
-              </div>
-              <p className="text-xs text-slate-600">
-                {t(
-                  'Av. Calle 24 #72b–30 (Modelia / Salitre). Puertas abiertas cada semana para recibirte.',
-                  'Av. Calle 24 #72b–30 (Modelia / Salitre). Open doors every week to welcome you.'
-                )}
-              </p>
-              <button
-                onClick={() => onNavigate('info')}
-                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-colors"
-              >
-                {t('Planear mi visita', 'Plan my visit')}
-              </button>
-            </div>
+            <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
+              {t(
+                'Tu camino de formación y propósito en Cristo',
+                'Your Path of Formation & Purpose in Christ'
+              )}
+            </h1>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+              {t(
+                'Conoce los 9 niveles de nuestra Ruta de Crecimiento. Pasa el cursor (o toca en móvil) sobre el ícono blanco (i) de cada escalón para descubrir su propósito.',
+                'Explore the 9 steps of our Growth Track. Hover over (or tap on mobile) the white (i) icon on each step to discover its purpose.'
+              )}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 2. INTERACTIVE 4-STEP GROWTH TRACK */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            {t('Niveles de Formación', 'Training Steps')}
-          </span>
-          <h2 className="text-3xl font-bold font-display text-slate-900">
-            {t('Siempre hay un siguiente paso', 'There Is Always a Next Step')}
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {growthSteps.map((stepItem) => {
-            const isCurrent = activeStep === stepItem.step;
-            return (
-              <button
-                key={stepItem.step}
-                onClick={() => setActiveStep(stepItem.step)}
-                className={`p-4 rounded-2xl text-left border transition-all ${
-                  isCurrent
-                    ? 'border-rose-600 bg-rose-50/70 text-slate-900 shadow-sm ring-1 ring-rose-500'
-                    : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600'
-                }`}
-              >
-                <span className="text-xs font-mono font-bold text-rose-600 block">
-                  {t('PASO', 'STEP')} 0{stepItem.step}
-                </span>
-                <span className="font-bold text-sm text-slate-900 block mt-1 line-clamp-1">
-                  {stepItem.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {(() => {
-          const current = growthSteps.find((s) => s.step === activeStep)!;
-          return (
-            <div className="p-8 rounded-3xl bg-slate-900 text-white space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-4 h-4" />
-                <span>{t(`Paso ${current.step} de 4`, `Step ${current.step} of 4`)}</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-bold font-display text-white">
-                {current.title}
-              </h3>
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-3xl">
-                {current.description}
-              </p>
-              <div className="pt-2 flex flex-wrap gap-3">
-                <button
-                  onClick={() => onNavigate(current.actionPage)}
-                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl transition-colors inline-flex items-center gap-2"
-                >
-                  <span>{current.cta}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={onOpenPrayerModal}
-                  className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-stone-200 border border-slate-700 text-xs font-semibold rounded-xl transition-colors"
-                >
-                  {t('Pedir Oración', 'Request Prayer')}
-                </button>
-              </div>
-            </div>
-          );
-        })()}
-      </section>
-
-      {/* 3. NUESTRA VISIÓN Y MISIÓN */}
+      {/* 2. ASCENDING INTERACTIVE STAIRCASE PATHWAY (1 -> 9) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="p-8 sm:p-10 rounded-3xl bg-slate-900 text-white space-y-4 shadow-xl">
-            <span className="text-xs font-bold text-rose-400 uppercase tracking-widest block">
-              {t('Nuestra Misión', 'Our Mission')}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
-              {t('NUESTRA MISIÓN', 'OUR MISSION')}
-            </h2>
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              {t(
-                'Nuestra misión es encontrar y llevar a las personas a un encuentro íntimo y reconciliación genuina con el Padre y consigo mismos. Esto lo haremos a través del discipulado y formación, mediante el cual conduciremos al nuevo hijo e hija a la estatura del Señor Jesucristo, en carácter, verdad y amor. Nuestra meta es ayudarte a ser más como Jesucristo, viviendo con autenticidad, verdad y amor en tu vida diaria. Nos apasiona compartir la maravillosa presencia del Espíritu Santo e infundir una gran pasión por ella a través de una adoración profunda y sincera. En nuestra comunidad, nos centramos en la Biblia, en Jesucristo y en cumplir la Gran Comisión a través de misiones significativas para expandir el Reino de Dios. ¡Únete a nosotros en esta travesía espiritual llena de amor y propósito!',
-                'Our mission is to find and lead people into an intimate encounter and genuine reconciliation with the Father and with themselves through discipleship and formation, helping you become more like Jesus Christ in character, truth, and love.'
-              )}
-            </p>
-          </div>
+        <div
+          className="relative rounded-3xl bg-gradient-to-br from-slate-950 via-blue-950/85 to-black border border-slate-800 shadow-2xl p-6 sm:p-10 lg:p-14"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setPinnedStep(null);
+          }}
+        >
+          {/* Ambient glow */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="p-8 sm:p-10 rounded-3xl bg-rose-50/70 border border-rose-200 text-slate-900 space-y-4 shadow-sm">
-            <span className="text-xs font-bold text-rose-700 uppercase tracking-widest block">
-              {t('Nuestra Visión', 'Our Vision')}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">
-              {t('NUESTRA VISIÓN', 'OUR VISION')}
-            </h2>
-            <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
-              {t(
-                'Soñamos con expandirnos y conquistar nuestra ciudad, nación y el mundo para Cristo, llevando el avivamiento del Espíritu Santo a través de la adoración sincera, el crecimiento en la Palabra y el uso de los dones espirituales. Visualizamos una comunidad comprometida en formar y equipar al cuerpo de Cristo, avanzando en el propósito eterno de Dios. Nuestro anhelo es cumplir la Gran Comisión, haciendo discípulos en todas las naciones, bautizándolos y enseñándoles a vivir conforme a los principios del Reino de Dios, transformando vidas y generaciones para Su gloria.',
-                'We dream of expanding and winning our city, nation, and the world for Christ, bringing the revival of the Holy Spirit through sincere worship, growth in the Word, and spiritual gifts to transform lives and generations for His glory.'
-              )}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. LOS 3 PILARES EN DETALLE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            Columnas Fundamentales
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold font-display text-slate-900 tracking-tight">
-            Los tres pilares de nuestra vida comunitaria
-          </h2>
-          <p className="text-slate-600 text-sm sm:text-base">
-            No somos un programa de actividades vacías; cada servicio, grupo y esfuerzo se apoya firmemente en tres convicciones bíblicas.
-          </p>
-        </div>
-
-        <div className="space-y-6">
-          {CHURCH_PILLARS.map((pillar) => (
-            <div
-              key={pillar.number}
-              className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
-            >
-              <div className="lg:col-span-4 space-y-2">
-                <span className="text-xs font-bold text-rose-600 font-mono tracking-wider">
-                  PILAR {pillar.number}
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-900">
-                  {pillar.title}
-                </h3>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                  {pillar.tagline}
-                </p>
-                <div className="pt-2">
-                  <span className="inline-block p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs font-serif italic text-slate-700">
-                    {pillar.biblicalFoundation}
-                  </span>
-                </div>
-              </div>
-
-              <div className="lg:col-span-8 space-y-4">
-                <p className="text-sm text-slate-700 leading-relaxed">
-                  {pillar.description}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
-                  {pillar.practicalApplication.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Header inside stage */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-8 mb-8 border-b border-white/10 relative z-10">
+            <div className="flex items-center gap-2 text-xs font-semibold text-sky-300 uppercase tracking-widest">
+              <Sparkles className="w-4 h-4" />
+              <span>{t('Escalera de Formación · 9 Niveles', 'Formation Stairway · 9 Levels')}</span>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 4. EN LO QUE CREEMOS: DECLARACIÓN DOCTRINAL */}
-      <section className="bg-slate-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-bold text-rose-400 uppercase tracking-widest">
-              Fundamentos de Fe
+            <span className="text-xs text-slate-400">
+              {t(
+                'Pasa el cursor sobre el ícono blanco (i) para ver la descripción',
+                'Hover over the white (i) icon to view the description'
+              )}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-white">
-              En lo que creemos
-            </h2>
-            <p className="text-stone-300 text-sm">
-              Nuestra teología está anclada en el evangelio histórico y en la gracia incondicional revelada en Jesucristo.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {faithStatements.map((item, index) => (
-              <div
-                key={index}
-                className="p-6 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-3 flex flex-col justify-between"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-rose-400">
-                    <ShieldCheck className="w-4 h-4" />
-                    <h3 className="text-base font-bold text-white font-display">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <p className="text-xs text-stone-300 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-slate-700">
-                  <span className="font-serif italic text-xs text-rose-300">
-                    {item.scripture}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          {/* Staircase Nodes: mobile 1->9 (flex-col-reverse), desktop 9 top-right -> 1 bottom-left */}
+          <div className="flex flex-col-reverse lg:flex-col gap-5 lg:gap-4 relative z-10">
+            {growthSteps.map((step) => {
+              const isTooltipOpen = activeStep === step.number && Boolean(step.tooltip);
 
-      {/* 5. GUÍA PARA TU PRIMERA VISITA (FAQ INTERACTIVO) */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
-        <div className="text-center space-y-3">
-          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-            ¿Primera vez con nosotros?
-          </span>
-          <h2 className="text-3xl font-bold font-display text-slate-900">
-            Qué esperar en tu primera visita
-          </h2>
-          <p className="text-slate-600 text-sm">
-            Sabemos que visitar una iglesia por primera vez puede generar inquietudes. Aquí te resolvemos las dudas más frecuentes para que vengas en total tranquilidad.
-          </p>
-        </div>
-
-        <div className="space-y-3">
-          {firstVisitQuestions.map((item, index) => {
-            const isOpen = activeFaq === index;
-            return (
-              <div
-                key={index}
-                className="rounded-2xl border border-slate-200 bg-white overflow-hidden transition-all shadow-sm"
-              >
-                <button
-                  onClick={() => setActiveFaq(isOpen ? null : index)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors"
+              return (
+                <div
+                  key={step.number}
+                  className={`relative flex flex-col sm:flex-row sm:items-center gap-4 transition-all duration-300 ${
+                    step.offsetClass
+                  } ${isTooltipOpen ? 'z-30' : 'z-10'}`}
                 >
-                  <span className="font-bold text-sm text-slate-900">
-                    {item.q}
-                  </span>
-                  <ChevronDown
-                    className={`w-4 h-4 text-slate-400 transition-transform ${
-                      isOpen ? 'rotate-180 text-rose-600' : ''
-                    }`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-                    {item.a}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                  {/* Step Card */}
+                  <div
+                    className={`relative w-full sm:w-80 md:w-[340px] bg-black/95 rounded-2xl px-5 py-4 border border-white/15 shadow-[0_0_22px_rgba(255,255,255,0.12)] transition-all duration-300 flex items-center justify-between gap-4 ${step.glowClass}`}
+                  >
+                    {/* Number + Title */}
+                    {step.isFirstStepLink ? (
+                      <button
+                        type="button"
+                        onClick={() => onNavigate('grupos-de-vida')}
+                        className="flex items-center gap-4 text-left group/link w-full cursor-pointer"
+                      >
+                        <span
+                          className={`text-5xl sm:text-6xl font-black italic font-display leading-none select-none shrink-0 ${step.numberColorClass}`}
+                        >
+                          {step.number}
+                        </span>
+                        <div className="flex items-center justify-between w-full gap-2">
+                          <span
+                            className={`text-base sm:text-lg font-extrabold italic font-display uppercase tracking-tight leading-tight ${step.titleColorClass}`}
+                          >
+                            {step.title}
+                          </span>
+                          <ArrowUpRight className="w-4 h-4 text-lime-400 opacity-75 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform shrink-0" />
+                        </div>
+                      </button>
+                    ) : (
+                      <div className="flex items-center gap-4 min-w-0">
+                        <span
+                          className={`text-5xl sm:text-6xl font-black italic font-display leading-none select-none shrink-0 ${step.numberColorClass}`}
+                        >
+                          {step.number}
+                        </span>
+                        <h2
+                          className={`text-xs sm:text-sm font-extrabold italic font-display uppercase tracking-wide leading-snug ${step.titleColorClass}`}
+                        >
+                          {step.title}
+                        </h2>
+                      </div>
+                    )}
 
-        {/* CTA Banner */}
-        <div className="p-6 rounded-2xl bg-rose-50 border border-rose-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-bold text-slate-900 text-sm">
-              ¿Quieres avisarnos que vendrás este domingo?
-            </h4>
-            <p className="text-xs text-slate-600">
-              Nuestro equipo de bienvenida te esperará en la entrada con un café caliente y te guiará con gusto.
-            </p>
+                    {/* White Circular (i) Icon with Interactive Hover/Focus/Tap Tooltip */}
+                    {step.tooltip && (
+                      <div
+                        className="relative shrink-0"
+                        onMouseEnter={() => setHoveredStep(step.number)}
+                        onMouseLeave={() => setHoveredStep(null)}
+                      >
+                        <button
+                          type="button"
+                          onFocus={() => setHoveredStep(step.number)}
+                          onBlur={() => setHoveredStep(null)}
+                          onClick={() =>
+                            setPinnedStep((prev) => (prev === step.number ? null : step.number))
+                          }
+                          aria-label={t(
+                            `Información de ${step.title}`,
+                            `Info for ${step.title}`
+                          )}
+                          aria-expanded={isTooltipOpen}
+                          className={`w-7 h-7 rounded-full bg-white text-black font-serif font-extrabold text-sm flex items-center justify-center shadow-md transition-transform duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-400 ${
+                            isTooltipOpen ? 'scale-110 ring-2 ring-sky-400' : 'hover:scale-110'
+                          }`}
+                        >
+                          i
+                        </button>
+
+                        {/* Floating Dark Tooltip Card */}
+                        {isTooltipOpen && (
+                          <div
+                            role="tooltip"
+                            className="absolute bottom-full right-0 sm:left-1/2 sm:-translate-x-1/2 mb-3 w-64 sm:w-72 p-4 rounded-xl bg-neutral-800/95 backdrop-blur-md text-white text-xs sm:text-[13px] leading-relaxed font-normal normal-case not-italic shadow-2xl border border-white/15 z-50 text-center animate-in fade-in zoom-in-95 duration-150"
+                          >
+                            <p>{step.tooltip}</p>
+                            {/* Bottom pointer arrow */}
+                            <div className="hidden sm:block absolute top-full left-1/2 -translate-x-1/2 w-3 h-3 bg-neutral-800/95 border-r border-b border-white/15 rotate-45 -mt-1.5" />
+                            <div className="sm:hidden absolute top-full right-2.5 w-3 h-3 bg-neutral-800/95 border-r border-b border-white/15 rotate-45 -mt-1.5" />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Optional Side Badge ("EL QUE SIRVE QUE SIRVA" next to Step 6) */}
+                  {step.sideBadge && (
+                    <div className="sm:w-32 bg-black/95 rounded-2xl px-4 py-4 border border-white/15 shadow-[0_0_22px_rgba(255,255,255,0.12)] flex items-center justify-center text-center">
+                      <span className="text-white font-black italic font-display text-sm sm:text-base uppercase tracking-wide leading-tight">
+                        {step.sideBadge}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <button
-            onClick={() => onNavigate('sos')}
-            className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold shrink-0 transition-colors"
-          >
-            {t('Avisar mi visita', 'Notify my visit')}
-          </button>
         </div>
       </section>
     </div>
