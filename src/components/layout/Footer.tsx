@@ -303,12 +303,14 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
 
               <div className="pt-2">
-                <button
-                  onClick={() => onNavigate('info')}
-                  className="text-xs text-rose-400 hover:text-rose-300 font-medium underline underline-offset-4"
+                <a
+                  href={CHURCH_INFO.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-rose-400 hover:text-rose-300 font-medium underline underline-offset-4 inline-flex items-center gap-1"
                 >
                   {t('Ver mapa y cómo llegar →', 'View map & directions →')}
-                </button>
+                </a>
               </div>
             </div>
           </div>

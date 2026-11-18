@@ -29,6 +29,7 @@ interface EventsInfoPageProps {
 interface ActivitySquareCardProps {
   title: string;
   subtitle: string;
+  address?: string;
   schedule: string;
   alignLeft: boolean;
   meetLink?: string;
@@ -39,6 +40,7 @@ interface ActivitySquareCardProps {
 const ActivitySquareCard: React.FC<ActivitySquareCardProps> = ({
   title,
   subtitle,
+  address,
   schedule,
   alignLeft,
   meetLink,
@@ -68,6 +70,19 @@ const ActivitySquareCard: React.FC<ActivitySquareCardProps> = ({
           {title}
         </h3>
         <p className="text-xs sm:text-sm font-medium text-slate-600">{subtitle}</p>
+        {address && (
+          <div className="pt-1">
+            <a
+              href={CHURCH_INFO.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700"
+            >
+              <MapPin className="w-3.5 h-3.5 shrink-0" />
+              <span>{address}</span>
+            </a>
+          </div>
+        )}
         {meetLink && (
           <div className="pt-2">
             <a
@@ -909,6 +924,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
               key={act.id}
               title={lang === 'es' ? act.titleEs : act.titleEn}
               subtitle={lang === 'es' ? act.subtitleEs : act.subtitleEn}
+              address={lang === 'es' ? act.addressEs : act.addressEn}
               schedule={lang === 'es' ? act.scheduleEs : act.scheduleEn}
               alignLeft={act.alignLeft}
               meetLink={act.meetLink}
@@ -1018,9 +1034,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
               <span>Av. Calle 24 #72b–30 · Modelia / Salitre Occidental, Bogotá</span>
             </div>
             <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(
-                'Iglesia Cristiana En El Lugar Santisimo Av. Calle 24 #72b-30, Bogota, Colombia'
-              )}`}
+              href={CHURCH_INFO.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"

@@ -17,6 +17,8 @@ export const CHURCH_INFO = {
   address: 'Av. Calle 24 #72b–30',
   city: 'Bogotá, Colombia',
   neighborhood: 'Modelia / Salitre Occidental',
+  googleMapsUrl:
+    'https://maps.google.com/?q=Iglesia+Cristiana+En+El+Lugar+Santisimo+Av.+Calle+24+%2372b-30%2C+Bogota%2C+Colombia',
   phone: '+57 3054351398',
   phoneClean: '573054351398',
   email: 'enellugarsantisimo@gmail.com',
@@ -733,6 +735,8 @@ export const INFO_SECTION_DATA = {
       titleEn: 'Congregational Fasting',
       subtitleEs: 'Presencial – Reunión Virtual',
       subtitleEn: 'In-Person – Virtual Meeting',
+      addressEs: 'Av. Calle 24 #72b–30, Bogotá, Colombia',
+      addressEn: 'Av. Calle 24 #72b–30, Bogotá, Colombia',
       scheduleEs: 'Sábado 10am – 12m',
       scheduleEn: 'Saturday 10 AM – 12 PM',
       alignLeft: true,
@@ -748,7 +752,19 @@ export const INFO_SECTION_DATA = {
       alignLeft: false,
       meetLink: 'https://meet.google.com/skt-pttc-gmz',
     },
-  ],
+  ] as Array<{
+    id: string;
+    titleEs: string;
+    titleEn: string;
+    subtitleEs: string;
+    subtitleEn: string;
+    addressEs?: string;
+    addressEn?: string;
+    scheduleEs: string;
+    scheduleEn: string;
+    alignLeft: boolean;
+    meetLink?: string;
+  }>,
 };
 
 export const DONATE_SECTION_DATA = {
