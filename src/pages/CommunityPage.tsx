@@ -159,20 +159,40 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
 
   const womenSlides: SlideItem[] = [
     {
-      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_1__a527bff0.jpeg',
-      alt: t('Grupo de Damas 1', 'Women’s Group 1'),
+      src: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.06.13_PM_e3d9d36e.jpeg',
+      alt: t('Grupo de Damas 1 - Encuentro Mujeres', 'Women’s Group 1 - Women’s Encounter'),
     },
     {
-      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_bcbf3f1b.jpeg',
+      src: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.11.14_PM_a1853d0e.jpeg',
       alt: t('Grupo de Damas 2', 'Women’s Group 2'),
     },
     {
-      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM__1__4cf0fc38.jpeg',
+      src: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.10.40_PM_b4cb73fb.jpeg',
       alt: t('Grupo de Damas 3', 'Women’s Group 3'),
     },
     {
-      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM_00846d68.jpeg',
+      src: '/assets/aistudio/IMG_2284_9b152a54.jpg',
       alt: t('Grupo de Damas 4', 'Women’s Group 4'),
+    },
+    {
+      src: '/assets/aistudio/IMG_1622_7fcb5f8a.jpg',
+      alt: t('Grupo de Damas 5', 'Women’s Group 5'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_1__a527bff0.jpeg',
+      alt: t('Grupo de Damas 6', 'Women’s Group 6'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_bcbf3f1b.jpeg',
+      alt: t('Grupo de Damas 7', 'Women’s Group 7'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM__1__4cf0fc38.jpeg',
+      alt: t('Grupo de Damas 8', 'Women’s Group 8'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM_00846d68.jpeg',
+      alt: t('Grupo de Damas 9', 'Women’s Group 9'),
     },
   ];
 
@@ -188,10 +208,22 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   ];
 
   const holyKidsSlides: SlideItem[] = [
-    { src: CHURCH_INFO.images.bocachica, alt: t('Holy Kids 1', 'Holy Kids 1') },
-    { src: CHURCH_INFO.images.community, alt: t('Holy Kids 2', 'Holy Kids 2') },
-    { src: CHURCH_INFO.images.worship, alt: t('Holy Kids 3', 'Holy Kids 3') },
-    { src: CHURCH_INFO.images.devotional, alt: t('Holy Kids 4', 'Holy Kids 4') },
+    {
+      src: '/assets/aistudio/IMG_3342_047d30a2.jpg',
+      alt: t('Holy Kids 1', 'Holy Kids 1'),
+    },
+    {
+      src: '/assets/aistudio/IMG_3212_501b3979.jpg',
+      alt: t('Holy Kids 2', 'Holy Kids 2'),
+    },
+    {
+      src: '/assets/aistudio/IMG_3358_a7de2b96.jpg',
+      alt: t('Holy Kids 3', 'Holy Kids 3'),
+    },
+    {
+      src: '/assets/aistudio/ima_inf_6f872373.jpg',
+      alt: t('Holy Kids 4', 'Holy Kids 4'),
+    },
   ];
 
   return (

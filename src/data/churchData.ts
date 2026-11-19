@@ -613,7 +613,7 @@ export const INFO_SECTION_DATA = {
       sloganEn: 'Do Something Different!',
       taglineEs: 'Grupo de Vida · MUJERES',
       taglineEn: 'Life Group · WOMEN',
-      image: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM__1__4cf0fc38.jpeg',
+      image: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.06.13_PM_e3d9d36e.jpeg',
       locations: [
         {
           address: 'Carrera 70 # 22 - 75, Manzana C Interior 13 Apto 204 · Urb. Carlos Lleras',
