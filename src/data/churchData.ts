@@ -657,7 +657,7 @@ export const INFO_SECTION_DATA = {
       subtitleEn: 'AGES 12 - 17',
       verseEs: 'Alégrate, joven, en tu juventud, y tome placer tu corazón',
       verseEn: 'Rejoice, young person, in your youth, and let your heart be glad',
-      image: '/src/assets/images/church_worship_gathering_1794440713697.jpg',
+      image: '/assets/aistudio/IMG_5040_d839e453.png',
       locations: [
         {
           address: 'Cra 79 # 19A-87 Torre 1 Apto 503 · Conjunto El Sendero · Barrio La Felicidad',

@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href={`https://wa.me/${CHURCH_INFO.phoneClean}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"
             >
               <Phone className="w-3 h-3" />
               <span>WhatsApp: +57 3054351398</span>
@@ -192,7 +192,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => handleNavClick('dona')}
-              className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all shadow-sm bg-rose-600 hover:bg-rose-700 text-white whitespace-nowrap shrink-0 cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold rounded-lg transition-all shadow-sm bg-rose-600 hover:bg-rose-700 text-white whitespace-nowrap shrink-0 cursor-pointer ${
                 currentPage === 'dona' ? 'ring-2 ring-rose-300 ring-offset-1' : ''
               }`}
             >

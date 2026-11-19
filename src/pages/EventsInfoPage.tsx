@@ -58,41 +58,41 @@ const ActivitySquareCard: React.FC<ActivitySquareCardProps> = ({
   return (
     <div
       ref={cardRef}
-      className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm"
+      className="grid grid-cols-12 gap-3 sm:gap-6 items-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-sm"
     >
       {/* Text Block */}
       <div
-        className={`md:col-span-6 space-y-2 ${
-          alignLeft ? 'md:order-1' : 'md:order-2'
+        className={`col-span-6 space-y-1.5 sm:space-y-2 ${
+          alignLeft ? 'order-1' : 'order-2'
         }`}
       >
-        <h3 className="text-2xl sm:text-3xl font-bold font-display text-slate-900 tracking-tight">
+        <h3 className="text-base sm:text-3xl font-bold font-display text-slate-900 tracking-tight leading-tight">
           {title}
         </h3>
-        <p className="text-xs sm:text-sm font-medium text-slate-600">{subtitle}</p>
+        <p className="text-[11px] sm:text-sm font-medium text-slate-600 leading-snug">{subtitle}</p>
         {address && (
-          <div className="pt-1">
+          <div className="pt-0.5 sm:pt-1">
             <a
               href={CHURCH_INFO.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700"
+              className="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-semibold text-rose-600 hover:text-rose-700 leading-tight"
             >
-              <MapPin className="w-3.5 h-3.5 shrink-0" />
+              <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
               <span>{address}</span>
             </a>
           </div>
         )}
         {meetLink && (
-          <div className="pt-2">
+          <div className="pt-1 sm:pt-2">
             <a
               href={meetLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 hover:text-rose-700"
+              className="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-rose-600 hover:text-rose-700"
             >
               <span>{joinMeetLabel}</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             </a>
           </div>
         )}
@@ -100,18 +100,18 @@ const ActivitySquareCard: React.FC<ActivitySquareCardProps> = ({
 
       {/* Scroll-Reactive Enlarging Square Card */}
       <div
-        className={`md:col-span-6 flex justify-center ${
-          alignLeft ? 'md:order-2' : 'md:order-1'
+        className={`col-span-6 flex justify-center ${
+          alignLeft ? 'order-2' : 'order-1'
         }`}
       >
         <motion.div
           style={{ scale: smoothScale }}
           whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.2 }}
-          className="w-full max-w-md px-6 py-7 rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 text-slate-950 shadow-lg border border-amber-300/80 flex items-center justify-center gap-3 text-center"
+          className="w-full max-w-md px-2.5 py-4 sm:px-6 sm:py-7 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 text-slate-950 shadow-lg border border-amber-300/80 flex items-center justify-center gap-1.5 sm:gap-3 text-center"
         >
-          <Clock className="w-5 h-5 shrink-0 text-slate-900" />
-          <span className="text-lg sm:text-xl font-extrabold font-display tracking-tight">
+          <Clock className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-slate-900" />
+          <span className="text-xs sm:text-xl font-extrabold font-display tracking-tight leading-tight">
             {schedule}
           </span>
         </motion.div>
@@ -248,19 +248,19 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-cyan-950/70 to-slate-950/55" />
 
-                <div className="relative z-10 w-full px-10 sm:px-14 lg:px-16 pt-10 pb-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="relative z-10 w-full px-10 sm:px-14 lg:px-16 pt-10 pb-14 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                   {/* Independent 3D Book Image */}
-                  <div className="lg:col-span-4 flex justify-center">
+                  <div className="md:col-span-4 flex justify-center">
                     <img
                       src={heroBanners.bookCoverImage}
                       alt={lang === 'es' ? bookShowcase.imageAltEs : bookShowcase.imageAltEn}
                       referrerPolicy="no-referrer"
-                      className="w-48 sm:w-56 lg:w-64 h-auto object-contain drop-shadow-[0_24px_38px_rgba(0,0,0,0.65)]"
+                      className="w-44 sm:w-52 lg:w-64 h-auto object-contain drop-shadow-[0_24px_38px_rgba(0,0,0,0.65)]"
                     />
                   </div>
 
                   {/* All Editable Headline & CTA Copy Overlaid on Image */}
-                  <div className="lg:col-span-8 text-center lg:text-left space-y-4">
+                  <div className="md:col-span-8 text-center md:text-left space-y-4">
                     <span className="inline-block text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase text-sky-300">
                       {lang === 'es' ? bookShowcase.badgeEs : bookShowcase.badgeEn}
                     </span>
@@ -345,9 +345,9 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950/92 via-slate-950/78 to-cyan-950/55" />
 
-                <div className="relative z-10 w-full px-11 sm:px-14 lg:px-16 pt-10 pb-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="relative z-10 w-full px-11 sm:px-14 lg:px-16 pt-10 pb-14 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                   {/* Left: Editable Reflection Copy + Romanos 8:26 Quote */}
-                  <div className="lg:col-span-8 space-y-3 text-left">
+                  <div className="md:col-span-8 space-y-3 text-left">
                     <div className="inline-flex items-center gap-2 text-xs font-bold text-sky-300 uppercase tracking-widest">
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>
@@ -388,12 +388,12 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                   </div>
 
                   {/* Right: Independent 3D Book Image */}
-                  <div className="lg:col-span-4 flex justify-center">
+                  <div className="md:col-span-4 flex justify-center">
                     <img
                       src={heroBanners.bookCoverImage}
                       alt={lang === 'es' ? bookShowcase.imageAltEs : bookShowcase.imageAltEn}
                       referrerPolicy="no-referrer"
-                      className="w-48 sm:w-56 lg:w-64 h-auto object-contain drop-shadow-[0_24px_38px_rgba(0,0,0,0.65)]"
+                      className="w-44 sm:w-52 lg:w-64 h-auto object-contain drop-shadow-[0_24px_38px_rgba(0,0,0,0.65)]"
                     />
                   </div>
                 </div>
@@ -464,14 +464,14 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
           </h2>
         </div>
 
-        {/* Scroll-Rotating Social Spheres Card (Text on left, vertical staggered spheres on right) */}
-        <div className="rounded-3xl bg-amber-300/90 border border-amber-400 p-8 sm:p-12 lg:p-14 shadow-md">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
-            <div className="md:col-span-6 text-center md:text-left space-y-3 md:pr-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-amber-900 block">
+        {/* Scroll-Rotating Social Spheres Card (Text on left, vertical staggered spheres on right across ALL devices) */}
+        <div className="rounded-3xl bg-amber-300/90 border border-amber-400 p-5 sm:p-12 lg:p-14 shadow-md">
+          <div className="grid grid-cols-12 gap-3 sm:gap-8 items-center">
+            <div className="col-span-6 text-left space-y-2 sm:space-y-3 pr-1 sm:pr-6">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-900 block">
                 {t('Redes Sociales Oficiales', 'Official Social Media')}
               </span>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-slate-950 leading-snug">
+              <h3 className="text-lg sm:text-3xl lg:text-4xl font-bold font-display text-slate-950 leading-snug">
                 {t(
                   '¡Haz Click en las esferas y síguenos en todas nuestras redes!',
                   'Click the spheres and follow us on all our social networks!'
@@ -479,14 +479,14 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
               </h3>
             </div>
 
-            <div className="md:col-span-6 flex flex-col items-center justify-center gap-5 sm:gap-6">
+            <div className="col-span-6 flex flex-col items-center justify-center gap-3.5 sm:gap-6">
               {socialSpheres.map((item, idx) => (
                 <div
                   key={item.platform}
                   className={
                     idx % 2 === 0
-                      ? 'translate-x-7 sm:translate-x-12'
-                      : '-translate-x-7 sm:-translate-x-12'
+                      ? 'translate-x-4 sm:translate-x-12'
+                      : '-translate-x-4 sm:-translate-x-12'
                   }
                 >
                   <SocialOrb3D
@@ -563,13 +563,13 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                       i
                     </button>
 
-                    {/* Floating Popover Card right beneath the hovered/tapped (i) button (Desktop & Tablet) */}
+                    {/* Floating Popover Card right beneath the hovered/tapped (i) button (All Devices) */}
                     {isPopoverOpen && (
                       <div
-                        className={`hidden sm:block absolute left-0 top-full mt-3 z-40 w-[560px] max-w-[88vw] rounded-2xl bg-gradient-to-br ${grp.flyerAccentClass} border-2 shadow-2xl p-5`}
+                        className={`block absolute left-0 top-full mt-3 z-40 w-[calc(100vw-3rem)] sm:w-[560px] max-w-[90vw] rounded-2xl bg-gradient-to-br ${grp.flyerAccentClass} border-2 shadow-2xl p-4 sm:p-5`}
                       >
                         {/* Upward Caret */}
-                        <div className="absolute -top-2 left-32 w-4 h-4 rotate-45 bg-slate-900 border-l border-t border-white/25" />
+                        <div className="absolute -top-2 left-28 sm:left-32 w-4 h-4 rotate-45 bg-slate-900 border-l border-t border-white/25" />
 
                         <div className="relative z-10 space-y-4">
                           {/* Popover Flyer Header */}
@@ -578,7 +578,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                               <span className="text-xs font-serif italic text-amber-200 block">
                                 {lang === 'es' ? grp.sloganEs : grp.sloganEn}
                               </span>
-                              <h3 className="text-xl font-black font-display tracking-tight text-white">
+                              <h3 className="text-lg sm:text-xl font-black font-display tracking-tight text-white">
                                 {lang === 'es' ? grp.taglineEs : grp.taglineEn}
                               </h3>
                               {grp.subtitleEs && (
@@ -598,21 +598,21 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                               <img
                                 src={CHURCH_INFO.logoWatermark}
                                 alt={CHURCH_INFO.name}
-                                className="h-9 w-auto object-contain opacity-90"
+                                className="h-8 sm:h-9 w-auto object-contain opacity-90"
                               />
                               <img
                                 src={grp.image}
                                 alt={lang === 'es' ? grp.labelEs : grp.labelEn}
                                 referrerPolicy="no-referrer"
-                                className="w-16 h-16 rounded-xl object-cover border-2 border-white/60 shadow-md"
+                                className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl object-cover border-2 border-white/60 shadow-md"
                               />
                             </div>
                           </div>
 
                           {/* Editable Schedule Table(s) + Locations Grid */}
-                          <div className="grid grid-cols-12 gap-3 items-start">
+                          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-start">
                             {/* Locations & Hosts */}
-                            <div className="col-span-6 space-y-2">
+                            <div className="sm:col-span-6 space-y-2">
                               {grp.locations.map((loc, idx) => (
                                 <div
                                   key={idx}
@@ -638,7 +638,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                             </div>
 
                             {/* Mes | Días | Hora Table(s) */}
-                            <div className="col-span-6 space-y-2.5">
+                            <div className="sm:col-span-6 space-y-2.5">
                               <div className="rounded-xl bg-black/35 border border-white/15 p-2.5">
                                 <p className="text-[10px] font-bold uppercase tracking-wider text-amber-300 mb-1.5">
                                   {lang === 'es' ? grp.scheduleTitleEs : grp.scheduleTitleEn}

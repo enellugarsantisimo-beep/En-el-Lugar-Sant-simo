@@ -107,7 +107,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             {/* Independent Graphic Layer: Large Red Vinyl Disc (Right) */}
             <div
               aria-hidden="true"
-              className="hidden md:block absolute right-4 lg:right-12 top-1/2 -translate-y-1/2 w-64 h-64 lg:w-[370px] lg:h-[370px] pointer-events-none z-0 opacity-95"
+              className="block absolute -right-4 sm:right-4 lg:right-12 top-6 sm:top-1/2 sm:-translate-y-1/2 w-32 h-32 sm:w-52 sm:h-52 md:w-64 md:h-64 lg:w-[370px] lg:h-[370px] pointer-events-none z-0 opacity-35 sm:opacity-55 md:opacity-95"
             >
               <RedVinylDisc
                 customImage={SOS_SECTION_DATA.visuals.largeVinylImage || undefined}
@@ -115,18 +115,18 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
               />
             </div>
 
-            {/* Independent Graphic Layer: Small Red Vinyl Disc + Bible & Push Button (Bottom-Left on Desktop) */}
+            {/* Independent Graphic Layer: Small Red Vinyl Disc + Bible & Push Button (Bottom-Left) */}
             <div
               aria-hidden="true"
-              className="hidden md:flex items-center justify-center absolute left-8 lg:left-24 bottom-6 lg:bottom-8 w-52 h-52 lg:w-64 lg:h-64 pointer-events-none z-0"
+              className="flex items-center justify-center absolute -left-4 sm:left-8 lg:left-24 bottom-3 sm:bottom-6 lg:bottom-8 w-28 h-28 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-64 lg:h-64 pointer-events-none z-0 opacity-40 sm:opacity-65 md:opacity-100"
             >
               <RedVinylDisc
                 customImage={SOS_SECTION_DATA.visuals.smallVinylImage || undefined}
-                className="w-44 h-44 lg:w-56 lg:h-56"
+                className="w-24 h-24 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-56 lg:h-56"
               />
               <BibleEmergencyArt
                 customImage={SOS_SECTION_DATA.visuals.bibleButtonImage || undefined}
-                className="absolute w-36 h-36 lg:w-44 lg:h-44 translate-y-2"
+                className="absolute w-20 h-20 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-44 lg:h-44 translate-y-1 sm:translate-y-2"
               />
             </div>
 
@@ -269,23 +269,6 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
               </div>
             </div>
 
-            {/* Mobile-only clean visual strip below copy so nothing overlaps on small screens */}
-            <div className="relative z-10 flex md:hidden items-center justify-center gap-6 pt-4 border-t border-white/10">
-              <div className="relative w-28 h-28 flex items-center justify-center">
-                <RedVinylDisc
-                  customImage={SOS_SECTION_DATA.visuals.smallVinylImage || undefined}
-                  className="w-28 h-28"
-                />
-                <BibleEmergencyArt
-                  customImage={SOS_SECTION_DATA.visuals.bibleButtonImage || undefined}
-                  className="absolute w-24 h-24"
-                />
-              </div>
-              <RedVinylDisc
-                customImage={SOS_SECTION_DATA.visuals.largeVinylImage || undefined}
-                className="w-28 h-28"
-              />
-            </div>
           </div>
         </div>
       </section>

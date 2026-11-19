@@ -94,7 +94,7 @@ export const SocialOrb3D: React.FC<SocialOrb3DProps> = ({
       whileHover={{ scale: 1.14, y: -4 }}
       whileTap={{ scale: 0.94 }}
       transition={{ type: 'spring', stiffness: 320, damping: 20 }}
-      className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full block cursor-pointer select-none shadow-[0_14px_24px_-6px_rgba(0,0,0,0.45),0_4px_8px_-2px_rgba(0,0,0,0.28)]"
+      className="relative w-14 h-14 sm:w-20 sm:h-20 rounded-full block cursor-pointer select-none shadow-[0_14px_24px_-6px_rgba(0,0,0,0.45),0_4px_8px_-2px_rgba(0,0,0,0.28)]"
     >
       {/* Layer 1: Realistic 3D Spherical Body Shading */}
       <svg

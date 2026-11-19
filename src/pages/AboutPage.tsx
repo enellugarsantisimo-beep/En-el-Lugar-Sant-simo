@@ -29,8 +29,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
   const activeStep = hoveredStep ?? pinnedStep;
 
-  // Ordered 9 -> 1 on desktop (staircase from bottom-left 1 to top-right 9),
-  // reversed on mobile via flex-col-reverse so mobile reads 1 -> 9 naturally.
+  // Ordered 9 -> 1 across all devices (ascending staircase from bottom-left 1 to top-right 9).
   const growthSteps: GrowthStepNode[] = [
     {
       number: 9,
@@ -42,7 +41,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'La persona podrá continuar su formación en un instituto bíblico mientras desarrollamos nuestra escuela ministerial.',
         'Participants can continue their training at a Bible institute while we develop our ministry school.'
       ),
-      offsetClass: 'lg:ml-[56%]',
+      offsetClass: 'ml-[24%] sm:ml-[36%] lg:ml-[56%]',
     },
     {
       number: 8,
@@ -54,7 +53,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Para preparar líderes de Grupos de Vida, enseñándoles a ministrar según los doce pasos y liderar su grupo.',
         'To prepare Life Group leaders, teaching them to minister through the twelve steps and lead their group.'
       ),
-      offsetClass: 'lg:ml-[49%]',
+      offsetClass: 'ml-[21%] sm:ml-[31.5%] lg:ml-[49%]',
     },
     {
       number: 7,
@@ -66,7 +65,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Para sanar y empoderar a líderes, equipándolos con dones para su misión en la iglesia y el mundo.',
         'To heal and empower leaders, equipping them with spiritual gifts for their mission in the church and the world.'
       ),
-      offsetClass: 'lg:ml-[42%]',
+      offsetClass: 'ml-[18%] sm:ml-[27%] lg:ml-[42%]',
     },
     {
       number: 6,
@@ -78,7 +77,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Formación y equipamiento para servidores comprometidos con la misión.',
         'Training and equipping for servants committed to the mission.'
       ),
-      offsetClass: 'lg:ml-[35%]',
+      offsetClass: 'ml-[15%] sm:ml-[22.5%] lg:ml-[35%]',
       sideBadge: t('EL QUE SIRVE QUE SIRVA', 'LET THE ONE WHO SERVES, SERVE'),
     },
     {
@@ -91,7 +90,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Formación bíblica y práctica para alcanzar la madurez cristiana, enfocada en doctrina, relación con Dios, oración, adoración y dirección divina.',
         'Biblical and practical training to reach Christian maturity, focused on doctrine, relationship with God, prayer, worship, and divine guidance.'
       ),
-      offsetClass: 'lg:ml-[28%]',
+      offsetClass: 'ml-[12%] sm:ml-[18%] lg:ml-[28%]',
     },
     {
       number: 4,
@@ -103,7 +102,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Para fortalecer la sanidad y el bienestar espiritual de los miembros.',
         'To strengthen the spiritual healing and wellbeing of members.'
       ),
-      offsetClass: 'lg:ml-[21%]',
+      offsetClass: 'ml-[9%] sm:ml-[13.5%] lg:ml-[21%]',
     },
     {
       number: 3,
@@ -115,7 +114,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Son dos lecciones que enseñan nuestra identidad como hijos de Dios y las disciplinas cristianas, estas las tomamos para estar preparados para el encuentro.',
         'Two lessons teaching our identity as children of God and Christian disciplines, preparing us for the encounter retreat.'
       ),
-      offsetClass: 'lg:ml-[14%]',
+      offsetClass: 'ml-[6%] sm:ml-[9%] lg:ml-[14%]',
     },
     {
       number: 2,
@@ -127,7 +126,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         'Este retiro confronta y libera de obstáculos espirituales, culminando con el Bautismo y la llenura del Espíritu Santo, guiando a los participantes hacia una vida cristiana plena.',
         'This retreat confronts and frees participants from spiritual obstacles, culminating in Baptism and the filling of the Holy Spirit, guiding them into a full Christian life.'
       ),
-      offsetClass: 'lg:ml-[7%]',
+      offsetClass: 'ml-[3%] sm:ml-[4.5%] lg:ml-[7%]',
     },
     {
       number: 1,
@@ -135,7 +134,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       numberColorClass: 'text-lime-400',
       titleColorClass: 'text-lime-400',
       glowClass: 'hover:border-lime-400/60 hover:shadow-[0_0_28px_rgba(163,230,53,0.3)]',
-      offsetClass: 'lg:ml-0',
+      offsetClass: 'ml-0',
       isFirstStepLink: true,
     },
   ];
@@ -180,9 +179,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </section>
 
       {/* 2. ASCENDING INTERACTIVE STAIRCASE PATHWAY (1 -> 9) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div
-          className="relative rounded-3xl bg-gradient-to-br from-slate-950 via-blue-950/85 to-black border border-slate-800 shadow-2xl p-6 sm:p-10 lg:p-14"
+          className="relative rounded-3xl bg-gradient-to-br from-slate-950 via-blue-950/85 to-black border border-slate-800 shadow-2xl p-3.5 sm:p-10 lg:p-14"
           onClick={(e) => {
             if (e.target === e.currentTarget) setPinnedStep(null);
           }}
@@ -192,7 +191,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
 
           {/* Header inside stage */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-8 mb-8 border-b border-white/10 relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6 sm:pb-8 mb-6 sm:mb-8 border-b border-white/10 relative z-10">
             <div className="flex items-center gap-2 text-xs font-semibold text-sky-300 uppercase tracking-widest">
               <Sparkles className="w-4 h-4" />
               <span>{t('Escalera de Formación · 9 Niveles', 'Formation Stairway · 9 Levels')}</span>
@@ -205,52 +204,52 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </span>
           </div>
 
-          {/* Staircase Nodes: mobile 1->9 (flex-col-reverse), desktop 9 top-right -> 1 bottom-left */}
-          <div className="flex flex-col-reverse lg:flex-col gap-5 lg:gap-4 relative z-10">
+          {/* Staircase Nodes: ascending 1 (bottom-left) -> 9 (top-right) across ALL devices */}
+          <div className="flex flex-col gap-2.5 sm:gap-3.5 lg:gap-4 relative z-10">
             {growthSteps.map((step) => {
               const isTooltipOpen = activeStep === step.number && Boolean(step.tooltip);
 
               return (
                 <div
                   key={step.number}
-                  className={`relative flex flex-col sm:flex-row sm:items-center gap-4 transition-all duration-300 ${
+                  className={`relative flex flex-row items-center gap-1.5 sm:gap-4 transition-all duration-300 ${
                     step.offsetClass
                   } ${isTooltipOpen ? 'z-30' : 'z-10'}`}
                 >
                   {/* Step Card */}
                   <div
-                    className={`relative w-full sm:w-80 md:w-[340px] bg-black/95 rounded-2xl px-5 py-4 border border-white/15 shadow-[0_0_22px_rgba(255,255,255,0.12)] transition-all duration-300 flex items-center justify-between gap-4 ${step.glowClass}`}
+                    className={`relative w-[62%] sm:w-[270px] md:w-[320px] lg:w-[340px] shrink-0 bg-black/95 rounded-xl sm:rounded-2xl px-2.5 py-2 sm:px-5 sm:py-4 border border-white/15 shadow-[0_0_22px_rgba(255,255,255,0.12)] transition-all duration-300 flex items-center justify-between gap-2 sm:gap-4 ${step.glowClass}`}
                   >
                     {/* Number + Title */}
                     {step.isFirstStepLink ? (
                       <button
                         type="button"
                         onClick={() => onNavigate('grupos-de-vida')}
-                        className="flex items-center gap-4 text-left group/link w-full cursor-pointer"
+                        className="flex items-center gap-2 sm:gap-4 text-left group/link w-full cursor-pointer"
                       >
                         <span
-                          className={`text-5xl sm:text-6xl font-black italic font-display leading-none select-none shrink-0 ${step.numberColorClass}`}
+                          className={`text-2xl sm:text-5xl lg:text-6xl font-black italic font-display leading-none select-none shrink-0 ${step.numberColorClass}`}
                         >
                           {step.number}
                         </span>
-                        <div className="flex items-center justify-between w-full gap-2">
+                        <div className="flex items-center justify-between w-full gap-1 sm:gap-2">
                           <span
-                            className={`text-base sm:text-lg font-extrabold italic font-display uppercase tracking-tight leading-tight ${step.titleColorClass}`}
+                            className={`text-[11px] sm:text-base lg:text-lg font-extrabold italic font-display uppercase tracking-tight leading-tight ${step.titleColorClass}`}
                           >
                             {step.title}
                           </span>
-                          <ArrowUpRight className="w-4 h-4 text-lime-400 opacity-75 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform shrink-0" />
+                          <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-lime-400 opacity-75 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform shrink-0" />
                         </div>
                       </button>
                     ) : (
-                      <div className="flex items-center gap-4 min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-4 min-w-0">
                         <span
-                          className={`text-5xl sm:text-6xl font-black italic font-display leading-none select-none shrink-0 ${step.numberColorClass}`}
+                          className={`text-2xl sm:text-5xl lg:text-6xl font-black italic font-display leading-none select-none shrink-0 ${step.numberColorClass}`}
                         >
                           {step.number}
                         </span>
                         <h2
-                          className={`text-xs sm:text-sm font-extrabold italic font-display uppercase tracking-wide leading-snug ${step.titleColorClass}`}
+                          className={`text-[9.5px] sm:text-xs md:text-sm font-extrabold italic font-display uppercase tracking-wide leading-tight sm:leading-snug ${step.titleColorClass}`}
                         >
                           {step.title}
                         </h2>
@@ -276,7 +275,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                             `Info for ${step.title}`
                           )}
                           aria-expanded={isTooltipOpen}
-                          className={`w-7 h-7 rounded-full bg-white text-black font-serif font-extrabold text-sm flex items-center justify-center shadow-md transition-transform duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-400 ${
+                          className={`w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-white text-black font-serif font-extrabold text-[11px] sm:text-sm flex items-center justify-center shadow-md transition-transform duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-400 ${
                             isTooltipOpen ? 'scale-110 ring-2 ring-sky-400' : 'hover:scale-110'
                           }`}
                         >
@@ -287,12 +286,18 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                         {isTooltipOpen && (
                           <div
                             role="tooltip"
-                            className="absolute bottom-full right-0 sm:left-1/2 sm:-translate-x-1/2 mb-3 w-64 sm:w-72 p-4 rounded-xl bg-neutral-800/95 backdrop-blur-md text-white text-xs sm:text-[13px] leading-relaxed font-normal normal-case not-italic shadow-2xl border border-white/15 z-50 text-center animate-in fade-in zoom-in-95 duration-150"
+                            className={`absolute bottom-full ${
+                              step.number <= 4 ? 'right-[-52px]' : 'right-0'
+                            } sm:right-auto sm:left-1/2 sm:-translate-x-1/2 mb-3 w-56 sm:w-72 p-3.5 sm:p-4 rounded-xl bg-neutral-800/95 backdrop-blur-md text-white text-xs sm:text-[13px] leading-relaxed font-normal normal-case not-italic shadow-2xl border border-white/15 z-50 text-center animate-in fade-in zoom-in-95 duration-150`}
                           >
                             <p>{step.tooltip}</p>
                             {/* Bottom pointer arrow */}
                             <div className="hidden sm:block absolute top-full left-1/2 -translate-x-1/2 w-3 h-3 bg-neutral-800/95 border-r border-b border-white/15 rotate-45 -mt-1.5" />
-                            <div className="sm:hidden absolute top-full right-2.5 w-3 h-3 bg-neutral-800/95 border-r border-b border-white/15 rotate-45 -mt-1.5" />
+                            <div
+                              className={`sm:hidden absolute top-full ${
+                                step.number <= 4 ? 'right-[56px]' : 'right-2'
+                              } w-3 h-3 bg-neutral-800/95 border-r border-b border-white/15 rotate-45 -mt-1.5`}
+                            />
                           </div>
                         )}
                       </div>
@@ -301,8 +306,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
                   {/* Optional Side Badge ("EL QUE SIRVE QUE SIRVA" next to Step 6) */}
                   {step.sideBadge && (
-                    <div className="sm:w-32 bg-black/95 rounded-2xl px-4 py-4 border border-white/15 shadow-[0_0_22px_rgba(255,255,255,0.12)] flex items-center justify-center text-center">
-                      <span className="text-white font-black italic font-display text-sm sm:text-base uppercase tracking-wide leading-tight">
+                    <div className="w-[21%] min-w-[64px] sm:w-32 shrink-0 bg-black/95 rounded-xl sm:rounded-2xl px-1.5 py-2 sm:px-4 sm:py-4 border border-white/15 shadow-[0_0_22px_rgba(255,255,255,0.12)] flex items-center justify-center text-center">
+                      <span className="text-white font-black italic font-display text-[8.5px] sm:text-sm md:text-base uppercase tracking-wide leading-tight">
                         {step.sideBadge}
                       </span>
                     </div>
