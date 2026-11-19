@@ -153,7 +153,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
                 </h1>
 
                 {/* Editable White/Yellow Helpline Card */}
-                <div className="relative bg-white text-slate-950 shadow-2xl border border-stone-200 min-w-[230px] sm:min-w-[255px] transform -rotate-1 hover:rotate-0 transition-transform">
+                <div className="relative bg-white text-slate-950 shadow-2xl border border-stone-200 min-w-[255px] sm:min-w-[285px] transform -rotate-1 hover:rotate-0 transition-transform">
                   {/* Top Phone Row (Clickable WhatsApp Link) */}
                   <a
                     href={whatsappDirectUrl}
@@ -170,13 +170,13 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
                   </a>
 
                   {/* Bottom Yellow Strip + Diagonal Red NEW Badge */}
-                  <div className="relative bg-amber-300 px-4 py-1 flex items-center justify-center overflow-hidden">
+                  <div className="relative bg-amber-300 px-4 py-1.5 flex items-center justify-center overflow-hidden">
                     <span className="absolute -left-2 bottom-0.5 -rotate-12 bg-red-600 text-white text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 shadow-sm">
                       {lang === 'es'
                         ? SOS_SECTION_DATA.helplineBadgeEs
                         : SOS_SECTION_DATA.helplineBadgeEn}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold italic text-slate-900 pl-6">
+                    <span className="text-xs sm:text-sm font-bold italic text-slate-900 pl-7 pr-1 whitespace-nowrap">
                       {lang === 'es'
                         ? SOS_SECTION_DATA.helplineLabelEs
                         : SOS_SECTION_DATA.helplineLabelEn}

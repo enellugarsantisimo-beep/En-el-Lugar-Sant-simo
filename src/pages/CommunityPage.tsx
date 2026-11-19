@@ -70,56 +70,60 @@ const GroupImageSlider: React.FC<GroupImageSliderProps> = ({
               src={slide.src}
               alt={`${slide.alt} (${idx + 1}/${slides.length})`}
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
         ))}
       </div>
 
       {/* Subtle Bottom Gradient for Controls */}
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+      {slides.length > 1 && (
+        <>
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
-      {/* Counter Badge */}
-      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-950/65 backdrop-blur-sm text-white text-[10px] font-mono font-semibold border border-white/15">
-        {currentIndex + 1} / {slides.length}
-      </div>
+          {/* Counter Badge */}
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-950/65 backdrop-blur-sm text-white text-[10px] font-mono font-semibold border border-white/15">
+            {currentIndex + 1} / {slides.length}
+          </div>
 
-      {/* Previous Button */}
-      <button
-        type="button"
-        onClick={handlePrev}
-        aria-label={prevLabel}
-        className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 hover:bg-slate-950/85 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </button>
-
-      {/* Next Button */}
-      <button
-        type="button"
-        onClick={handleNext}
-        aria-label={nextLabel}
-        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 hover:bg-slate-950/85 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
-      >
-        <ChevronRight className="w-4 h-4" />
-      </button>
-
-      {/* Dot Indicators */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
-        {slides.map((_, idx) => (
+          {/* Previous Button */}
           <button
-            key={idx}
             type="button"
-            onClick={() => setCurrentIndex(idx)}
-            aria-label={`Slide ${idx + 1}`}
-            className={`h-2 rounded-full transition-all cursor-pointer ${
-              currentIndex === idx
-                ? 'w-5 bg-white shadow-sm'
-                : 'w-2 bg-white/50 hover:bg-white/80'
-            }`}
-          />
-        ))}
-      </div>
+            onClick={handlePrev}
+            aria-label={prevLabel}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 hover:bg-slate-950/85 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          {/* Next Button */}
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label={nextLabel}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/60 hover:bg-slate-950/85 text-white flex items-center justify-center backdrop-blur-sm border border-white/15 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+
+          {/* Dot Indicators */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentIndex(idx)}
+                aria-label={`Slide ${idx + 1}`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  currentIndex === idx
+                    ? 'w-5 bg-white shadow-sm'
+                    : 'w-2 bg-white/50 hover:bg-white/80'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -133,12 +137,15 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   const prevLabel = t('Imagen anterior', 'Previous image');
   const nextLabel = t('Siguiente imagen', 'Next image');
 
-  // 4-image slider slots per group (ready for custom group photos)
+  // Official photo for Dirección Pastoral (Pastoras Yuri Arenas y Cecilia Cuervo)
   const pastoralSlides: SlideItem[] = [
-    { src: CHURCH_INFO.images.worship, alt: t('Dirección Pastoral 1', 'Pastoral Leadership 1') },
-    { src: CHURCH_INFO.images.community, alt: t('Dirección Pastoral 2', 'Pastoral Leadership 2') },
-    { src: CHURCH_INFO.images.devotional, alt: t('Dirección Pastoral 3', 'Pastoral Leadership 3') },
-    { src: CHURCH_INFO.images.bocachica, alt: t('Dirección Pastoral 4', 'Pastoral Leadership 4') },
+    {
+      src: '/assets/aistudio/20230910_105343_60a9f334.jpg',
+      alt: t(
+        'Pastoras Yuri Arenas y Cecilia Cuervo - Dirección Pastoral',
+        'Pastors Yuri Arenas and Cecilia Cuervo - Pastoral Leadership'
+      ),
+    },
   ];
 
   const youthSlides: SlideItem[] = [
@@ -156,17 +163,33 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   ];
 
   const womenSlides: SlideItem[] = [
-    { src: CHURCH_INFO.images.community, alt: t('Grupo de Damas 1', 'Women’s Group 1') },
-    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Damas 2', 'Women’s Group 2') },
-    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Damas 3', 'Women’s Group 3') },
-    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Damas 4', 'Women’s Group 4') },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_1__a527bff0.jpeg',
+      alt: t('Grupo de Damas 1', 'Women’s Group 1'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_bcbf3f1b.jpeg',
+      alt: t('Grupo de Damas 2', 'Women’s Group 2'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM__1__4cf0fc38.jpeg',
+      alt: t('Grupo de Damas 3', 'Women’s Group 3'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM_00846d68.jpeg',
+      alt: t('Grupo de Damas 4', 'Women’s Group 4'),
+    },
   ];
 
   const menSlides: SlideItem[] = [
-    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Hombres 1', 'Men’s Group 1') },
-    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Hombres 2', 'Men’s Group 2') },
-    { src: CHURCH_INFO.images.community, alt: t('Grupo de Hombres 3', 'Men’s Group 3') },
-    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Hombres 4', 'Men’s Group 4') },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.12.46_PM_e3907ab8.jpeg',
+      alt: t('Grupo de Hombres 1', 'Men’s Group 1'),
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.13.04_PM_6d7e7268.jpeg',
+      alt: t('Grupo de Hombres 2', 'Men’s Group 2'),
+    },
   ];
 
   const holyKidsSlides: SlideItem[] = [
@@ -194,33 +217,22 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
             </span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
-                {t('Grupos de vida · Comunidad y Liderazgo', 'Life Groups · Community & Leadership')}
-              </span>
-              <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
-                {t(
-                  'No fuiste creado para vivir la fe en soledad',
-                  'You Were Not Created to Live Faith Alone'
-                )}
-              </h1>
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                {t(
-                  'Caminamos juntos bajo dirección pastoral, fortaleciendo a jóvenes, parejas, damas, hombres y niños conforme al diseño y la Palabra de Dios.',
-                  'We walk together under pastoral leadership, strengthening youth, couples, women, men, and children according to God’s design and Word.'
-                )}
-              </p>
-            </div>
-
-            <div className="lg:col-span-4 rounded-2xl overflow-hidden aspect-[4/3] shadow-md border border-slate-200">
-              <img
-                src={CHURCH_INFO.images.community}
-                alt={t('Comunidad en compañerismo', 'Community fellowship')}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="max-w-3xl space-y-4">
+            <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">
+              {t('Grupos de vida · Comunidad y Liderazgo', 'Life Groups · Community & Leadership')}
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-bold font-display text-slate-900 tracking-tight leading-tight">
+              {t(
+                'No fuiste creado para vivir la fe en soledad',
+                'You Were Not Created to Live Faith Alone'
+              )}
+            </h1>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+              {t(
+                'Caminamos juntos bajo dirección pastoral, fortaleciendo a jóvenes, parejas, damas, hombres y niños conforme al diseño y la Palabra de Dios.',
+                'We walk together under pastoral leadership, strengthening youth, couples, women, men, and children according to God’s design and Word.'
+              )}
+            </p>
           </div>
         </div>
       </section>

@@ -584,7 +584,7 @@ export const INFO_SECTION_DATA = {
       sloganEn: 'Do Something Different!',
       taglineEs: 'GRUPO DE VIDA · HOMBRES',
       taglineEn: 'LIFE GROUP · MEN',
-      image: '/src/assets/images/church_community_fellowship_1794440714625.jpg',
+      image: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.13.04_PM_6d7e7268.jpeg',
       locations: [
         {
           address: 'Calle 23C # 69F-65 · Int 31 Apto 502 · Urb Carlos Lleras',
@@ -613,7 +613,7 @@ export const INFO_SECTION_DATA = {
       sloganEn: 'Do Something Different!',
       taglineEs: 'Grupo de Vida · MUJERES',
       taglineEn: 'Life Group · WOMEN',
-      image: '/src/assets/images/church_community_fellowship_1794440714625.jpg',
+      image: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM__1__4cf0fc38.jpeg',
       locations: [
         {
           address: 'Carrera 70 # 22 - 75, Manzana C Interior 13 Apto 204 · Urb. Carlos Lleras',
@@ -852,12 +852,12 @@ export const SOS_SECTION_DATA = {
   title: 'S.O.S',
   helplineBadgeEs: 'NEW',
   helplineBadgeEn: 'NEW',
-  helplineNumber: '(+57) 316 7429925',
-  helplineClean: '573167429925',
-  prayerDispatchNumber: '(+57) 316 7429925',
-  prayerDispatchClean: '573167429925',
-  helplineLabelEs: 'Línea de ayuda',
-  helplineLabelEn: 'Help Line',
+  helplineNumber: '(+57) 305 4351398',
+  helplineClean: '573054351398',
+  prayerDispatchNumber: '(+57) 305 4351398',
+  prayerDispatchClean: '573054351398',
+  helplineLabelEs: 'Solicita ayuda u oración',
+  helplineLabelEn: 'Request help or prayer',
   scriptureLine1Es: '¡Voy a hacer algo nuevo!',
   scriptureLine1En: 'See, I am doing a new thing!',
   scriptureLine2Es: 'Ya está sucediendo',
@@ -879,5 +879,26 @@ export const SOS_SECTION_DATA = {
     'Este espacio es confidencial. Nuestro equipo de oración y cuidado pastoral responderá a tu mensaje con amor y discreción.',
   formSubtitleEn:
     'This space is confidential. Our prayer and pastoral care team will respond to your message with love and discretion.',
+};
+
+export const HOME_SECTION_DATA = {
+  heroBackgroundImage: '/assets/aistudio/IMG_9640_97a34117.jpg',
+  heroBackgroundAltEs: 'Congregación de la iglesia En el Lugar Santísimo reunida en familia',
+  heroBackgroundAltEn: 'Congregation of En el Lugar Santísimo gathered as a church family',
+  propheticBackgroundImage: '/assets/aistudio/IMG_1423_463aaefa.JPG',
+  propheticBackgroundAltEs: 'Jóvenes y familia celebrando en En el Lugar Santísimo',
+  propheticBackgroundAltEn: 'Youth and church family celebrating at En el Lugar Santísimo',
+  eyebrowEs: 'Nosotros · Comunidad Cristiana en Bogotá',
+  eyebrowEn: 'About Us · Christian Community in Bogotá',
+  titleStartEs: 'Un lugar para encontrarte con ',
+  titleHighlightEs: 'Dios',
+  titleEndEs: ' y transformar tu vida',
+  titleStartEn: 'A place to encounter ',
+  titleHighlightEn: 'God',
+  titleEndEn: ' and transform your life',
+  introEs:
+    "En nuestra iglesia, creemos firmemente en el poder de la formación y el crecimiento espiritual. El botón 'Ruta de Crecimiento' es tu puerta de entrada a un viaje transformador. Aquí, te presentamos los diversos niveles de formación disponibles en nuestra casa, diseñados para equiparte con las herramientas esenciales que necesitas para ser un líder en el servicio a Dios y a los demás. Si anhelas crecer en tu fe, descubrir tu propósito y contribuir al ministerio de la iglesia, ¡has llegado al lugar adecuado!",
+  introEn:
+    "In our church, we firmly believe in the power of spiritual formation and growth. The 'Growth Track' button is your gateway to a transformative journey. Here, we present the different levels of training available in our house, designed to equip you with the essential tools you need to become a leader in serving God and others. If you long to grow in your faith, discover your purpose, and contribute to the ministry of the church, you have come to the right place!",
 };
 
