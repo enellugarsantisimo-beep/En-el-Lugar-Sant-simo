@@ -21,18 +21,24 @@ interface CommunityPageProps {
 interface SlideItem {
   src: string;
   alt: string;
+  objectPosition?: string;
+  objectFit?: 'cover' | 'contain';
+  frameTransform?: string;
+  frameOrigin?: string;
 }
 
 interface GroupImageSliderProps {
   slides: SlideItem[];
   prevLabel: string;
   nextLabel: string;
+  strictAspect?: boolean;
 }
 
 const GroupImageSlider: React.FC<GroupImageSliderProps> = ({
   slides,
   prevLabel,
   nextLabel,
+  strictAspect = false,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -45,31 +51,50 @@ const GroupImageSlider: React.FC<GroupImageSliderProps> = ({
   };
 
   return (
-    <div className="relative w-full h-full aspect-[4/3] overflow-hidden group select-none bg-slate-900">
-      {/* Slides Track */}
-      <div
-        className="flex w-full h-full transition-transform duration-500 ease-out"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-      >
-        {slides.map((slide, idx) => (
-          <div key={idx} className="w-full h-full shrink-0 relative overflow-hidden">
-            <img
-              src={slide.src}
-              alt={`${slide.alt} (${idx + 1}/${slides.length})`}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-            />
+    <div
+      className={`relative w-full ${
+        strictAspect ? '' : 'h-full'
+      } aspect-[4/3] overflow-hidden group select-none bg-slate-900`}
+    >
+      {/* Stacked Slides (always positioned at inset-0 to avoid off-screen track culling) */}
+      {slides.map((slide, idx) => {
+        const isActive = idx === currentIndex;
+        return (
+          <div
+            key={slide.src + idx}
+            aria-hidden={!isActive}
+            className={`absolute inset-0 overflow-hidden transition-opacity duration-300 ease-out ${
+              isActive ? 'opacity-100 z-[1]' : 'opacity-0 z-0 pointer-events-none'
+            }`}
+          >
+            <div className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105">
+              <img
+                src={slide.src}
+                alt={`${slide.alt} (${idx + 1}/${slides.length})`}
+                referrerPolicy="no-referrer"
+                loading="eager"
+                decoding="async"
+                style={{
+                  objectPosition: slide.objectPosition ?? '50% 0%',
+                  transform: slide.frameTransform,
+                  transformOrigin: slide.frameOrigin,
+                }}
+                className={`w-full h-full ${
+                  slide.objectFit === 'contain' ? 'object-contain' : 'object-cover'
+                }`}
+              />
+            </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
 
       {/* Subtle Bottom Gradient for Controls */}
       {slides.length > 1 && (
         <>
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-10" />
 
           {/* Counter Badge */}
-          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-950/65 backdrop-blur-sm text-white text-[10px] font-mono font-semibold border border-white/15">
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-950/65 backdrop-blur-sm text-white text-[10px] font-mono font-semibold border border-white/15 z-20">
             {currentIndex + 1} / {slides.length}
           </div>
 
@@ -78,7 +103,7 @@ const GroupImageSlider: React.FC<GroupImageSliderProps> = ({
             type="button"
             onClick={handlePrev}
             aria-label={prevLabel}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/65 hover:bg-slate-950/90 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/65 hover:bg-slate-950/90 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 opacity-90 hover:opacity-100 transition-opacity cursor-pointer z-20"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -88,13 +113,13 @@ const GroupImageSlider: React.FC<GroupImageSliderProps> = ({
             type="button"
             onClick={handleNext}
             aria-label={nextLabel}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/65 hover:bg-slate-950/90 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/65 hover:bg-slate-950/90 text-white flex items-center justify-center backdrop-blur-sm border border-white/20 opacity-90 hover:opacity-100 transition-opacity cursor-pointer z-20"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
 
           {/* Dot Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
             {slides.map((_, idx) => (
               <button
                 key={idx}
@@ -124,7 +149,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   const prevLabel = t('Imagen anterior', 'Previous image');
   const nextLabel = t('Siguiente imagen', 'Next image');
 
-  // Official photo for Dirección Pastoral (Pastoras Yuri Arenas y Cecilia Cuervo)
+  // Official photos for Dirección Pastoral (Pastoras Yuri Arenas y Cecilia Cuervo)
   const pastoralSlides: SlideItem[] = [
     {
       src: '/assets/aistudio/20230910_105343_60a9f334.jpg',
@@ -132,6 +157,25 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
         'Pastoras Yuri Arenas y Cecilia Cuervo - Dirección Pastoral',
         'Pastors Yuri Arenas and Cecilia Cuervo - Pastoral Leadership'
       ),
+      objectPosition: '50% 30%',
+    },
+    {
+      src: '/assets/aistudio/IMG_6225_6134ce8d.jpg',
+      alt: t(
+        'Pastoras Cecilia Cuervo y Yuri Arenas ministrando - Dirección Pastoral',
+        'Pastors Cecilia Cuervo and Yuri Arenas ministering - Pastoral Leadership'
+      ),
+      objectPosition: '50% 10%',
+    },
+    {
+      src: '/assets/aistudio/20230910_110750_e9804e22.jpg',
+      alt: t(
+        'Pastoras Cecilia Cuervo y Yuri Arenas en el altar - Dirección Pastoral',
+        'Pastors Cecilia Cuervo and Yuri Arenas on stage - Pastoral Leadership'
+      ),
+      objectPosition: '50% 34%',
+      frameTransform: 'scale(1.22)',
+      frameOrigin: '49% 34%',
     },
   ];
 
@@ -141,12 +185,20 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
       alt: t('Grupo de Jóvenes 1', 'Youth Group 1'),
     },
     {
-      src: '/assets/aistudio/IMG_6846_23cefb0b.png',
+      src: '/assets/youth/IMG_6846_web.jpg',
       alt: t('Grupo de Jóvenes 2', 'Youth Group 2'),
+      objectPosition: '50% 45%',
     },
     {
-      src: '/assets/aistudio/IMG_4638_3396d20d.png',
+      src: '/assets/youth/IMG_4638_web.jpg',
       alt: t('Grupo de Jóvenes 3', 'Youth Group 3'),
+      objectFit: 'contain',
+      objectPosition: '50% 50%',
+    },
+    {
+      src: '/assets/aistudio/IMG_1423_463aaefa.JPG',
+      alt: t('Grupo de Jóvenes 4', 'Youth Group 4'),
+      objectPosition: '50% 45%',
     },
   ];
 
@@ -163,36 +215,46 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
       alt: t('Grupo de Damas 1 - Encuentro Mujeres', 'Women’s Group 1 - Women’s Encounter'),
     },
     {
-      src: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.11.14_PM_a1853d0e.jpeg',
+      src: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.10.40_PM_b4cb73fb.jpeg',
       alt: t('Grupo de Damas 2', 'Women’s Group 2'),
     },
     {
-      src: '/assets/aistudio/WhatsApp_Image_2026-11-19_at_5.10.40_PM_b4cb73fb.jpeg',
+      src: '/assets/aistudio/IMG_2284_9b152a54.jpg',
       alt: t('Grupo de Damas 3', 'Women’s Group 3'),
     },
     {
-      src: '/assets/aistudio/IMG_2284_9b152a54.jpg',
+      src: '/assets/aistudio/IMG_1622_7fcb5f8a.jpg',
       alt: t('Grupo de Damas 4', 'Women’s Group 4'),
     },
     {
-      src: '/assets/aistudio/IMG_1622_7fcb5f8a.jpg',
-      alt: t('Grupo de Damas 5', 'Women’s Group 5'),
-    },
-    {
       src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_1__a527bff0.jpeg',
-      alt: t('Grupo de Damas 6', 'Women’s Group 6'),
+      alt: t('Grupo de Damas 5', 'Women’s Group 5'),
+      objectPosition: '50% 45%',
     },
     {
       src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.19_PM_bcbf3f1b.jpeg',
-      alt: t('Grupo de Damas 7', 'Women’s Group 7'),
+      alt: t('Grupo de Damas 6', 'Women’s Group 6'),
+      objectPosition: '50% 45%',
     },
     {
       src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM__1__4cf0fc38.jpeg',
-      alt: t('Grupo de Damas 8', 'Women’s Group 8'),
+      alt: t('Grupo de Damas 7', 'Women’s Group 7'),
+      objectPosition: '50% 35%',
     },
     {
       src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_2.18.21_PM_00846d68.jpeg',
+      alt: t('Grupo de Damas 8', 'Women’s Group 8'),
+      objectPosition: '50% 35%',
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_3.16.28_PM__1___1__26398fab.jpeg',
       alt: t('Grupo de Damas 9', 'Women’s Group 9'),
+      objectPosition: '50% 35%',
+    },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2024-12-18_at_3.16.28_PM__2__4599b7e7.jpeg',
+      alt: t('Grupo de Damas 10', 'Women’s Group 10'),
+      objectPosition: '50% 50%',
     },
   ];
 
@@ -267,7 +329,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
       {/* 2. DIRECCIÓN PASTORAL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-slate-900 text-white overflow-hidden border border-slate-800 shadow-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-12 items-center">
             <div className="md:col-span-7 p-8 sm:p-10 lg:p-14 space-y-5 flex flex-col justify-center">
               <div className="space-y-1.5">
                 <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold uppercase tracking-widest">
@@ -305,8 +367,15 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
               </div>
             </div>
 
-            <div className="md:col-span-5 relative min-h-[260px]">
-              <GroupImageSlider slides={pastoralSlides} prevLabel={prevLabel} nextLabel={nextLabel} />
+            <div className="md:col-span-5 p-4 sm:p-6 md:pl-0 md:pr-8 md:py-8 flex items-center justify-center">
+              <div className="w-full rounded-2xl overflow-hidden border border-slate-700/60 shadow-2xl">
+                <GroupImageSlider
+                  slides={pastoralSlides}
+                  prevLabel={prevLabel}
+                  nextLabel={nextLabel}
+                  strictAspect
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -752,6 +752,16 @@ export const INFO_SECTION_DATA = {
       alignLeft: false,
       meetLink: 'https://meet.google.com/skt-pttc-gmz',
     },
+    {
+      id: 'act-5',
+      titleEs: 'Reunión de Hombres y Mujeres',
+      titleEn: 'Men’s & Women’s Meeting',
+      subtitleEs: 'Reunión Virtual',
+      subtitleEn: 'Virtual Meeting',
+      scheduleEs: 'Jueves 7:00 pm',
+      scheduleEn: 'Thursday 7:00 PM',
+      alignLeft: true,
+    },
   ] as Array<{
     id: string;
     titleEs: string;
