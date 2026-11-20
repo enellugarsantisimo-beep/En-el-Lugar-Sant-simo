@@ -107,7 +107,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             {/* Independent Graphic Layer: Large Red Vinyl Disc (Right) */}
             <div
               aria-hidden="true"
-              className="block absolute -right-4 sm:right-4 lg:right-12 top-6 sm:top-1/2 sm:-translate-y-1/2 w-32 h-32 sm:w-52 sm:h-52 md:w-64 md:h-64 lg:w-[370px] lg:h-[370px] pointer-events-none z-0 opacity-35 sm:opacity-55 md:opacity-95"
+              className="block absolute -right-5 sm:right-4 lg:right-12 top-4 sm:top-1/2 sm:-translate-y-1/2 w-28 h-28 sm:w-52 sm:h-52 md:w-64 md:h-64 lg:w-[370px] lg:h-[370px] pointer-events-none z-0 opacity-95"
             >
               <RedVinylDisc
                 customImage={SOS_SECTION_DATA.visuals.largeVinylImage || undefined}
@@ -118,7 +118,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             {/* Independent Graphic Layer: Small Red Vinyl Disc + Bible & Push Button (Bottom-Left) */}
             <div
               aria-hidden="true"
-              className="flex items-center justify-center absolute -left-4 sm:left-8 lg:left-24 bottom-3 sm:bottom-6 lg:bottom-8 w-28 h-28 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-64 lg:h-64 pointer-events-none z-0 opacity-40 sm:opacity-65 md:opacity-100"
+              className="flex items-center justify-center absolute -left-3 sm:left-8 lg:left-24 bottom-2 sm:bottom-6 lg:bottom-8 w-28 h-28 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-64 lg:h-64 pointer-events-none z-0 opacity-100"
             >
               <RedVinylDisc
                 customImage={SOS_SECTION_DATA.visuals.smallVinylImage || undefined}
@@ -131,7 +131,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             </div>
 
             {/* Editable Top Prompt Text */}
-            <div className="relative z-10">
+            <div className="relative z-10 pr-24 sm:pr-0">
               <p className="text-sm sm:text-lg lg:text-xl font-medium text-white/95 tracking-tight max-w-2xl">
                 {lang === 'es'
                   ? SOS_SECTION_DATA.topPromptEs
@@ -140,7 +140,7 @@ export const ContactCarePage: React.FC<ContactCarePageProps> = ({
             </div>
 
             {/* Center Editable Typography + Interactive Helpline Badge + Scripture Note */}
-            <div className="relative z-10 my-auto py-8 flex flex-col items-center md:items-start md:pl-20 lg:pl-44 space-y-6">
+            <div className="relative z-10 my-auto pt-10 pb-24 sm:py-8 flex flex-col items-center md:items-start md:pl-20 lg:pl-44 space-y-6">
               {/* Row 1: S.O.S Display Title + Interactive Helpline Sticker */}
               <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                 <h1

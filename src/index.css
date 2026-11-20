@@ -10,7 +10,9 @@
   --color-church-gold: #d99a42;
 }
 
+:root,
 html {
+  color-scheme: light only;
   scroll-behavior: smooth;
   font-family: var(--font-sans);
 }
@@ -19,6 +21,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #fafaf9;
+  color: #1e293b;
 }
 
 #root {
