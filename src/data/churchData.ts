@@ -774,6 +774,7 @@ export const INFO_SECTION_DATA = {
       scheduleEs: 'Jueves 7:00 pm',
       scheduleEn: 'Thursday 7:00 PM',
       alignLeft: false,
+      meetLink: 'https://meet.google.com/yct-vptf-gac',
     },
   ] as Array<{
     id: string;
