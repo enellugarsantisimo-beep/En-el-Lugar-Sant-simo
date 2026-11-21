@@ -108,7 +108,7 @@ const ActivitySquareCard: React.FC<ActivitySquareCardProps> = ({
           style={{ scale: smoothScale }}
           whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.2 }}
-          className="w-full max-w-md px-2.5 py-4 sm:px-6 sm:py-7 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 text-slate-950 shadow-lg border border-amber-300/80 flex items-center justify-center gap-1.5 sm:gap-3 text-center"
+          className="w-full max-w-md px-2.5 py-4 sm:px-6 sm:py-7 rounded-xl sm:rounded-2xl bg-amber-400 bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 text-slate-950 shadow-lg border border-amber-300/80 flex items-center justify-center gap-1.5 sm:gap-3 text-center"
         >
           <Clock className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-slate-900" />
           <span className="text-xs sm:text-xl font-extrabold font-display tracking-tight leading-tight">
@@ -455,7 +455,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
 
       {/* 2. BANNER COMUNIDAD + ESFERAS SOCIALES QUE GIRAN CON EL SCROLL */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="rounded-3xl bg-gradient-to-r from-indigo-950 via-slate-900 to-rose-950 text-white p-8 sm:p-10 text-center shadow-lg border border-slate-800">
+        <div className="rounded-3xl bg-slate-900 bg-gradient-to-r from-indigo-950 via-slate-900 to-rose-950 text-white p-8 sm:p-10 text-center shadow-lg border border-slate-800">
           <h2 className="text-2xl sm:text-4xl font-bold font-display tracking-tight">
             {t(
               '¡No esperes más para hacer parte de nuestra comunidad!',
@@ -504,7 +504,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
 
       {/* 3. ÚNETE AQUÍ A NUESTROS GRUPOS DE VIDA (POPOVERS EN ÍCONOS (i) + TARJETA FLYER EDITABLE) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="rounded-3xl bg-gradient-to-br from-rose-50 via-stone-100 to-purple-50 border border-slate-200 p-6 sm:p-12 shadow-sm space-y-10">
+        <div className="rounded-3xl bg-stone-100 bg-gradient-to-br from-rose-50 via-stone-100 to-purple-50 border border-slate-200 p-6 sm:p-12 shadow-sm space-y-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Group Selector Pills + Floating Popover on White/Dark (i) Info Buttons */}
             <div className="lg:col-span-6 space-y-4">
@@ -566,7 +566,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
                     {/* Floating Popover Card right beneath the hovered/tapped (i) button (All Devices) */}
                     {isPopoverOpen && (
                       <div
-                        className={`block absolute left-0 top-full mt-3 z-40 w-[calc(100vw-3rem)] sm:w-[560px] max-w-[90vw] rounded-2xl bg-gradient-to-br ${grp.flyerAccentClass} border-2 shadow-2xl p-4 sm:p-5`}
+                        className={`block absolute left-0 right-0 sm:right-auto top-full mt-3 z-40 sm:w-[560px] rounded-2xl bg-slate-900 bg-gradient-to-br ${grp.flyerAccentClass} border-2 shadow-2xl p-4 sm:p-5`}
                       >
                         {/* Upward Caret */}
                         <div className="absolute -top-2 left-28 sm:left-32 w-4 h-4 rotate-45 bg-slate-900 border-l border-t border-white/25" />
@@ -741,7 +741,7 @@ export const EventsInfoPage: React.FC<EventsInfoPageProps> = ({
 
           {/* Active Editable Life Group Flyer Card (Always visible on Mobile & Desktop below selector) */}
           <div
-            className={`rounded-2xl bg-gradient-to-br ${selectedGroup.flyerAccentClass} border shadow-xl overflow-hidden`}
+            className={`rounded-2xl bg-slate-900 bg-gradient-to-br ${selectedGroup.flyerAccentClass} border shadow-xl overflow-hidden`}
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
               {/* Independent Group Image */}

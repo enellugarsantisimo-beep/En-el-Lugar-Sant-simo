@@ -302,7 +302,7 @@ export const LiveContentPage: React.FC<LiveContentPageProps> = ({
 
           {/* 3. SALA VIRTUAL DE ORACIÓN MATUTINA (GOOGLE MEET) */}
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-sky-900 to-slate-900 text-white border border-sky-800/80 shadow-xl">
+            <div className="p-8 sm:p-12 rounded-3xl bg-sky-900 bg-gradient-to-br from-sky-900 to-slate-900 text-white border border-sky-800/80 shadow-xl">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-8 space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 text-xs font-semibold border border-sky-400/30">
