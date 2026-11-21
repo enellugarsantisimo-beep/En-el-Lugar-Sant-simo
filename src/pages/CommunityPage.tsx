@@ -203,10 +203,11 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({
   ];
 
   const couplesSlides: SlideItem[] = [
-    { src: CHURCH_INFO.images.devotional, alt: t('Grupo de Parejas 1', 'Couples Group 1') },
-    { src: CHURCH_INFO.images.community, alt: t('Grupo de Parejas 2', 'Couples Group 2') },
-    { src: CHURCH_INFO.images.worship, alt: t('Grupo de Parejas 3', 'Couples Group 3') },
-    { src: CHURCH_INFO.images.bocachica, alt: t('Grupo de Parejas 4', 'Couples Group 4') },
+    {
+      src: '/assets/aistudio/WhatsApp_Image_2026-11-21_at_4.21.42_PM_d4441f86.jpeg',
+      alt: t('Grupo de Parejas - Parejas con propósito', 'Couples Group - Couples with Purpose'),
+      objectPosition: '50% 35%',
+    },
   ];
 
   const womenSlides: SlideItem[] = [

@@ -555,7 +555,7 @@ export const INFO_SECTION_DATA = {
       taglineEn: 'LIFE GROUP · Couples',
       subtitleEs: 'SIRVIENDO A DIOS COMO PAREJA',
       subtitleEn: 'SERVING GOD AS A COUPLE',
-      image: '/src/assets/images/prayer_morning_devotional_1794440714722.jpg',
+      image: '/assets/aistudio/WhatsApp_Image_2026-11-21_at_4.21.42_PM_d4441f86.jpeg',
       locations: [
         {
           address: 'Carrera 72C # 22A - 77 · Interior 5 Torre 2 Apto 618',
